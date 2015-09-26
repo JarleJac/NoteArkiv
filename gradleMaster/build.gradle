@@ -1,0 +1,35 @@
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+
+    repositories {
+       mavenCentral()
+    }
+	sourceSets {
+		main {
+			java {
+				srcDir 'src'
+			}
+			resources {
+				srcDir 'resources'
+			}
+		}
+		test {
+			java {
+				srcDir 'testSrc'
+			}
+			resources {
+				srcDir 'testResources'
+			}
+		}
+	}
+    dependencies {
+        testCompile 'junit:junit:4.8.2'
+    }
+
+    version = '1.0'
+
+    jar {
+        manifest.attributes provider: 'JacJarSoft'
+    }
+}
