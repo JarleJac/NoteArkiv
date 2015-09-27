@@ -1,7 +1,14 @@
+ext {
+	libraries = [
+		'sqlite': ['org.xerial:sqlite-jdbc:3.8.11.1']
+	]
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'eclipse'
-
+	
+	
     repositories {
        mavenCentral()
     }
@@ -24,7 +31,7 @@ subprojects {
 		}
 	}
     dependencies {
-        testCompile 'junit:junit:4.8.2'
+        testCompile 'junit:junit:4.12'
     }
 
     version = '1.0'
