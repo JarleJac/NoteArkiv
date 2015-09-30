@@ -34,7 +34,8 @@ subprojects {
         testCompile 'junit:junit:4.12'
     }
 
-    version = '1.0'
+	version='2.0.0.0'
+    //version = '1.0'
 
     jar {
         manifest.attributes provider: 'JacJarSoft'

@@ -8,13 +8,14 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 import jacJarSoft.util.DbUtil;
 import jacJarSoft.util.ExceptionUtil;
 import jacJarSoft.util.Version;
 
 public class NoteArkivDatabase {
 
-	Logger logger = Logger.getLogger(NoteArkivDatabase.class.getName());
+	private static Logger logger = Logger.getLogger(NoteArkivDatabase.class.getName());
 	private File dbFileName;
 
 	public NoteArkivDatabase(String dbFileName) {
@@ -39,8 +40,13 @@ public class NoteArkivDatabase {
 						return rs.getString(1);
 					});
 				Version version = new Version(versionStr);
-				if (version.getMajor() == 0 && version.getMinor() == 0) {
-					createNewDatabase();
+				if (version.isEarlier(NoteArkivAppInfo.getVersion()))
+				{
+					if (version.getMajor() == 0 && version.getMinor() == 0) {
+						createNewDatabase();
+					}
+					else if (version.getMajor() < 2)
+						upgradeFromVersion1();
 				}
 					
 			}
@@ -52,8 +58,13 @@ public class NoteArkivDatabase {
 		
 	}
 
+	private void upgradeFromVersion1() {
+		// TODO Auto-generated method stub createNewDatabase
+		
+	}
+
 	private void createNewDatabase() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub createNewDatabase
 		
 	}
 

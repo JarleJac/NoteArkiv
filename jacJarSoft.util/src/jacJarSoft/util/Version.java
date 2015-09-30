@@ -50,4 +50,8 @@ public class Version {
 	public String toString() {
 		return major + "." + minor + "." + fix + "." + build;
 	}
+	public boolean isEarlier(Version version) {
+		// TODO Auto-generated method stub isEarlier
+		return false;
+	}
 }

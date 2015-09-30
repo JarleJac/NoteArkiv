@@ -1,0 +1,15 @@
+
+dependencies {
+	compile project(':jacJarSoft.util')
+}
+
+//Thank you. For anybody who encounter the same problem - 
+//if you want several properties to be expanded you should use: 
+//expand([projectVersion: project.version, projectGroupId: project.groupId]) 
+//I'm not very familiar with groovy and it was something new to me. expand() consumes a map as a parameter. 
+//[key1: value1, key2: value2] is a map
+
+
+processResources {
+	expand projectVersion: project.version
+}
