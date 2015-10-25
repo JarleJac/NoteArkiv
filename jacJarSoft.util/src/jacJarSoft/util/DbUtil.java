@@ -3,8 +3,7 @@ package jacJarSoft.util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.function.Function;;
+import java.sql.SQLException;;
 
 public class DbUtil {
 	private DbUtil() {/*only static methods*/}
