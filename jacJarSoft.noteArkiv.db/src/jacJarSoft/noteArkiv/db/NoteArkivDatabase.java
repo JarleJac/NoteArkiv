@@ -17,8 +17,10 @@ public class NoteArkivDatabase {
 
 	private static Logger logger = Logger.getLogger(NoteArkivDatabase.class.getName());
 	private File dbFileName;
+	private Version appVersion;
 
 	public NoteArkivDatabase(String dbFileName) {
+		appVersion = NoteArkivAppInfo.getVersion();
 		File f = new File(dbFileName);
 		this.dbFileName = f.getAbsoluteFile();
 	}
@@ -40,7 +42,7 @@ public class NoteArkivDatabase {
 						return rs.getString(1);
 					});
 				Version version = new Version(versionStr);
-				if (version.isEarlier(NoteArkivAppInfo.getVersion()))
+				if (version.isEarlier(appVersion))
 				{
 					if (version.getMajor() == 0 && version.getMinor() == 0) {
 						createNewDatabase();

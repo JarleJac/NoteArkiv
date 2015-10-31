@@ -5,6 +5,7 @@ public class Version {
 	private int minor;
 	private int fix;
 	private int build;
+	private String versionText;
 
 	public Version(int major, int minor, int fix, int build) {
 		this.major = major;
@@ -13,9 +14,12 @@ public class Version {
 		this.build = build;
 	}
 	public Version(String version) {
-		String[] split = version.split("\\.");
+		String[] mainSplit = version.split("-");
+		if (mainSplit.length > 1)
+			versionText = mainSplit[1];
+		String[] split = mainSplit[0].split("\\.");
 		if (split.length != 4)
-			throw new IllegalArgumentException("version string must be in the format <major>.<minor>.<fix>.<build>");
+			throw new IllegalArgumentException("version string must be in the format <major>.<minor>.<fix>.<build>[-<buildInfo>]");
 		major = Integer.valueOf(split[0]);
 		minor = Integer.valueOf(split[1]);
 		fix = Integer.valueOf(split[2]);
@@ -48,7 +52,7 @@ public class Version {
 
 	@Override
 	public String toString() {
-		return major + "." + minor + "." + fix + "." + build;
+		return major + "." + minor + "." + fix + "." + build + (versionText == null ? "" : "-" + versionText) ;
 	}
 	public boolean isEarlier(Version version) {
 		// TODO Auto-generated method stub isEarlier
