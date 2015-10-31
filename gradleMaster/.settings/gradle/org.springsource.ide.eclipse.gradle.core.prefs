@@ -1,5 +1,5 @@
 #org.springsource.ide.eclipse.gradle.core.preferences.GradleProjectPreferences
-#Wed Sep 30 22:31:36 CEST 2015
-build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;../jacJarSoft.noteArkiv.base;../jacJarSoft.noteArkiv.db;../jacJarSoft.noteArkiv.web;../jacJarSoft.util;
+#Sat Oct 31 12:50:25 CET 2015
+build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;../jacJarSoft.noteArkiv.base;../jacJarSoft.noteArkiv.db;../jacJarSoft.util;
 org.springsource.ide.eclipse.gradle.linkedresources=
 org.springsource.ide.eclipse.gradle.rootprojectloc=
