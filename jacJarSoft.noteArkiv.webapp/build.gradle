@@ -6,7 +6,7 @@ dependencies {
 	compile project(':jacJarSoft.util')
 	compile project(':jacJarSoft.noteArkiv.base')
 	compile project(':jacJarSoft.noteArkiv.db')
-	compile libraries.cfx
+	compile libraries.cxf
 	compile libraries.spring
 	runtime libraries.jackson
 }
