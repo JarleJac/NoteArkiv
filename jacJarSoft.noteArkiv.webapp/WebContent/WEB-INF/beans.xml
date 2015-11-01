@@ -19,12 +19,13 @@
 
 	<context:component-scan base-package="jacJarSoft.noteArkiv.*" />
 
-	<jaxrs:server id="noteService" address="/">
+	<jaxrs:server id="noteArkivService" address="/">
 		<jaxrs:providers>
 			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
 		</jaxrs:providers>
 		<jaxrs:serviceBeans>
 			<ref bean="noteServiceImpl" />
+			<ref bean="noteArkivAppServiceImpl" />
 		</jaxrs:serviceBeans>
 <!-- 		<jaxrs:extensionMappings> -->
 <!-- 			<entry key="xml" value="application/xml" /> -->
@@ -33,5 +34,6 @@
 	</jaxrs:server>
 
     <bean id="noteServiceImpl" class="jacJarSoft.noteArkiv.internal.NoteServiceImpl"/>
+    <bean id="noteArkivAppServiceImpl" class="jacJarSoft.noteArkiv.internal.NoteArkivAppServiceImpl"/>
     <bean id="noteDao" class="jacJarSoft.noteArkiv.dao.NoteDao"/>
 </beans>
