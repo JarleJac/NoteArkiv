@@ -1,51 +1,55 @@
 ext {
 	libraries = [
-		'sqlite': ['org.xerial:sqlite-jdbc:3.8.11.1'],
-		'cxf': 		['org.apache.cxf:cxf-rt-frontend-jaxws:3.1.3',
-					'org.apache.cxf:cxf-rt-frontend-jaxrs:3.1.3',
-					'org.apache.cxf:cxf-rt-rs-service-description:3.1.3'],
-		'spring': 	['org.springframework:spring-context:4.2.2.RELEASE',
-					'org.springframework:spring-web:4.2.2.RELEASE'],
-		'jackson':  ['com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.6.1']
+		'sqlite': 		[
+			'org.xerial:sqlite-jdbc:3.8.11.1'
+		],
+
+		'cxf': 			[
+			'org.apache.cxf:cxf-rt-frontend-jaxws:3.1.3',
+			'org.apache.cxf:cxf-rt-frontend-jaxrs:3.1.3',
+			'org.apache.cxf:cxf-rt-rs-service-description:3.1.3'
+		],
+
+		'spring': 		[
+			'org.springframework:spring-context:4.2.2.RELEASE',
+			'org.springframework:spring-web:4.2.2.RELEASE'
+		],
+
+		'jackson':		[
+			'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.6.1'
+		],
+
+		'eclipselink':	[
+			'org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.1'
+		],
+		'jpa' :			[
+			'org.eclipse.persistence:javax.persistence:2.1.0'
+			]
 	]
 }
 apply plugin: 'eclipse-wtp'
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'eclipse'
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
 	apply plugin: 'eclipse-wtp'
+
+	eclipse.classpath.downloadJavadoc = true;
 	
-	
-    repositories {
-       mavenCentral()
-    }
+	repositories { mavenCentral() }
 	sourceSets {
 		main {
-			java {
-				srcDir 'src'
-			}
-			resources {
-				srcDir 'resources'
-			}
+			java { srcDir 'src' }
+			resources { srcDir 'resources' }
 		}
 		test {
-			java {
-				srcDir 'testSrc'
-			}
-			resources {
-				srcDir 'testResources'
-			}
+			java { srcDir 'testSrc' }
+			resources { srcDir 'testResources' }
 		}
 	}
-    dependencies {
-        testCompile 'junit:junit:4.12'
-    }
+	dependencies { testCompile 'junit:junit:4.12' }
 
 	version='2.0.0.0'
-    //version = '1.0'
 
-    jar {
-        manifest.attributes provider: 'JacJarSoft'
-    }
+	jar { manifest.attributes provider: 'JacJarSoft' }
 }

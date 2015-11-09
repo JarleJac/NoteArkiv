@@ -1,6 +1,6 @@
 package jacJarSoft.util;
 
-public class Version {
+public class Version implements Comparable<Version>{
 	private int major;
 	private int minor;
 	private int fix;
@@ -54,8 +54,18 @@ public class Version {
 	public String toString() {
 		return major + "." + minor + "." + fix + "." + build + (versionText == null ? "" : "-" + versionText) ;
 	}
-	public boolean isEarlier(Version version) {
-		// TODO Auto-generated method stub isEarlier
-		return false;
+	public boolean isEarlier(Version other) {
+		return compareTo(other) < 0;
+	}
+	@Override
+	public int compareTo(Version other) {
+		int ret = major - other.major;
+		if (ret == 0)
+			ret = minor - other.minor;
+		if (ret == 0)
+			ret = fix - other.fix;
+		if (ret == 0)
+			ret = build - other.build;
+		return ret;
 	}
 }

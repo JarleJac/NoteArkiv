@@ -3,5 +3,6 @@
 dependencies {
 	compile project(':jacJarSoft.util')
 	compile project(':jacJarSoft.noteArkiv.base')
+	compile libraries.eclipselink
 	runtime libraries.sqlite
 }

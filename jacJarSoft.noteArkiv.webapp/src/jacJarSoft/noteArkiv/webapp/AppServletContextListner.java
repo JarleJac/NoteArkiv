@@ -4,11 +4,13 @@ import java.io.InputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import javax.persistence.EntityManager;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import jacJarSoft.noteArkiv.db.NoteArkivDatabase;
+import jacJarSoft.noteArkiv.db.PersistenceFactory;
 
 public class AppServletContextListner implements ServletContextListener {
 
@@ -19,8 +21,18 @@ public class AppServletContextListner implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		servletContext = sce.getServletContext();
 		initLogging(servletContext.getInitParameter("logging.props"));
-		String dbFileName = "test.db";
-		db = new NoteArkivDatabase(dbFileName);
+//		String dbFileName = "test.db";
+//		db = new NoteArkivDatabase(dbFileName);
+		EntityManager entityManager = null;
+		try {
+			entityManager = PersistenceFactory.getEntityManager();
+			NoteArkivDatabase db = new NoteArkivDatabase(entityManager);
+			db.verifyAndUpgradeDb();
+		}
+		finally {
+			if (entityManager != null)
+			entityManager.close();
+		}
 		
 	}
 

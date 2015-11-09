@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="testSrc"/>
+	<classpathentry kind="src" path="resources"/>
 	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>

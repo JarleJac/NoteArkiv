@@ -3,7 +3,11 @@ package jacJarSoft.util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;;
+import java.sql.SQLException;
+import java.util.function.Function;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;;
 
 public class DbUtil {
 	private DbUtil() {/*only static methods*/}
@@ -59,5 +63,34 @@ public class DbUtil {
 			statement.close();
 		}
 		return result;
+	}
+	public static <R> R runWithConnection(EntityManager em, Function<Connection,R> function) {
+		R ret = null;
+		EntityTransaction transaction = em.getTransaction();
+		if (transaction.isActive())
+		{
+			ret = unwrapConnectionAndRun(em, function);
+		}
+		else
+		{
+			try
+			{
+				transaction.begin();
+				ret = unwrapConnectionAndRun(em, function);
+				transaction.commit();
+			}
+			finally {
+				if (transaction.isActive())
+					transaction.rollback();
+			}
+		}
+		return ret;
+	}
+
+	private static <R> R unwrapConnectionAndRun(EntityManager em, Function<Connection, R> function) {
+		R ret;
+		Connection connection = em.unwrap(Connection.class);
+		ret = function.apply(connection);
+		return ret;
 	}
 }
