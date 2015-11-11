@@ -6,8 +6,8 @@ public class NoteDao {
 	public Note getNote(long noteId) {
 		Note note = new Note();
 		note.setNoteId(noteId);
-		note.setTitle("Watever");
-		note.setDescription("Watever descr");
+		note.setTitle("Whatever");
+		note.setDescription("Whatever descr");
 		return note;
 	}
 
