@@ -12,7 +12,9 @@ ext {
 
 		'spring': 		[
 			'org.springframework:spring-context:4.2.2.RELEASE',
-			'org.springframework:spring-web:4.2.2.RELEASE'
+			'org.springframework:spring-web:4.2.2.RELEASE',
+			'org.springframework:spring-orm:4.2.2.RELEASE'
+			
 		],
 
 		'jackson':		[

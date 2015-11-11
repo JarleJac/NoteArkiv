@@ -16,5 +16,10 @@ public interface NoteService {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/getnote/{noteId}")
 	public Response getNote(@PathParam("noteId") long noteId);
+
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/getvoice/")
+	public Response getVoices();
 	
 }

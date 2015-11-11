@@ -36,8 +36,11 @@ public class NoteArkivDatabase {
 				if (version.getMajor() == 0 && version.getMinor() == 0) {
 					createNewDatabase(connection);
 				}
-				else if (version.getMajor() < 2)
+				else if (version.getMajor() < 2) {
 					upgradeFromVersion1(connection);
+				}
+				
+				updateToCurrentVersion(connection);
 			}
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error upgrading db", e);
@@ -64,6 +67,10 @@ public class NoteArkivDatabase {
 				return ver;
 			});
 		return versionStr;
+	}
+	private void updateToCurrentVersion(Connection connection) throws SQLException {
+		String sql = "update SYSTEM_INFO set VERSION_NO = ?";
+		DbUtil.execUpdateSql(connection,sql,appVersion.toVersionString(false));
 	}
 
 	private void upgradeFromVersion1(Connection connection) {

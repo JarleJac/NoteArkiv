@@ -17,8 +17,11 @@
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
  	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-	<context:component-scan base-package="jacJarSoft.noteArkiv.*" />
-
+	<context:component-scan base-package="jacJarSoft.noteArkiv" />
+	
+	<bean id="myEmf" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="noteArkivDb"/>
+    </bean>
 	<jaxrs:server id="noteArkivService" address="/">
 		<jaxrs:providers>
 			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
@@ -35,5 +38,5 @@
 
     <bean id="noteServiceImpl" class="jacJarSoft.noteArkiv.internal.NoteServiceImpl"/>
     <bean id="noteArkivAppServiceImpl" class="jacJarSoft.noteArkiv.internal.NoteArkivAppServiceImpl"/>
-    <bean id="noteDao" class="jacJarSoft.noteArkiv.dao.NoteDao"/>
+<!--     <bean id="noteDao" class="jacJarSoft.noteArkiv.dao.NoteDao"/> -->
 </beans>

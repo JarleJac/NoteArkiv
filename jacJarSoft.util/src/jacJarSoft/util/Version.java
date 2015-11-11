@@ -52,7 +52,10 @@ public class Version implements Comparable<Version>{
 
 	@Override
 	public String toString() {
-		return major + "." + minor + "." + fix + "." + build + (versionText == null ? "" : "-" + versionText) ;
+		return toVersionString(true);
+	}
+	public String toVersionString(boolean includeText) {
+		return major + "." + minor + "." + fix + "." + build + (versionText == null || !includeText ? "" : "-" + versionText) ;
 	}
 	public boolean isEarlier(Version other) {
 		return compareTo(other) < 0;
