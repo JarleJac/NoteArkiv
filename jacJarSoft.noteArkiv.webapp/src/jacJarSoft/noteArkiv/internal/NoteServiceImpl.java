@@ -4,11 +4,12 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import jacJarSoft.noteArkiv.api.SheetParam;
 import jacJarSoft.noteArkiv.dao.NoteDao;
 import jacJarSoft.noteArkiv.dao.VoiceDao;
 import jacJarSoft.noteArkiv.service.NoteService;
 
-public class NoteServiceImpl implements NoteService {
+public class NoteServiceImpl extends BaseService implements NoteService {
 
 	@Autowired
 	private NoteDao noteDao;
@@ -26,6 +27,12 @@ public class NoteServiceImpl implements NoteService {
 	@Override
 	public Response getVoices() {
 		return Response.ok(voiceDao.getVoices()).build();
+	}
+
+	@Override
+	public Response addNote(SheetParam param) {
+		// TODO Auto-generated method stub
+		return Response.ok(param).build();
 	}
 
 }

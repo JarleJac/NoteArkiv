@@ -154,7 +154,7 @@ public class NoteArkivDatabase {
 	private void createUsers(Connection connection) throws SQLException {
 		String sql =
                 "CREATE TABLE IF NOT EXISTS USERS " + 
-					"(USER_NO text, " +
+					"(USER_NO text primary key, " +
 					"USER_NAME text, " +
 					"PASSWORD text, " + 
 					"MUST_CHANGE_PASSWORD integer, " +

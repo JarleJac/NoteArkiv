@@ -86,6 +86,28 @@ public class DbUtil {
 		}
 		return ret;
 	}
+	public static <T,R> R runWithTransaction(EntityManager em, Function<T,R> function, T param) {
+		R ret = null;
+		EntityTransaction transaction = em.getTransaction();
+		if (transaction.isActive())
+		{
+			ret = function.apply(param);
+		}
+		else
+		{
+			try
+			{
+				transaction.begin();
+				ret = function.apply(param);
+				transaction.commit();
+			}
+			finally {
+				if (transaction.isActive())
+					transaction.rollback();
+			}
+		}
+		return ret;
+	}
 
 	private static <R> R unwrapConnectionAndRun(EntityManager em, Function<Connection, R> function) {
 		R ret;
