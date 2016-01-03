@@ -25,6 +25,7 @@
 	<jaxrs:server id="noteArkivService" address="/">
 		<jaxrs:providers>
 			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
+			<bean class="jacJarSoft.noteArkiv.internal.ValidationErrorExceptionMapper" />
 		</jaxrs:providers>
 		<jaxrs:serviceBeans>
 			<ref bean="noteServiceImpl" />

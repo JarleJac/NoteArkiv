@@ -5,6 +5,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,6 +15,7 @@ import jacJarSoft.noteArkiv.db.PersistenceFactory;
 
 public class AppServletContextListner implements ServletContextListener {
 
+	public static final String ENTITY_MANAGER_FACTORY = "jacJarSoft.noteArkiv.webapp.EntityManagerFactory";
 	NoteArkivDatabase db;
 	private ServletContext servletContext;
 	private Logger logger;
@@ -23,9 +25,12 @@ public class AppServletContextListner implements ServletContextListener {
 		initLogging(servletContext.getInitParameter("logging.props"));
 //		String dbFileName = "test.db";
 //		db = new NoteArkivDatabase(dbFileName);
+		
+		EntityManagerFactory entityManagerFactory = PersistenceFactory.getEntityManagerFactory();
+		servletContext.setAttribute(ENTITY_MANAGER_FACTORY, entityManagerFactory);		
 		EntityManager entityManager = null;
 		try {
-			entityManager = PersistenceFactory.getEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			NoteArkivDatabase db = new NoteArkivDatabase(entityManager);
 			db.verifyAndUpgradeDb();
 		}
@@ -53,6 +58,10 @@ public class AppServletContextListner implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
+		servletContext = sce.getServletContext();
+		EntityManagerFactory entityManagerFactory = (EntityManagerFactory) servletContext.getAttribute(ENTITY_MANAGER_FACTORY);
+		if (null != entityManagerFactory)
+			entityManagerFactory.close();
 	}
 
 }

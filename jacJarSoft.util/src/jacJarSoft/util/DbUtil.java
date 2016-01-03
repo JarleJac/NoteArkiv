@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import javax.persistence.EntityManager;
@@ -86,19 +87,19 @@ public class DbUtil {
 		}
 		return ret;
 	}
-	public static <T,R> R runWithTransaction(EntityManager em, Function<T,R> function, T param) {
+	public static <T,R> R runWithTransaction(EntityManager em, BiFunction<EntityManager,T,R> function, T param) {
 		R ret = null;
 		EntityTransaction transaction = em.getTransaction();
 		if (transaction.isActive())
 		{
-			ret = function.apply(param);
+			ret = function.apply(em, param);
 		}
 		else
 		{
 			try
 			{
 				transaction.begin();
-				ret = function.apply(param);
+				ret = function.apply(em, param);
 				transaction.commit();
 			}
 			finally {

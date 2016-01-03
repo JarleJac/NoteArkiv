@@ -1,5 +1,9 @@
 package jacJarSoft.noteArkiv.dao;
 
+import java.util.Date;
+
+import javax.persistence.EntityManager;
+
 import org.springframework.stereotype.Component;
 
 import jacJarSoft.noteArkiv.model.Note;
@@ -13,6 +17,13 @@ public class NoteDao extends AbstractDao {
 		note.setTitle("Whatever");
 		note.setDescription("Whatever descr");
 		return note;
+	}
+
+	public Note insertNote(EntityManager em, Note sheet) {
+		sheet.setRegisteredDate(new Date());
+		
+		em.persist(sheet);
+		return sheet;
 	}
 
 }
