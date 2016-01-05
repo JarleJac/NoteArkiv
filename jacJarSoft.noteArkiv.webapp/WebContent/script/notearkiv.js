@@ -14,4 +14,23 @@
 		})
 		;
 	})
+	
+	.factory('httpErrorsInterceptor', function ($q, $rootScope, EventsDict) {
+
+	    function successHandler(response) {
+	        return response;
+	    }
+
+	    function errorHandler(response) {
+	        return response;
+//	        $rootScope.$broadcast(EventsDict.httpError, response.data.cause);
+//	        return $q.reject(response);
+	    }
+
+	    return function(httpPromise) {
+	        return httpPromise.then(successHandler, errorHandler);
+	    };
+
+	})	
 	;
+	

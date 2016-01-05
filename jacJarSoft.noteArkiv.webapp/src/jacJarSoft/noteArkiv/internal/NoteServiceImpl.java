@@ -36,7 +36,6 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	@Override
 	public Response addNote(SheetParam param) {
 		SheetParam result = runWithTransaction(this::internalAddNote, param);
-//		SheetParam result = DbUtil.runWithTransaction(getEntityManager(), this::internalAddNote, param);
 		return Response.ok(result).build();
 	}
 	private SheetParam internalAddNote(EntityManager em, SheetParam param)

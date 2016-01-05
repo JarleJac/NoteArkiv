@@ -8,9 +8,11 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
+import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.model.Voice;
 import jacJarSoft.util.DbUtil;
 import jacJarSoft.util.ExceptionUtil;
+import jacJarSoft.util.PasswordUtil;
 import jacJarSoft.util.Version;
 
 public class NoteArkivDatabase {
@@ -163,6 +165,7 @@ public class NoteArkivDatabase {
 					"IS_AUTHOR integer " +
 					");";
 		DbUtil.execUpdateSql(connection,sql);
+		AddSysadminUser();
 	}
 
 	private void initAutoIncrementSequence(Connection connection, String name) throws SQLException {
@@ -173,6 +176,17 @@ public class NoteArkivDatabase {
 	private void AddVoice(String code, String name) {
 		Voice v = new Voice(code, name);
 		entityManager.persist(v);
+	}
+	private void AddSysadminUser() {
+		User user = new User();
+		user.setNo("sysadmin");
+		user.setName("System Admin Big Boss");
+		user.setPassword(PasswordUtil.getPasswordMd5Hash("Binders"));
+		user.setAdmin(true);
+		user.setAuthor(true);
+		user.setMustChangePassword(true);
+		user.setSysadmin(true);
+		entityManager.persist(user);
 	}
 
 
