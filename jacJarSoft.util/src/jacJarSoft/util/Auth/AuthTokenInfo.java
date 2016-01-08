@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class AuthTokenInfo {
+	public static final String AuthSchema = "JJSAUTH";
 	private String user;
 	private String tokenPart;
 	private Date creationDateTime;
@@ -42,16 +43,23 @@ public class AuthTokenInfo {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	
-	@Override
-	public String toString() {
+	public String getTokenString() {
 		String token = uuid +
 		        "|" + tokenPart +
 		        "|" + user +
 		        "|" + df.format(creationDateTime);
 		return token;
+	
 	}
-		
+	@Override
+	public String toString() {
+		return AuthSchema + " " + getTokenString();
+	}
+	public static String getTokenFromAuthString(String authString) {
+		if (authString.indexOf(AuthSchema) != 0)
+			throw new IllegalArgumentException("Illegal authString");
+	    return authString.substring(AuthSchema.length() +1);		
+	}
 	public static AuthTokenInfo fromTokenString(String token) {
 		String[] parts = token.split("\\|"); //Split on |
 		if (parts.length != 4)

@@ -70,6 +70,6 @@ public class User extends AbstractEntity{
 	}
 	@PostLoad
 	private void postLoad() {
-		password = "**hidden**";
+		//password = "**hidden**";
 	}
 }

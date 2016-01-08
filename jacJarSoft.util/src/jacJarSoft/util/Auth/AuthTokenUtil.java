@@ -22,7 +22,7 @@ public class AuthTokenUtil {
 	public static String createToken(String userId, String tokenPart) {
 		logger.fine("Creating auth token for " + userId + "/" + tokenPart);
 		AuthTokenInfo tokenInfo = new AuthTokenInfo(userId, tokenPart);
-		String key = tokenInfo.toString();
+		String key = tokenInfo.getTokenString();
 		logger.fine("Token created: " + key );
 		String encryptedToken;
 		try {
@@ -32,9 +32,10 @@ public class AuthTokenUtil {
 			throw new RuntimeException("Unable to encrypt AuthToken",e);
 		} 
 		logger.fine("Encrypted: " + encryptedToken );
-		return encryptedToken;
+		return AuthTokenInfo.AuthSchema + " " + encryptedToken;
 	}
-	public static AuthTokenInfo getTokenInfo(String encryptedToken) {
+	public static AuthTokenInfo getTokenInfo(String authString) {
+		String encryptedToken = AuthTokenInfo.getTokenFromAuthString(authString);
 		String tokenString;
 		try {
 			tokenString = decrypt(encryptedToken);
