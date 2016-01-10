@@ -35,7 +35,7 @@ public class AuthCheckerFilter implements Filter 	 {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 
-		boolean authOk = true;
+		boolean authOk = false;
 		String pathInfo = req.getPathInfo();
 		if (pathInfo.equals("/appservice/logon"))
 			authOk = true;
