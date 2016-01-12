@@ -27,7 +27,7 @@ public interface NoteService {
 
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("/getvoice/")
+	@Path("/voice/")
 	public Response getVoices();
 	
 }

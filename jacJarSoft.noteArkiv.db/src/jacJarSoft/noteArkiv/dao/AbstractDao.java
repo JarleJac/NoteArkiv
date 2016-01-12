@@ -1,19 +1,7 @@
 package jacJarSoft.noteArkiv.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jacJarSoft.noteArkiv.AppContextAware;
 
-public abstract class AbstractDao {
+public abstract class AbstractDao extends AppContextAware{
 	
-    private EntityManager entityManager;
-
-	protected EntityManager getEntityManager() {
-		return entityManager;
-	}
-
-	@PersistenceContext
-	public void setEntityManager(EntityManager em) {
-		this.entityManager = em;
-	}
-
 }

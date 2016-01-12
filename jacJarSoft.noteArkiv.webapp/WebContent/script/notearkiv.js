@@ -1,8 +1,10 @@
 var currentUser;
 var currentUserName;
 
+//register the interceptor as a service
+
 angular.module('notearkiv', [ 'ngRoute' ])
-.config(function($routeProvider) {
+.config(function($routeProvider, $provide, $httpProvider) {
 	$routeProvider
 	.when('/', {
 		templateUrl : 'templates/pages/home/index.html'
@@ -26,6 +28,47 @@ angular.module('notearkiv', [ 'ngRoute' ])
 		controllerAs : 'changepwCtrl'
 	})
 	;
+	
+	$provide.factory('myHttpInterceptor', function($q) {
+		  return {
+		    // optional method
+		    'request': function(config) {
+		    	if (config.url.startsWith("rest/")) {
+		    		 config.headers['Authorization'] = 'Basic Token';
+		    	}
+		    	return config;
+		    },
+
+		    // optional method
+		   'requestError': function(rejection) {
+		      // do something on error
+//		      if (canRecover(rejection)) {
+//		        return responseOrNewPromise
+//		      }
+		      return $q.reject(rejection);
+		    },
+
+
+
+		    // optional method
+		    'response': function(response) {
+		      // do something on success
+		      return response;
+		    },
+
+		    // optional method
+		   'responseError': function(rejection) {
+		      // do something on error
+//		      if (canRecover(rejection)) {
+//		        return responseOrNewPromise
+//		      }
+		      return $q.reject(rejection);
+		    }
+		  };
+		});
+
+	$httpProvider.interceptors.push('myHttpInterceptor');
+	
 })
 .controller('mainController', function($scope, $http, $location) {
 	var controller = this;
@@ -86,23 +129,5 @@ angular.module('notearkiv', [ 'ngRoute' ])
 		controller.doLogon(logonInfo);
 	}
 })	
-
-//.factory('httpErrorsInterceptor', function ($q, $rootScope, EventsDict) {
-//
-//    function successHandler(response) {
-//        return response;
-//    }
-//
-//    function errorHandler(response) {
-//        return response;
-////	        $rootScope.$broadcast(EventsDict.httpError, response.data.cause);
-////	        return $q.reject(response);
-//    }
-//
-//    return function(httpPromise) {
-//        return httpPromise.then(successHandler, errorHandler);
-//    };
-//
-//})	
 ;
 	

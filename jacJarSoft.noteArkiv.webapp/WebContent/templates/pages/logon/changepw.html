@@ -1,9 +1,13 @@
 <h3>Bytt passord</h3>
 <div data-ng-show="changePwMsg" class="alert alert-warning" role="alert">
   <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-<!--   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> -->
   {{changePwMsg}}
 </div>
+<div data-ng-show="errorMsg" class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  {{errorMsg}}
+</div>
+
 <form class="form-horizontal">
   <div class="form-group">
     <label for="user" class="col-sm-1 control-label">Bruker</label>
@@ -14,7 +18,7 @@
   <div class="form-group">
     <label for="password" class="col-sm-1 control-label">Nåværende</label>
     <div class="col-sm-5">
-      <input type="password" class="form-control" id="password" data-ng-model="info.password" placeholder="Nåværende passord">
+      <input type="password" class="form-control" id="password" data-ng-model="info.password" placeholder="Nåværende passord" autofocus>
     </div>
   </div>
   <div class="form-group">

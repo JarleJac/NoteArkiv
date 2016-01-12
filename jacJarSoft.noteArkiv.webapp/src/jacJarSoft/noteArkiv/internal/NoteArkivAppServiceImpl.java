@@ -27,11 +27,9 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 
 	@Override
 	public Response logon(LogonInfo logonInfo) {
-		User userLogonInfo = new User();
-		userLogonInfo.setNo(logonInfo.getUser());
-		userLogonInfo.setPassword(PasswordUtil.getPasswordMd5Hash(logonInfo.getPassword()));
+		User userLogonInfo = UserServiceImpl.getUserLogonInfo(logonInfo);
 		
-		User user = userDao.Logon(userLogonInfo);
+		User user = userDao.logon(userLogonInfo);
 		if (null == user)
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 
@@ -40,5 +38,6 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 		lir.setAuthToken(AuthTokenUtil.createToken(user.getNo(), "NoteArkiv " + NoteArkivAppInfo.getVersion().toVersionString(true)));
 		return Response.ok(lir).build();
 	}
+
 
 }

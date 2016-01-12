@@ -10,7 +10,6 @@ import jacJarSoft.noteArkiv.dao.NoteDao;
 import jacJarSoft.noteArkiv.dao.VoiceDao;
 import jacJarSoft.noteArkiv.model.Note;
 import jacJarSoft.noteArkiv.service.NoteService;
-import jacJarSoft.util.DbUtil;
 import jacJarSoft.util.StringUtils;
 
 public class NoteServiceImpl extends BaseService implements NoteService {
@@ -44,7 +43,7 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 			throw new ValidationErrorException("Tittel kan ikke være blank.");
 		}
 		
-		Note sheetResult = noteDao.insertNote(em, param.getSheet());
+		Note sheetResult = noteDao.insertNote(param.getSheet());
 		param.setSheet(sheetResult);
 		return param;
 	}

@@ -28,8 +28,9 @@
 			<bean class="jacJarSoft.noteArkiv.internal.ValidationErrorExceptionMapper" />
 		</jaxrs:providers>
 		<jaxrs:serviceBeans>
-			<ref bean="noteServiceImpl" />
-			<ref bean="noteArkivAppServiceImpl" />
+			<ref bean="noteService" />
+			<ref bean="noteArkivAppService" />
+			<ref bean="userService" />
 		</jaxrs:serviceBeans>
 <!-- 		<jaxrs:extensionMappings> -->
 <!-- 			<entry key="xml" value="application/xml" /> -->
@@ -37,7 +38,8 @@
 <!-- 		</jaxrs:extensionMappings> -->
 	</jaxrs:server>
 
-    <bean id="noteServiceImpl" class="jacJarSoft.noteArkiv.internal.NoteServiceImpl"/>
-    <bean id="noteArkivAppServiceImpl" class="jacJarSoft.noteArkiv.internal.NoteArkivAppServiceImpl"/>
+    <bean id="noteService" class="jacJarSoft.noteArkiv.internal.NoteServiceImpl"/>
+    <bean id="noteArkivAppService" class="jacJarSoft.noteArkiv.internal.NoteArkivAppServiceImpl"/>
+    <bean id="userService" class="jacJarSoft.noteArkiv.internal.UserServiceImpl"/>
 <!--     <bean id="noteDao" class="jacJarSoft.noteArkiv.dao.NoteDao"/> -->
 </beans>

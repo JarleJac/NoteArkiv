@@ -7,10 +7,15 @@ import jacJarSoft.noteArkiv.model.User;
 @Component
 public class UserDao extends AbstractDao {
 
-	public User Logon(User logonInfo) {
+	public User logon(User logonInfo) {
 		User user = getEntityManager().find(User.class, logonInfo.getNo());
 		if (!user.getPassword().equals(logonInfo.getPassword()))
 			return null;
+		return user;
+	}
+
+	public User updateUser(User user) {
+		getEntityManager().merge(user);
 		return user;
 	}
 

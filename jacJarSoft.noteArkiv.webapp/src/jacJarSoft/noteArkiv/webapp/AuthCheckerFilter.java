@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jacJarSoft.noteArkiv.AppContext;
 import jacJarSoft.util.Auth.AuthTokenInfo;
 import jacJarSoft.util.Auth.AuthTokenUtil;
 
@@ -36,6 +37,7 @@ public class AuthCheckerFilter implements Filter 	 {
 		HttpServletResponse res = (HttpServletResponse) response;
 
 		boolean authOk = false;
+		AuthTokenInfo tokenInfo = null;
 		String pathInfo = req.getPathInfo();
 		if (pathInfo.equals("/appservice/logon"))
 			authOk = true;
@@ -45,7 +47,7 @@ public class AuthCheckerFilter implements Filter 	 {
 			if (authHeader != null) {
 				logger.fine("got header: " + authHeader );
 				try {
-					AuthTokenInfo tokenInfo = AuthTokenUtil.getTokenInfo(authHeader);
+					tokenInfo = AuthTokenUtil.getTokenInfo(authHeader);
 					//TODO check timeout using tokenInfo.getCreationDateTime();
 					logger.fine("Authenticated: " + tokenInfo.getUser());
 					authOk = true;
@@ -55,7 +57,15 @@ public class AuthCheckerFilter implements Filter 	 {
 			}
 		}
 		if (authOk)
+		{
+			AppContext appContext = AppContext.get();
+			if (tokenInfo != null)
+				appContext.setCurrentUser(tokenInfo.getUser());
+			
 			chain.doFilter(request, response);
+			
+			appContext.close();
+		}
 		else {
 			res.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 		}
