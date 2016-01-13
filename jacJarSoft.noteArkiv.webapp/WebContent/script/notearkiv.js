@@ -28,13 +28,12 @@ angular.module('notearkiv', [ 'ngRoute' ])
 		controllerAs : 'changepwCtrl'
 	})
 	;
-	
-	$provide.factory('myHttpInterceptor', function($q) {
+ 	$provide.factory('myHttpInterceptor', function($q, Auth) {
 		  return {
 		    // optional method
 		    'request': function(config) {
-		    	if (config.url.startsWith("rest/")) {
-		    		 config.headers['Authorization'] = 'Basic Token';
+		    	if (config.url.startsWith("rest/") && Auth.hasAuthToken()) {
+		    		 config.headers['Authorization'] = Auth.getAuthToken();
 		    	}
 		    	return config;
 		    },
@@ -70,7 +69,7 @@ angular.module('notearkiv', [ 'ngRoute' ])
 	$httpProvider.interceptors.push('myHttpInterceptor');
 	
 })
-.controller('mainController', function($scope, $http, $location) {
+.controller('mainController', function($scope, $http, $location, Auth) {
 	var controller = this;
 	this.requestedPath = null;
 	this.rquestedQuery = null;
@@ -95,7 +94,8 @@ angular.module('notearkiv', [ 'ngRoute' ])
 		$http({method: 'POST', url : 'rest/appservice/logon', data: logonInfo })
 		.then(function successCallback(result) {
 			$scope.logonResult = result.data
-			$http.defaults.headers.common.Authorization = $scope.authToken;
+			Auth.setAuthToken(result.data.authToken);
+			//$http.defaults.headers.common.Authorization = $scope.authToken;
 			
 			if(result.data.user.mustChangePassword) {
 				$location.path("/changepw").search({"mustChange": true}).replace();
@@ -129,5 +129,21 @@ angular.module('notearkiv', [ 'ngRoute' ])
 		controller.doLogon(logonInfo);
 	}
 })	
+.factory('Auth', function AuthFactory() {
+	 var authToken;
+
+	 return {
+	     setAuthToken : function(token){
+	    	 authToken = token;
+	     },
+	     getAuthToken: function() {
+	    	 return authToken;
+	     },
+	     hasAuthToken : function(){
+	         return(authToken)? true : false;
+	     }
+	     
+	   }
+	 })	
 ;
 	

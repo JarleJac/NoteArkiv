@@ -4,7 +4,7 @@
 angular.module('notearkiv').controller('changepwController', function($scope, $http, $routeParams) {
 	var controller = this;
 	$scope.changePwMsg = null;
-	$scope.errorMsg = "sss";
+	$scope.errorMsg = null;
 	$scope.info = {"user": $scope.logonResult.user.no};
 	if($routeParams.mustChange) {
 		$scope.changePwMsg="En administrator har satt ditt passord. Du må bytte passord.";
@@ -14,8 +14,8 @@ angular.module('notearkiv').controller('changepwController', function($scope, $h
 			$scope.errorMsg = "Du må skrive inn samme passord i Nytt og Gjenta!";
 			return;
 		}
+		$scope.errorMsg = null;
 		
-		//TODO do the password change
 		$http({method: "PUT", url : "rest/userservice/user/"+$scope.info.user+"/changepw", data: $scope.info })
 		.then(function successCallback(result) {
 			$scope.$parent.changePwOk();
