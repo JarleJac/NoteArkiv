@@ -16,7 +16,7 @@ public interface UserService {
 
 	@PUT
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("/user/{:userNo}/changepw")
+	@Path("/user/{userNo}/changepw")
 	public Response changePassword(@PathParam("userNo")String userNo, ChangePassword param);
 
 }

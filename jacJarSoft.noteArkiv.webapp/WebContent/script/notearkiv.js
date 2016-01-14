@@ -76,24 +76,12 @@ angular.module('notearkiv', [ 'ngRoute' ])
 	$scope.userName = "";
 	$scope.logedOn = false;
 	$scope.initPath = "/";
-	var user = localStorage.getItem("user");
-	var password = localStorage.getItem("password");
-	if (user != null) {
-		var logonInfo = {"user": user, "pasword": password};
-		doLogon(info)
-	}
-	if (!$scope.logedOn) {
-		if ($location.path() != "/" && $location.path() != "/logon") {
-			requestedPath = $location.path();
-			rquestedQuery = $location.search();
-			$location.path("/logon").replace();
-		}
-	}
 
 	this.doLogon = function(logonInfo) {
 		$http({method: 'POST', url : 'rest/appservice/logon', data: logonInfo })
 		.then(function successCallback(result) {
 			$scope.logonResult = result.data
+			$scope.logonInfo = logonInfo;
 			Auth.setAuthToken(result.data.authToken);
 			//$http.defaults.headers.common.Authorization = $scope.authToken;
 			
@@ -110,6 +98,8 @@ angular.module('notearkiv', [ 'ngRoute' ])
 	this.setLogonOk = function() {
 		$scope.userName = $scope.logonResult.user.name;
 		$scope.logedOn = true;
+		localStorage.setItem("user", $scope.logonInfo.user);
+		localStorage.setItem("password", $scope.logonInfo.password);
 		$location.search("");
 		if (controller.requestedPath === null) {
 			$location.path("/");
@@ -127,6 +117,29 @@ angular.module('notearkiv', [ 'ngRoute' ])
 	//Called from logon page
 	$scope.logon = function(logonInfo) {
 		controller.doLogon(logonInfo);
+	}
+	$scope.logoff = function() {
+		localStorage.removeItem("user");
+		localStorage.removeItem("password");
+		$scope.logonResult = null;
+		$scope.logonInfo = null;
+		$scope.logedOn = false;
+		$scope.userName = null;
+		$location.path("/").replace();
+	}
+
+	var user = localStorage.getItem("user");
+	var password = localStorage.getItem("password");
+	if (user != null) {
+		var logonInfo = {"user": user, "password": password};
+		this.doLogon(logonInfo);
+	}
+	if (!$scope.logedOn) {
+		if ($location.path() != "/" && $location.path() != "/logon") {
+			requestedPath = $location.path();
+			rquestedQuery = $location.search();
+			$location.path("/logon").replace();
+		}
 	}
 })	
 .factory('Auth', function AuthFactory() {

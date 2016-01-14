@@ -65,6 +65,7 @@ public class AuthCheckerFilter implements Filter 	 {
 			chain.doFilter(request, response);
 			
 			appContext.close();
+			AppContext.remove();
 		}
 		else {
 			res.sendError(HttpServletResponse.SC_UNAUTHORIZED);

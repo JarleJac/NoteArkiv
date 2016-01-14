@@ -12,7 +12,6 @@ import jacJarSoft.noteArkiv.dao.UserDao;
 import jacJarSoft.noteArkiv.model.AppInfo;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.NoteArkivAppService;
-import jacJarSoft.util.PasswordUtil;
 import jacJarSoft.util.Auth.AuthTokenUtil;
 
 public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivAppService {

@@ -10,7 +10,7 @@ public class ValidationErrorExceptionMapper implements ExceptionMapper<Validatio
  
 	public Response toResponse(ValidationErrorException ex) {
 		return Response.status(Status.BAD_REQUEST)
-				.entity(ex.getMessage())
+				.entity("{\"msg\": \"" + ex.getMessage() +"\"}")
 				.build();
 	}
  

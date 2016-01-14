@@ -1,5 +1,6 @@
 package jacJarSoft.noteArkiv.internal;
 
+import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,19 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 	@Override
 	public Response changePassword(String userNo, ChangePassword param) {
+		if (!param.getUser().equals(userNo))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+
+		return runWithTransaction(this::internalChangePassword, param);
+
+	}
+	private Response internalChangePassword(EntityManager em, ChangePassword param) {
 		User userLogonInfo = getUserLogonInfo(param);
 		User user = userDao.logon(userLogonInfo);
 		if (null == user)
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		
-		if (getCurrentUser().equals(userNo))
+		if (getCurrentUser().equals(param.getUser()))
 		{
 			user.setMustChangePassword(false);
 		}
@@ -42,6 +50,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		user.setPassword(PasswordUtil.getPasswordMd5Hash(param.getNewpassword()));
 		user = userDao.updateUser(user);
 		return Response.ok(user).build();
+		
 	}
 
 }

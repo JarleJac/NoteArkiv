@@ -16,6 +16,9 @@ public class AppContext {
     public static AppContext get() {
         return appContext.get();
     }
+    public static void remove() {
+        appContext.remove();
+    }
     private boolean closed = false;
 	private EntityManager entityManager;
 	private String currentUser;

@@ -39,6 +39,8 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	}
 	private SheetParam internalAddNote(EntityManager em, SheetParam param)
 	{
+		if (param.getSheet().getTitle().equals("FUCK"))
+			throw new RuntimeException("Bad language!");
 		if (StringUtils.isEmpty(param.getSheet().getTitle())) {
 			throw new ValidationErrorException("Tittel kan ikke være blank.");
 		}

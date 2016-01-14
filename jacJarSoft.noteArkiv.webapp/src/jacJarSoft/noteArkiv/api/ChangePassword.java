@@ -1,5 +1,8 @@
 package jacJarSoft.noteArkiv.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class ChangePassword extends LogonInfo {
 	private String newpassword;
 
