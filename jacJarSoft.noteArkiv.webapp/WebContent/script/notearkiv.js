@@ -9,6 +9,12 @@ angular.module('notearkiv', [ 'ngRoute' ])
 	.when('/', {
 		templateUrl : 'templates/pages/home/index.html'
 	})
+	.when('/help', {
+		templateUrl : 'templates/pages/help/index.html'
+	})
+	.when('/about', {
+		templateUrl : 'templates/pages/home/about.html'
+	})
 	.when('/sheets/new', {
 		templateUrl : 'templates/pages/sheets/sheet.html',
 		controller : 'editSheetController',
@@ -71,13 +77,13 @@ angular.module('notearkiv', [ 'ngRoute' ])
 })
 .controller('mainController', function($scope, $http, $location, Auth) {
 	var controller = this;
-	this.requestedPath = null;
-	this.rquestedQuery = null;
+	$scope.requestedPath = $location.path();
+	$scope.rquestedQuery = $location.search();
 	$scope.userName = "";
 	$scope.logedOn = false;
 	$scope.initPath = "/";
 
-	this.doLogon = function(logonInfo) {
+	this.doLogon = function(logonInfo, fromLogonPage) {
 		$http({method: 'POST', url : 'rest/appservice/logon', data: logonInfo })
 		.then(function successCallback(result) {
 			$scope.logonResult = result.data
@@ -92,6 +98,7 @@ angular.module('notearkiv', [ 'ngRoute' ])
 			}
 		}, function errorCallback(result) {
 			var r = result;
+			$location.path("/logon").replace();
 		})
 		;
 	};
@@ -101,12 +108,12 @@ angular.module('notearkiv', [ 'ngRoute' ])
 		localStorage.setItem("user", $scope.logonInfo.user);
 		localStorage.setItem("password", $scope.logonInfo.password);
 		$location.search("");
-		if (controller.requestedPath === null) {
+		if ($scope.requestedPath === null) {
 			$location.path("/");
 		} else {
-			$location.path(controller.requestedPath);
-			if (controller.rquestedQuery != null) {
-				$location.search(controller.rquestedQuery);
+			$location.path($scope.requestedPath);
+			if ($scope.rquestedQuery != null) {
+				$location.search($scope.rquestedQuery);
 			}
 		}
 		$location.replace();
@@ -116,7 +123,7 @@ angular.module('notearkiv', [ 'ngRoute' ])
 	}
 	//Called from logon page
 	$scope.logon = function(logonInfo) {
-		controller.doLogon(logonInfo);
+		controller.doLogon(logonInfo, true);
 	}
 	$scope.logoff = function() {
 		localStorage.removeItem("user");
@@ -132,14 +139,13 @@ angular.module('notearkiv', [ 'ngRoute' ])
 	var password = localStorage.getItem("password");
 	if (user != null) {
 		var logonInfo = {"user": user, "password": password};
-		this.doLogon(logonInfo);
-	}
-	if (!$scope.logedOn) {
-		if ($location.path() != "/" && $location.path() != "/logon") {
-			requestedPath = $location.path();
-			rquestedQuery = $location.search();
-			$location.path("/logon").replace();
-		}
+		this.doLogon(logonInfo, false);
+	} 
+	else if ($location.path() != "/" && 
+			$location.path() != "/about" &&
+			$location.path() != "/help" &&
+			$location.path() != "/logon") {
+		$location.path("/logon").replace();
 	}
 })	
 .factory('Auth', function AuthFactory() {

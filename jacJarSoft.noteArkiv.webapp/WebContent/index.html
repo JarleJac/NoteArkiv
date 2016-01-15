@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html data-ng-app="notearkiv">
-<head>
- <meta name="viewport" content="width=device-width, initial-scale=1">
+<head profile="http://www.w3.org/2005/10/profile">
+<meta name="viewport" content="width=device-width, initial-scale=1">
  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="css/notearkiv.css" />
+ <link rel="stylesheet" type="text/css" href="css/notearkiv.css" />
+ <link rel="icon" href="favicon.png" type="image/png">
 <meta charset="UTF-8">
 <title>NoteArkiv</title>
 </head>
@@ -42,7 +43,14 @@
                 <li><a href="#" data-toggle="collapse" data-target="#navbar.in">Profil</a></li>
                 <li><a href="#" data-toggle="collapse" data-target="#navbar.in">Bytt passord</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href ng-click="logoff()" data-toggle="collapse" data-target="#navbar.in">Logg ut</a></li>
+                <li><a href data-ng-click="logoff()" data-toggle="collapse" data-target="#navbar.in">Logg ut</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hjelp<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#/help" data-toggle="collapse" data-target="#navbar.in">Hjelp</a></li>
+                <li><a href="#/about" data-toggle="collapse" data-target="#navbar.in">Om NoteArkiv</a></li>
               </ul>
             </li>
           </ul>
