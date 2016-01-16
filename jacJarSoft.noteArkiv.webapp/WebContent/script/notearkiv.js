@@ -15,6 +15,10 @@ angular.module('notearkiv', [ 'ngRoute' ])
 	.when('/about', {
 		templateUrl : 'templates/pages/home/about.html'
 	})
+	.when('/search', {
+		templateUrl : 'templates/pages/search/index.html',
+		controller : 'searchController'
+	})
 	.when('/sheets/new', {
 		templateUrl : 'templates/pages/sheets/sheet.html',
 		controller : 'editSheetController',

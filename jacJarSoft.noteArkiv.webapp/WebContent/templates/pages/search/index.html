@@ -1,0 +1,39 @@
+<h3 class="pagetop">Søk</h3>
+<ul class="nav nav-tabs">
+	<li role="presentation" data-ng-class="{ active: isTabSet('current') }"><a
+		data-ng-click="setTab('current')" href=>Gjeldende</a></li>
+	<li role="presentation" data-ng-class="{ active: isTabSet('lists') }"><a
+		data-ng-click="setTab('lists')" href=>Lister</a></li>
+	<li role="presentation" data-ng-class="{ active: isTabSet('newest') }"><a
+		data-ng-click="setTab('newest')" href=>nyeste</a></li>
+	<li role="presentation" data-ng-class="{ active: isTabSet('simple') }"><a
+		data-ng-click="setTab('simple')" href=>Enkel søk</a></li>
+	<li role="presentation" data-ng-class="{ active: isTabSet('advansed') }"><a
+		data-ng-click="setTab('advansed')" href=>Avansert søk</a></li>
+</ul>
+<div class="small-spacer"> </div>
+<div data-ng-show="isTabSet('current')">
+Viser de notene som det øves på for tiden.... Snart
+</div>
+<div data-ng-show="isTabSet('lists')">
+her kommer en mulighet for å søke på noter tilhørende en gitt liste.
+</div>
+<div data-ng-show="isTabSet('newest')">
+Viser de notene som er registrert de siste x dagene. (kommer snart)
+</div>
+<div data-ng-show="isTabSet('simple')">
+<form class="form-horizontal">
+  <div class="form-group">
+    <label for="title" class="col-sm-1 control-label">Tittel</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="title" data-ng-model="title" placeholder="Angi deler av en tittel, kan godt være midt i et sted">
+    </div>
+    <div class="col-sm-1">
+      <button type="submit" class="btn btn-default"  data-ng-click="searchSimple()">Søk</button>
+    </div>
+  </div>
+</form>
+</div>
+<div data-ng-show="isTabSet('advansed')">
+Her kommer det avansert søk med mange muligheter.
+</div>

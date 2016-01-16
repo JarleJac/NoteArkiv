@@ -2,6 +2,13 @@ textarea.ta-vertical {
 	resize: vertical;
 }
 
+h3.pagetop {
+	margin-top: 0px;
+}
+
+.small-spacer {
+    margin-top: 5px; 
+}
 /* START
 copy bootstrap navbar color
 http://work.smarchal.com/twbscolor/
