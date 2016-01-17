@@ -43,7 +43,7 @@
                 <li><a href="#" data-toggle="collapse" data-target="#navbar.in">Profil</a></li>
                 <li><a href="#" data-toggle="collapse" data-target="#navbar.in">Bytt passord</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href data-ng-click="logoff()" data-toggle="collapse" data-target="#navbar.in">Logg ut</a></li>
+                <li><a data-ng-click="logoff()" data-toggle="collapse" data-target="#navbar.in" href=>Logg ut</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -60,11 +60,13 @@
 
 	<div class="container" data-ng-view>
 	</div>
-	<script type="text/javascript" src="script/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="script/bootstrap.min.js"></script>
-	<script type="text/javascript" src="script/angular.min.js"></script>
-	<script type="text/javascript" src="script/angular-route.min.js"></script>
+	<script type="text/javascript" src="script/vendors/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="script/vendors/bootstrap.min.js"></script>
+	<script type="text/javascript" src="script/vendors/angular.min.js"></script>
+	<script type="text/javascript" src="script/vendors/angular-route.min.js"></script>
 	<script type="text/javascript" src="script/notearkiv.js"></script>
+	<script type="text/javascript" src="script/services/authService.js"></script>
+	<script type="text/javascript" src="script/controllers/mainController.js"></script>
 	<script type="text/javascript" src="script/controllers/editSheetController.js"></script>
 	<script type="text/javascript" src="script/controllers/logonController.js"></script>
 	<script type="text/javascript" src="script/controllers/changepwController.js"></script>
