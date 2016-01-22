@@ -38,10 +38,11 @@ angular.module('notearkiv', [ 'ngRoute' ])
 		controllerAs : 'changepwCtrl'
 	})
 	;
- 	$provide.factory('myHttpInterceptor', function($q, Auth) {
+ 	$provide.factory('myHttpInterceptor', function($q, $rootScope, Auth) {
 		  return {
 		    // optional method
 		    'request': function(config) {
+		    	$rootScope.$emit('HttpStart', {config: config});
 		    	if (config.url.startsWith("rest/") && Auth.hasAuthToken()) {
 		    		 config.headers['Authorization'] = Auth.getAuthToken();
 		    	}
@@ -71,6 +72,7 @@ angular.module('notearkiv', [ 'ngRoute' ])
 //		      if (canRecover(rejection)) {
 //		        return responseOrNewPromise
 //		      }
+			   $rootScope.$emit('HttpError', {rejection: rejection});
 		      return $q.reject(rejection);
 		    }
 		  };

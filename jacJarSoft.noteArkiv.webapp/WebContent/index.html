@@ -58,8 +58,13 @@
       </div>
     </nav>
 
-	<div class="container" data-ng-view>
+	<div class="container">
+		<div data-ng-show="errorOccured" class="alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{errorMsg}}
+		</div>
+		<div data-ng-view></div>
 	</div>
+
 	<script type="text/javascript" src="script/vendors/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="script/vendors/bootstrap.min.js"></script>
 	<script type="text/javascript" src="script/vendors/angular.min.js"></script>

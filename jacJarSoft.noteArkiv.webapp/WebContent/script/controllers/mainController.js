@@ -1,7 +1,7 @@
 /**
  * 
  */
-angular.module('notearkiv').controller('mainController', function($scope, $http, $location, Auth) {
+angular.module('notearkiv').controller('mainController', function($rootScope, $scope, $http, $location, Auth) {
 	var controller = this;
 	$scope.requestedPath = $location.path();
 	$scope.rquestedQuery = $location.search();
@@ -9,6 +9,24 @@ angular.module('notearkiv').controller('mainController', function($scope, $http,
 	$scope.logedOn = false;
 	$scope.initPath = "/";
 
+	this.resetError = function() {
+    	$scope.errorOccured = false;
+    	$scope.errorMsg = null;
+	}
+    $rootScope.$on('HttpStart', function(ev, args){
+    	controller.resetError();
+    });
+    $rootScope.$on('HttpError', function(ev, args){
+    	$scope.errorOccured = true;
+    	var data = args.rejection.data;
+    	if (typeof data.msgType === "undefined" ) {
+        	$scope.errorMsg = args.rejection.status + " - " + args.rejection.statusText;
+    	} else {
+        	$scope.errorMsg = data.msg;
+    	}
+    		
+    }); 	
+	
 	this.doLogon = function(logonInfo, fromLogonPage) {
 		$http({method: 'POST', url : 'rest/appservice/logon', data: logonInfo })
 		.then(function successCallback(result) {

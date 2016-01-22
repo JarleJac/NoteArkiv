@@ -2,16 +2,15 @@
  * 
  */
 
-angular.module('notearkiv').controller('editSheetController', function($http) {
+angular.module('notearkiv').controller('editSheetController', function($scope, $http) {
 	var controller = this;
-	this.saveSheet = function(sheetData) {
-		var s = sheetData;
+	$scope.saveSheet = function() {
+		var sheet = $.extend({} , {title: ""}, $scope.sheet)
+		var sheetData = {sheet: sheet};
 		$http({method: 'POST', url : 'rest/noteservice/note', data: sheetData })
 		.then(function successCallback(result) {
 			result.data.sheet.registeredDate = new Date(result.data.sheet.registeredDate);
-			controller.sheetData = result.data;
-		}, function errorCallback(result) {
-			var r = result;
+			$scope.sheet = result.data.sheet;
 		});
 //		.success(function(returnData) {
 //			returnData.sheet.registeredDate = new Date(returnData.sheet.registeredDate);
