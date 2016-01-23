@@ -6,7 +6,6 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 	$scope.requestedPath = $location.path();
 	$scope.rquestedQuery = $location.search();
 	$scope.userName = "";
-	$scope.logedOn = false;
 	$scope.initPath = "/";
 
 	this.resetError = function() {
@@ -26,14 +25,15 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
     	}
     		
     }); 	
-	
+	$scope.isLoggedOn = function() {
+		return Auth.isLoggedOn();
+	}
 	this.doLogon = function(logonInfo, fromLogonPage) {
 		$http({method: 'POST', url : 'rest/appservice/logon', data: logonInfo })
 		.then(function successCallback(result) {
 			$scope.logonResult = result.data
 			$scope.logonInfo = logonInfo;
 			Auth.setAuthToken(result.data.authToken);
-			//$http.defaults.headers.common.Authorization = $scope.authToken;
 			
 			if(result.data.user.mustChangePassword) {
 				$location.path("/changepw").search({"mustChange": true}).replace();
@@ -48,7 +48,7 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 	};
 	this.setLogonOk = function() {
 		$scope.userName = $scope.logonResult.user.name;
-		$scope.logedOn = true;
+		Auth.setLoggedOn(true);
 		localStorage.setItem("user", $scope.logonInfo.user);
 		localStorage.setItem("password", $scope.logonInfo.password);
 		$location.search("");
@@ -74,7 +74,7 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 		localStorage.removeItem("password");
 		$scope.logonResult = null;
 		$scope.logonInfo = null;
-		$scope.logedOn = false;
+		Auth.setLoggedOn(false);
 		$scope.userName = null;
 		$location.path("/").replace();
 	}

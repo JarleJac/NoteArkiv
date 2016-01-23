@@ -3,6 +3,7 @@
  */
 angular.module('notearkiv').factory('Auth', function AuthFactory() {
 	var authToken;
+	var isLoggedOn = false;
 
 	return {
 		setAuthToken : function(token) {
@@ -13,6 +14,12 @@ angular.module('notearkiv').factory('Auth', function AuthFactory() {
 		},
 		hasAuthToken : function() {
 			return (authToken) ? true : false;
+		},
+		setLoggedOn : function(loggedOn) {
+			isLoggedOn = loggedOn;
+		},
+		isLoggedOn : function() {
+			return isLoggedOn;
 		}
 
 	}

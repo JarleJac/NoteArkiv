@@ -19,8 +19,6 @@ angular.module('notearkiv').controller('changepwController', function($scope, $h
 		$http({method: "PUT", url : "rest/userservice/user/"+$scope.info.user+"/changepw", data: $scope.info })
 		.then(function successCallback(result) {
 			$scope.$parent.changePwOk();
-		}, function errorCallback(result) {
-			var r = result;
 		});
 
 	}

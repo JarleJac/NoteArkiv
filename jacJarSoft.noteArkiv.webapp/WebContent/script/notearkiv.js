@@ -17,15 +17,26 @@ angular.module('notearkiv', [ 'ngRoute' ])
 	})
 	.when('/search', {
 		templateUrl : 'templates/pages/search/index.html',
-		controller : 'searchController'
+		controller : 'searchController',
+		access: {
+            requiresLogin: true
+        }
 	})
 	.when('/sheets/new', {
 		templateUrl : 'templates/pages/sheets/sheet.html',
 		controller : 'editSheetController',
-		controllerAs : 'editSheetCtrl'
+		controllerAs : 'editSheetCtrl',
+		access: {
+            requiresLogin: true
+        }
+		
 	})
 	.when('/quicklists', {
-		templateUrl : 'templates/pages/quicklists/index.html'
+		templateUrl : 'templates/pages/quicklists/index.html',
+		access: {
+            requiresLogin: true
+        }
+		
 	})
 	.when('/logon', {
 		templateUrl : 'templates/pages/logon/logon.html',
@@ -35,7 +46,11 @@ angular.module('notearkiv', [ 'ngRoute' ])
 	.when('/changepw', {
 		templateUrl : 'templates/pages/logon/changepw.html',
 		controller : 'changepwController',
-		controllerAs : 'changepwCtrl'
+		controllerAs : 'changepwCtrl',
+		access: {
+            requiresLogin: true
+        }
+		
 	})
 	;
  	$provide.factory('myHttpInterceptor', function($q, $rootScope, Auth) {
@@ -80,6 +95,25 @@ angular.module('notearkiv', [ 'ngRoute' ])
 
 	$httpProvider.interceptors.push('myHttpInterceptor');
 	
+})
+.run(function($rootScope, $location, Auth) {
+	$rootScope.$on('$routeChangeStart', function (event, next) {
+        var authorised;
+        if (next.access !== undefined) {
+        	if (next.access.requiresLogin && !Auth.isLoggedOn()) {
+        		$location.path("/logon").replace();
+        	}
+        		
+//            authorised = authorization.authorize(next.access.loginRequired,
+//                                                 next.access.permissions,
+//                                                 next.access.permissionCheckType);
+//            if (authorised === jcs.modules.auth.enums.authorised.loginRequired) {
+//                $location.path(jcs.modules.auth.routes.login);
+//            } else if (authorised === jcs.modules.auth.enums.authorised.notAuthorised) {
+//                $location.path(jcs.modules.auth.routes.notAuthorised).replace();
+//            }
+        }
+    });	
 })
 ;
 	
