@@ -53,13 +53,13 @@ angular.module('notearkiv', [ 'ngRoute' ])
 		
 	})
 	;
- 	$provide.factory('myHttpInterceptor', function($q, $rootScope, Auth) {
+ 	$provide.factory('myHttpInterceptor', function($q, $rootScope, AuthToken) {
 		  return {
 		    // optional method
 		    'request': function(config) {
 		    	$rootScope.$emit('HttpStart', {config: config});
-		    	if (config.url.startsWith("rest/") && Auth.hasAuthToken()) {
-		    		 config.headers['Authorization'] = Auth.getAuthToken();
+		    	if (config.url.startsWith("rest/") && AuthToken.hasAuthToken()) {
+		    		 config.headers['Authorization'] = AuthToken.getAuthToken();
 		    	}
 		    	return config;
 		    },
@@ -87,7 +87,7 @@ angular.module('notearkiv', [ 'ngRoute' ])
 //		      if (canRecover(rejection)) {
 //		        return responseOrNewPromise
 //		      }
-			   $rootScope.$emit('HttpError', {rejection: rejection});
+			  $rootScope.$emit('HttpError', {rejection: rejection});
 		      return $q.reject(rejection);
 		    }
 		  };

@@ -1,25 +1,36 @@
 /**
  * 
  */
-angular.module('notearkiv').factory('Auth', function AuthFactory() {
-	var authToken;
+angular.module('notearkiv').factory('Auth', function AuthFactory($http, AuthToken) {
 	var isLoggedOn = false;
-
+	var user;
+	var logonInfo;
 	return {
-		setAuthToken : function(token) {
-			authToken = token;
+		getUser : function() {
+			return user;
 		},
-		getAuthToken : function() {
-			return authToken;
-		},
-		hasAuthToken : function() {
-			return (authToken) ? true : false;
+		getLogonInfo : function() {
+			return logonInfo;
 		},
 		setLoggedOn : function(loggedOn) {
 			isLoggedOn = loggedOn;
 		},
 		isLoggedOn : function() {
 			return isLoggedOn;
+		},
+		doLogon : function(Info, fromLogonPage) {
+			logonInfo = Info;
+			return $http({method: 'POST', url : 'rest/appservice/logon', data: logonInfo })
+			.then(function successCallback(result) {
+				user = result.data.user;
+				AuthToken.setAuthToken(result.data.authToken);
+				return {
+					user: result.data.user
+				}
+			}, function errorCallback(result) {
+				throw result;
+			});
+			
 		}
 
 	}
