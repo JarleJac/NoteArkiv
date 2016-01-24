@@ -5,11 +5,11 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jacJarSoft.noteArkiv.api.ChangePassword;
-import jacJarSoft.noteArkiv.api.LogonInfo;
 import jacJarSoft.noteArkiv.dao.UserDao;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.UserService;
+import jacJarSoft.noteArkiv.webapi.ChangePassword;
+import jacJarSoft.noteArkiv.webapi.LogonInfo;
 import jacJarSoft.util.PasswordUtil;
 
 public class UserServiceImpl extends BaseService implements UserService {

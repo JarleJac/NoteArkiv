@@ -37,3 +37,23 @@ Viser de notene som er registrert de siste x dagene. (kommer snart)
 <div data-ng-show="isTabSet('advansed')">
 Her kommer det avansert søk med mange muligheter.
 </div>
+<div class="small-spacer"> </div>
+<div data-ng-show="hasResult()">
+	<div class="row listHeading">
+		<div class="col-md-4">Tittel</div>
+		<div class="col-md-4">Komponist</div>
+		<div class="col-md-3">Arrangør</div>
+	</div>
+	<div data-ng-repeat="sheetData in getSheetList()" data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'">
+		<div class="row">
+			<div class="col-md-4">{{sheetData.sheet.title}}</div>
+			<div class="col-md-4">{{sheetData.sheet.composedBy}}</div>
+			<div class="col-md-3">{{sheetData.sheet.arrangedBy}}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-5">Beskrivelse: {{sheetData.sheet.description}}</div>
+			<div class="col-md-5">Dato: {{sheetData.sheet.registeredDate}}</div>
+		</div>
+	</div>
+	
+</div>

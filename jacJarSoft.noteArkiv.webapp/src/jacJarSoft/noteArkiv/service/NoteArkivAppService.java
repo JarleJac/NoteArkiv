@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import jacJarSoft.noteArkiv.api.LogonInfo;
+import jacJarSoft.noteArkiv.webapi.LogonInfo;
 
 @Path("/appservice")
 public interface NoteArkivAppService {

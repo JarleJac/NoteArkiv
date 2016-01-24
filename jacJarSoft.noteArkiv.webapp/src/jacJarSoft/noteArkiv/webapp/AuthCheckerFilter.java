@@ -39,7 +39,7 @@ public class AuthCheckerFilter implements Filter 	 {
 		boolean authOk = false;
 		AuthTokenInfo tokenInfo = null;
 		String pathInfo = req.getPathInfo();
-		if (pathInfo.equals("/appservice/logon"))
+		if (pathInfo.equals("/appservice/logon") || pathInfo.startsWith("/services") || (pathInfo.equals("/") && (req.getParameterValues("_wadl") != null)))
 			authOk = true;
 		else {
 			logger.fine("Checking auth for: " + pathInfo );

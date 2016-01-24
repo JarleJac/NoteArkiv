@@ -1,4 +1,4 @@
-package jacJarSoft.noteArkiv.api;
+package jacJarSoft.noteArkiv.webapi;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

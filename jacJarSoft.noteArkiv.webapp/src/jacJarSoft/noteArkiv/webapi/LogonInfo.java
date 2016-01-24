@@ -1,4 +1,4 @@
-package jacJarSoft.noteArkiv.api;
+package jacJarSoft.noteArkiv.webapi;
 
 public class LogonInfo {
 	private String user;

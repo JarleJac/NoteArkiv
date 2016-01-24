@@ -6,6 +6,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jacJarSoft.noteArkiv.api.SheetParam;
+import jacJarSoft.noteArkiv.api.SheetSearchParam;
 import jacJarSoft.noteArkiv.dao.NoteDao;
 import jacJarSoft.noteArkiv.dao.VoiceDao;
 import jacJarSoft.noteArkiv.model.Note;
@@ -48,6 +49,11 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 		Note sheetResult = noteDao.insertNote(param.getSheet());
 		param.setSheet(sheetResult);
 		return param;
+	}
+
+	@Override
+	public Response searchSheets(SheetSearchParam param) {
+		return Response.ok(noteDao.sheetSearch(param)).build();
 	}
 
 }

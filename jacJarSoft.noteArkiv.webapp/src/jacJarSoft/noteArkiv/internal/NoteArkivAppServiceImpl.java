@@ -5,13 +5,13 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jacJarSoft.noteArkiv.api.LogonInfo;
-import jacJarSoft.noteArkiv.api.LogonInfoReturn;
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 import jacJarSoft.noteArkiv.dao.UserDao;
 import jacJarSoft.noteArkiv.model.AppInfo;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.NoteArkivAppService;
+import jacJarSoft.noteArkiv.webapi.LogonInfo;
+import jacJarSoft.noteArkiv.webapi.LogonInfoReturn;
 import jacJarSoft.util.Auth.AuthTokenUtil;
 
 public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivAppService {

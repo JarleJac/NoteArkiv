@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import jacJarSoft.noteArkiv.api.SheetParam;
+import jacJarSoft.noteArkiv.api.SheetSearchParam;
 
 @Path("/noteservice")
 @WebService(name="noteService", targetNamespace="http://jacJarSoft/noteArkiv/noteService")
@@ -29,5 +30,10 @@ public interface NoteService {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/voice/")
 	public Response getVoices();
+
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/note/search")
+	public Response searchSheets(SheetSearchParam param);
 	
 }

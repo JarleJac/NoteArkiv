@@ -8,7 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import jacJarSoft.noteArkiv.api.ChangePassword;
+import jacJarSoft.noteArkiv.webapi.ChangePassword;
 
 @Path("/userservice")
 @WebService(name="userService", targetNamespace="http://jacJarSoft/noteArkiv/userService")
