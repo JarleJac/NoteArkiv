@@ -38,22 +38,24 @@ Viser de notene som er registrert de siste x dagene. (kommer snart)
 Her kommer det avansert søk med mange muligheter.
 </div>
 <div class="small-spacer"> </div>
-<div data-ng-show="hasResult()">
-	<div class="row listHeading">
+<div data-ng-show="hasResult()" data-ng-repeat="sheetData in getSheetList()">
+	<div data-ng-if="$first" class="row listHeading">
 		<div class="col-md-4">Tittel</div>
 		<div class="col-md-4">Komponist</div>
 		<div class="col-md-3">Arrangør</div>
 	</div>
-	<div data-ng-repeat="sheetData in getSheetList()" data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'">
-		<div class="row">
-			<div class="col-md-4">{{sheetData.sheet.title}}</div>
-			<div class="col-md-4">{{sheetData.sheet.composedBy}}</div>
-			<div class="col-md-3">{{sheetData.sheet.arrangedBy}}</div>
+	<div data-ng-class-odd="'row listodd'" data-ng-class-even="'row listEven'"  data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false" aria-controls="{{ 'sheetInfo-' + $index }}">
+		<div class="col-md-4"><a>{{sheetData.sheet.title}}</a></div>
+		<div class="col-md-4">{{sheetData.sheet.composedBy}}</div>
+		<div class="col-md-3">{{sheetData.sheet.arrangedBy}}</div>
+	</div>
+	<div data-ng-class-odd="'row topBorder listodd'" data-ng-class-even="'row topBorder listEven'" class="row collapse" id="{{ 'sheetInfo-' + $index }}">
+		<div class="col-md-5">
+			<div>Beskrivelse: {{sheetData.sheet.description}}</div>
+			<div>Registrert: {{sheetData.sheet.registeredDate | date:'dd.MM.yyyy HH:mm'}} av {{sheetData.sheet.registeredBy}}</div>
+			<div>Note id: {{sheetData.sheet.noteId}}</div>
 		</div>
-		<div class="row">
-			<div class="col-md-5">Beskrivelse: {{sheetData.sheet.description}}</div>
-			<div class="col-md-5">Dato: {{sheetData.sheet.registeredDate}}</div>
-		</div>
+		<div class="col-md-7">Her kommer filliste</div>
 	</div>
 	
 </div>

@@ -20,6 +20,12 @@ h3.pagetop {
 .listodd {
 	background-color: #e5e5ff;
 }
+
+.topBorder {
+	border-top-width: thin;
+	border-top-style: solid;
+	border-top-color: black;
+}
 /* START
 copy bootstrap navbar color
 http://work.smarchal.com/twbscolor/
