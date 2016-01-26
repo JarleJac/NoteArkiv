@@ -44,18 +44,20 @@ Her kommer det avansert søk med mange muligheter.
 		<div class="col-md-4">Komponist</div>
 		<div class="col-md-3">Arrangør</div>
 	</div>
-	<div data-ng-class-odd="'row listodd'" data-ng-class-even="'row listEven'"  data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false" aria-controls="{{ 'sheetInfo-' + $index }}">
-		<div class="col-md-4"><a>{{sheetData.sheet.title}}</a></div>
+	<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row sheetHeading" data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false" aria-controls="{{ 'sheetInfo-' + $index }}">
+		<div class="col-md-4">{{sheetData.sheet.title}}</div>
 		<div class="col-md-4">{{sheetData.sheet.composedBy}}</div>
-		<div class="col-md-3">{{sheetData.sheet.arrangedBy}}</div>
+		<div class="col-md-4">{{sheetData.sheet.arrangedBy}}</div>
 	</div>
-	<div data-ng-class-odd="'row topBorder listodd'" data-ng-class-even="'row topBorder listEven'" class="row collapse" id="{{ 'sheetInfo-' + $index }}">
-		<div class="col-md-5">
-			<div>Beskrivelse: {{sheetData.sheet.description}}</div>
-			<div>Registrert: {{sheetData.sheet.registeredDate | date:'dd.MM.yyyy HH:mm'}} av {{sheetData.sheet.registeredBy}}</div>
-			<div>Note id: {{sheetData.sheet.noteId}}</div>
+	<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row topBorder collapse" id="{{ 'sheetInfo-' + $index }}">
+	<div class="col-md-12">
+		<div class="col-md-5" >
+			<div><span class="listLabel">Beskrivelse: </span>{{sheetData.sheet.description}}</div>
+			<div><span class="listLabel">Registrert: </span>{{sheetData.sheet.registeredDate | date:'dd.MM.yyyy HH:mm'}}<span class="listLabel"> av </span>{{sheetData.sheet.registeredBy}}</div>
+			<div><span class="listLabel">Note id: </span>{{sheetData.sheet.noteId}}</div>
 		</div>
-		<div class="col-md-7">Her kommer filliste</div>
+		<div class="col-md-7">TODO Her kommer filliste</div>
+		</div>
 	</div>
 	
 </div>

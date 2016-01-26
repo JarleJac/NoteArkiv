@@ -13,18 +13,26 @@ h3.pagetop {
 .listHeading {
 	font-weight: bolder;
 	background-color: #d9d9d9;
+	font-size: larger;
 }
 .listEven {
-	background-color: #e5ffe5;
+	background-color: #ecf8ed;
 }
 .listodd {
-	background-color: #e5e5ff;
+	background-color: #fffffa;
 }
 
 .topBorder {
 	border-top-width: thin;
 	border-top-style: solid;
-	border-top-color: black;
+	border-top-color: #d9d9d9;
+}
+.sheetHeading {
+	cursor: pointer;
+	font-size: 1.2em;
+}
+.listLabel {
+	font-weight: bold;
 }
 /* START
 copy bootstrap navbar color
