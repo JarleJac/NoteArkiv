@@ -100,7 +100,7 @@ angular.module('notearkiv', [ 'ngRoute' ])
 	$rootScope.$on('$routeChangeStart', function (event, next) {
         var authorised;
         if (next.access !== undefined) {
-        	if (next.access.requiresLogin && !Auth.isLoggedOn()) {
+        	if (next.access.requiresLogin && !Auth.isLoggedOn() && !Auth.islogonInProgress()) {
         		$location.path("/logon").replace();
         	}
         		

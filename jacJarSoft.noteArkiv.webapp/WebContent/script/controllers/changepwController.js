@@ -1,11 +1,11 @@
 /**
  * 
  */
-angular.module('notearkiv').controller('changepwController', function($scope, $http, $routeParams) {
+angular.module('notearkiv').controller('changepwController', function($scope, $http, $routeParams, Auth) {
 	var controller = this;
 	$scope.changePwMsg = null;
 	$scope.errorMsg = null;
-	$scope.info = {"user": $scope.logonResult.user.no};
+	$scope.info = {"user": Auth.getUser().no};
 	if($routeParams.mustChange) {
 		$scope.changePwMsg="En administrator har satt ditt passord. Du må bytte passord.";
 	}

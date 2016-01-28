@@ -18,6 +18,8 @@ public class User extends AbstractEntity{
 	private String name;
 	@Column(name="PASSWORD")
 	private String password;
+	@Column(name="E_MAIL")
+	private String eMail;
 	@Column(name="MUST_CHANGE_PASSWORD")
 	private boolean mustChangePassword;
 	@Column(name="IS_SYSADMIN")
@@ -71,5 +73,11 @@ public class User extends AbstractEntity{
 	@PostLoad
 	private void postLoad() {
 		//password = "**hidden**";
+	}
+	public String geteMail() {
+		return eMail;
+	}
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
 	}
 }

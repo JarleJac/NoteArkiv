@@ -75,8 +75,12 @@ public class NoteArkivDatabase {
 		DbUtil.execUpdateSql(connection,sql,appVersion.toVersionString(false));
 	}
 
-	private void upgradeFromVersion1(Connection connection) {
-		// TODO Auto-generated method stub createNewDatabase
+	private void upgradeFromVersion1(Connection connection) throws SQLException {
+		String sql = "alter table users add E_MAIL text";
+		DbUtil.execUpdateSql(connection,sql);
+		
+		sql = "update users set password = ?, MUST_CHANGE_PASSWORD = ?";
+		DbUtil.execUpdateSql(connection,sql, PasswordUtil.getPasswordMd5Hash("sommer"), true);
 		
 	}
 
@@ -159,6 +163,7 @@ public class NoteArkivDatabase {
 					"(USER_NO text primary key, " +
 					"USER_NAME text, " +
 					"PASSWORD text, " + 
+					"E_MAIL text, " + 
 					"MUST_CHANGE_PASSWORD integer, " +
 					"IS_SYSADMIN integer, " +
 					"IS_ADMIN integer, " +
@@ -181,7 +186,8 @@ public class NoteArkivDatabase {
 		User user = new User();
 		user.setNo("sysadmin");
 		user.setName("System Admin Big Boss");
-		user.setPassword(PasswordUtil.getPasswordMd5Hash("Binders"));
+		user.setPassword(PasswordUtil.getPasswordMd5Hash("sommer"));
+		user.seteMail("jarle.jacobsen@gmail.com");
 		user.setAdmin(true);
 		user.setAuthor(true);
 		user.setMustChangePassword(true);
