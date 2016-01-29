@@ -2,14 +2,11 @@ package jacJarSoft.noteArkiv.webapi;
 
 import jacJarSoft.noteArkiv.model.User;
 
-public class LogonInfoReturn {
-	private User user;
+public class LogonInfoReturn extends UserInfoReturn {
 	private String authToken;
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
+
+	public LogonInfoReturn(User user) {
+		super(user);
 	}
 	public String getAuthToken() {
 		return authToken;

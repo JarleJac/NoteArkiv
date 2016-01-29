@@ -6,6 +6,7 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 	$scope.requestedPath = $location.path();
 	$scope.rquestedQuery = $location.search();
 	$scope.userName = "";
+	$scope.userId = "";
 	$scope.initPath = "/";
 
 	this.resetError = function() {
@@ -28,6 +29,9 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 	$scope.isLoggedOn = function() {
 		return Auth.isLoggedOn();
 	}
+	$scope.userGravatarUrl = function(size) {
+		return GravatarUtil.getUrl(Auth.getUserGravatarInfo(), size);
+	}
 	this.doLogon = function(logonInfo, fromLogonPage) {
 		Auth.doLogon(logonInfo, fromLogonPage)
 		.then(function successCallback(result) {
@@ -44,6 +48,7 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 	};
 	this.setLogonOk = function() {
 		$scope.userName = Auth.getUser().name;
+		$scope.userId = Auth.getUser().no;
 		Auth.setLoggedOn(true);
 		localStorage.setItem("user", Auth.getLogonInfo().user);
 		localStorage.setItem("password", Auth.getLogonInfo().password);

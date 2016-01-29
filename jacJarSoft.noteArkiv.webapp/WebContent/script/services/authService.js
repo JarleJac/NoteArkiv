@@ -4,11 +4,15 @@
 angular.module('notearkiv').factory('Auth', function AuthFactory($http, AuthToken) {
 	var isLoggedOn = false;
 	var user;
+	var userGravatarInfo;
 	var logonInfo;
 	var logonInProgress = false;
 	return {
 		getUser : function() {
 			return user;
+		},
+		getUserGravatarInfo : function() {
+			return userGravatarInfo;
 		},
 		getLogonInfo : function() {
 			return logonInfo;
@@ -29,6 +33,7 @@ angular.module('notearkiv').factory('Auth', function AuthFactory($http, AuthToke
 			.then(function successCallback(result) {
 				logonInProgress = true;
 				user = result.data.user;
+				userGravatarInfo = result.data.gravatar;
 				AuthToken.setAuthToken(result.data.authToken);
 				return {
 					user: result.data.user

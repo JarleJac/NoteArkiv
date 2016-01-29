@@ -1,7 +1,15 @@
 var currentUser;
 var currentUserName;
 
-//register the interceptor as a service
+var GravatarUtil = {
+		getUrl : function(info, size) {
+			if (info !== undefined)
+				return "http://www.gravatar.com/avatar/" + info.hash + "?d=" +info.dParam + "&s=" + size;
+			else
+				return ""
+		}
+} 
+
 
 angular.module('notearkiv', [ 'ngRoute' ])
 .config(function($routeProvider, $provide, $httpProvider) {
@@ -47,6 +55,14 @@ angular.module('notearkiv', [ 'ngRoute' ])
 		templateUrl : 'templates/pages/logon/changepw.html',
 		controller : 'changepwController',
 		controllerAs : 'changepwCtrl',
+		access: {
+            requiresLogin: true
+        }
+		
+	})
+	.when('/users/profile/:userId', {
+		templateUrl : 'templates/pages/users/profile.html',
+		controller : 'userProfileController',
 		access: {
             requiresLogin: true
         }

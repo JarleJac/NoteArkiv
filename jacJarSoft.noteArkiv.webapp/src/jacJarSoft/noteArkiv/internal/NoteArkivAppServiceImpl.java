@@ -30,10 +30,9 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 		
 		User user = userDao.logon(userLogonInfo);
 		if (null == user)
-			throw new ValidationErrorException("Uggyldig bruker og/eller pasord");
+			throw new ValidationErrorException("Uggyldig bruker og/eller passord");
 
-		LogonInfoReturn lir = new LogonInfoReturn();
-		lir.setUser(user);
+		LogonInfoReturn lir = new LogonInfoReturn(user);
 		lir.setAuthToken(AuthTokenUtil.createToken(user.getNo(), "NoteArkiv " + NoteArkivAppInfo.getVersion().toVersionString(true)));
 		return Response.ok(lir).build();
 	}

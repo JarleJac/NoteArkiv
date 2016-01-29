@@ -1,6 +1,7 @@
 package jacJarSoft.noteArkiv.service;
 
 import javax.jws.WebService;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -18,5 +19,10 @@ public interface UserService {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/user/{userNo}/changepw")
 	public Response changePassword(@PathParam("userNo")String userNo, ChangePassword param);
+
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/user/{userNo}")
+	public Response getUser(@PathParam("userNo")String userNo);
 
 }

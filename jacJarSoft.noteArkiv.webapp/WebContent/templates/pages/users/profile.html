@@ -1,0 +1,19 @@
+<h3 class="pagetop">Profil for {{user.name}}</h3>
+<div class="row">
+	<div class="col-sm-4">
+		<div class="visible-xs-block"> <img src="{{userGravatarUrl(150)}}"> </div>
+		<div class="visible-sm-block"> <img src="{{userGravatarUrl(200)}}"> </div>
+		<div class="visible-md-block"> <img src="{{userGravatarUrl(250)}}"> </div>
+		<div class="visible-lg-block"> <img src="{{userGravatarUrl(350)}}"> </div>
+		<div>Ønsker du bilde av deg selv her? Registrer deg med e-post addressen din på Gravatar: 
+		<a href="https://en.gravatar.com/" target="_blank">https://en.gravatar.com/</a></div>
+	</div>
+	<div class="col-sm-8">
+	<div><span class="listLabel">Id: </span>{{user.no}}</div>
+	<div><span class="listLabel">E-Post: </span>{{user.eMail}}</div>
+	<div>
+		TODO skal kunne endre info  + muligens mere info
+	</div>
+</div>
+
+</div>

@@ -10,6 +10,7 @@ import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.UserService;
 import jacJarSoft.noteArkiv.webapi.ChangePassword;
 import jacJarSoft.noteArkiv.webapi.LogonInfo;
+import jacJarSoft.noteArkiv.webapi.UserInfoReturn;
 import jacJarSoft.util.PasswordUtil;
 
 public class UserServiceImpl extends BaseService implements UserService {
@@ -51,6 +52,15 @@ public class UserServiceImpl extends BaseService implements UserService {
 		user = userDao.updateUser(user);
 		return Response.ok(user).build();
 		
+	}
+
+	@Override
+	public Response getUser(String userNo) {
+		User user = userDao.getUser(userNo);
+		if (user == null)
+			throw new ValidationErrorException("Ukjent bruker " + userNo);
+		UserInfoReturn ret = new UserInfoReturn(user);
+		return Response.ok(ret).build();
 	}
 
 }

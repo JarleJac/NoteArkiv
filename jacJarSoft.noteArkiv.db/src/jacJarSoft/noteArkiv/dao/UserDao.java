@@ -18,5 +18,10 @@ public class UserDao extends AbstractDao {
 		getEntityManager().merge(user);
 		return user;
 	}
+	public User getUser(String userNo) {
+		
+		User user = getEntityManager().find(User.class, userNo);
+		return user;
+	}
 
 }
