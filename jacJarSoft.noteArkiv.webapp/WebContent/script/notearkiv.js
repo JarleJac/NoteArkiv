@@ -30,7 +30,7 @@ angular.module('notearkiv', [ 'ngRoute' ])
             requiresLogin: true
         }
 	})
-	.when('/sheets/new', {
+	.when('/sheets/:sheetId', {
 		templateUrl : 'templates/pages/sheets/sheet.html',
 		controller : 'editSheetController',
 		controllerAs : 'editSheetCtrl',

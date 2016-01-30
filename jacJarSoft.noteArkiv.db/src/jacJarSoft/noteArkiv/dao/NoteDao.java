@@ -40,12 +40,17 @@ public class NoteDao extends AbstractDao {
 		List<SheetParam> sheetList = result.getSheetList();
 		
 		for (Note sheet : sheets) {
-			SheetParam sheetData = new SheetParam();
-			sheetData.setSheet(sheet);
+			SheetParam sheetData = getSheetData(sheet);
 			sheetList.add(sheetData);
 		}
 			
 		return result;
+	}
+
+	public SheetParam getSheetData(Note sheet) {
+		SheetParam sheetData = new SheetParam();
+		sheetData.setSheet(sheet);
+		return sheetData;
 	}
 
 }

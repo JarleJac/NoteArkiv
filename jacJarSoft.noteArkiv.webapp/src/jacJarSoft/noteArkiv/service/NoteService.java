@@ -3,6 +3,7 @@ package jacJarSoft.noteArkiv.service;
 import javax.jws.WebService;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,6 +21,11 @@ public interface NoteService {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/note/{noteId}")
 	public Response getNote(@PathParam("noteId") long noteId);
+
+	@PUT
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/note")
+	public Response updateNote(SheetParam param);
 
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})

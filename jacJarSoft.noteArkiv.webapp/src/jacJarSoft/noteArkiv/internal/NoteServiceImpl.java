@@ -25,7 +25,12 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 		if (noteId <= 0) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
-		return Response.ok(noteDao.getNote(noteId)).build();
+		Note note = noteDao.getNote(noteId);
+		if (note == null)
+			throw new ValidationErrorException("Finner ikke note " + noteId);
+	
+		SheetParam result = noteDao.getSheetData(note);
+		return Response.ok(result).build();
 	}
 
 	@Override
@@ -47,13 +52,18 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 			throw new RuntimeException("Bad language!");
 		
 		Note sheetResult = noteDao.insertNote(param.getSheet());
-		param.setSheet(sheetResult);
-		return param;
+		return noteDao.getSheetData(sheetResult);
 	}
 
 	@Override
 	public Response searchSheets(SheetSearchParam param) {
 		return Response.ok(noteDao.sheetSearch(param)).build();
+	}
+
+	@Override
+	public Response updateNote(SheetParam param) {
+		throw new ValidationErrorException("updateNote er ikke implementert!");
+//		return null;
 	}
 
 }
