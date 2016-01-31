@@ -13,17 +13,23 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
     	$scope.errorOccured = false;
     	$scope.errorMsg = null;
 	}
+	this.setError = function(msg) {
+    	$scope.errorOccured = true;
+    	$scope.errorMsg = msg;
+    	$("body").scrollTop($('#mainContainer').offset().top);
+	}
     $rootScope.$on('HttpStart', function(ev, args){
     	controller.resetError();
     });
     $rootScope.$on('HttpError', function(ev, args){
-    	$scope.errorOccured = true;
     	var data = args.rejection.data;
+    	var msg;
     	if (typeof data.msgType === "undefined" ) {
-        	$scope.errorMsg = args.rejection.status + " - " + args.rejection.statusText;
+        	msg = args.rejection.status + " - " + args.rejection.statusText;
     	} else {
-        	$scope.errorMsg = data.msg;
+        	msg = data.msg;
     	}
+    	controller.setError(msg);
     		
     }); 	
 	$scope.isLoggedOn = function() {

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html data-ng-app="notearkiv">
 <head profile="http://www.w3.org/2005/10/profile">
-<meta name="viewport" content="width=device-width, initial-scale=1">
- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
- <link rel="stylesheet" type="text/css" href="css/notearkiv.css" />
- <link rel="icon" href="favicon.png" type="image/png">
-<meta charset="UTF-8">
-<title>NoteArkiv</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/notearkiv.css" />
+	<link rel="stylesheet" type="text/css" href="css/angular-busy.min.css" />
+	<link rel="icon" href="favicon.png" type="image/png">
+	<script type="text/javascript" src="script/vendors/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="script/vendors/angular.min.js"></script>
+	<meta charset="UTF-8">
+	<title>NoteArkiv</title>
 </head>
 <body data-ng-controller="mainController">
    <nav class="navbar navbar-default navbar-static-top">
@@ -37,7 +40,7 @@
               </ul>
             </li>
             <li data-ng-hide="isLoggedOn()"><a href="#/logon" data-toggle="collapse" data-target="#navbar.in">Logg inn</a></li>
-            <li data-ng-if="isLoggedOn()" class="dropdown">
+            <li data-ng-cloak data-ng-if="isLoggedOn()" class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="{{userGravatarUrl(25)}}"> {{userName}}<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#/users/profile/{{userId}}" data-toggle="collapse" data-target="#navbar.in">Profil</a></li>
@@ -58,17 +61,16 @@
       </div>
     </nav>
 
-	<div class="container">
-		<div data-ng-show="errorOccured" class="alert alert-danger" role="alert">
+	<div id="mainContainer" class="container">
+		<div id="errorMsg" data-ng-cloak data-ng-show="errorOccured" class="alert alert-danger" role="alert">
 			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{errorMsg}}
 		</div>
 		<div data-ng-view></div>
 	</div>
 
-	<script type="text/javascript" src="script/vendors/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="script/vendors/bootstrap.min.js"></script>
-	<script type="text/javascript" src="script/vendors/angular.min.js"></script>
 	<script type="text/javascript" src="script/vendors/angular-route.min.js"></script>
+	<script type="text/javascript" src="script/vendors/bootstrap.min.js"></script>
+	<script type="text/javascript" src="script/vendors/angular-busy.min.js"></script>
 	<script type="text/javascript" src="script/notearkiv.js"></script>
 	<script type="text/javascript" src="script/services/authService.js"></script>
 	<script type="text/javascript" src="script/services/authTokenService.js"></script>
