@@ -22,44 +22,78 @@ her kommer en mulighet for å søke på noter tilhørende en gitt liste.
 Viser de notene som er registrert de siste x dagene. (kommer snart)
 </div>
 <div data-ng-show="isTabSet('simple')">
-<form class="form-horizontal">
-  <div class="form-group">
-    <label for="title" class="col-sm-1 control-label">Tittel</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" id="title" data-ng-model="title" placeholder="Angi deler av en tittel, kan godt være midt i et sted">
-    </div>
-    <div class="col-sm-1">
-      <button type="submit" class="btn btn-default"  data-ng-click="searchSimple()">Søk</button>
-    </div>
-  </div>
-</form>
+	<form class="form-inline">
+<!-- 		<div class="form-group"> -->
+			<label for="title" class="control-label">Tittel</label>
+			<div style="width: 60%" class="input-group">
+				<input  type="text" class="form-control" id="title" data-ng-model="title"
+					placeholder="Angi deler av en tittel, kan godt være midt i et sted">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" data-container="body" data-toggle="popover" data-placement="top"
+					 data-trigger="focus"
+					title="Hjelp for søk" data-content="Du kan søke på hele eller deler av en tittel. Det kan være starten på tittelen eller midt i. Søk med alt fra en bokstav til hele tittelen. Finner du ikke det du leter etter bruk færre bokstaver.">
+						<span class='glyphicon glyphicon-question-sign' aria-hidden='true'></span>
+					</button>
+				<button type="submit" class="btn btn-default" data-ng-click="searchSimple()">Søk</button>
+				</span>
+			</div>
+<!-- 			<div class=""> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+	</form>
 </div>
 <div data-ng-show="isTabSet('advansed')">
 Her kommer det avansert søk med mange muligheter.
 </div>
 <div class="small-spacer"> </div>
-<div data-ng-show="hasResult()" data-ng-repeat="sheetData in getSheetList()">
-	<div data-ng-if="$first" class="row listHeading">
-		<div class="col-md-4">Tittel</div>
-		<div class="col-md-4">Komponist</div>
-		<div class="col-md-3">Arrangør</div>
-	</div>
-	<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row sheetHeading" data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false" aria-controls="{{ 'sheetInfo-' + $index }}">
-		<div class="col-md-4">{{sheetData.sheet.title}}</div>
-		<div class="col-md-4">{{sheetData.sheet.composedBy}}</div>
-		<div class="col-md-4">{{sheetData.sheet.arrangedBy}}</div>
-	</div>
-	<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row topBorder collapse" id="{{ 'sheetInfo-' + $index }}">
-	<div class="col-md-12">
-		<div class="col-md-5" >
-			<div><span class="listLabel">Beskrivelse: </span>{{sheetData.sheet.description}}</div>
-			<div><span class="listLabel">Registrert: </span>{{sheetData.sheet.registeredDate | date:'dd.MM.yyyy HH:mm'}}<span class="listLabel"> av </span>{{sheetData.sheet.registeredBy}}</div>
-			<div><span class="listLabel">Note id: </span>{{sheetData.sheet.noteId}}</div>
-			<div><a class="" href="#/sheets/{{sheetData.sheet.noteId}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Endre</a></div>
-			<div><a class="" href=><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Slett</a></div>
+
+<div data-cg-busy="{promise:getPromise,message:'Søker ...'}">
+	<h4>Søkeresultat</h4>
+	<div data-ng-show="hasResult() &&  getSheetList().length === 0">Fant desverre ingen noter som passer til søket</div>
+<!-- 	<div data-ng-show="hasResult()" class="form-inline"> -->
+<!-- 		<label for="search" class="control-label">Filter</label> -->
+<!-- 		<input type="text" class="form-control" data-ng-model="search" placeholder="filtrer resultatet"> -->
+<!-- 	</div> -->
+	<div data-ng-show="hasResult()"
+		data-ng-repeat="sheetData in getSheetList() | filter: {sheet: {title :search}}">
+<!-- 		data-ng-repeat="sheetData in getSheetList() | filter: {sheet: {title :search}}"> -->
+		<div data-ng-if="$first" class="row listHeading">
+			<div class="col-md-4">Tittel</div>
+			<div class="col-md-4">Komponist</div>
+			<div class="col-md-3">Arrangør</div>
 		</div>
-		<div class="col-md-7">TODO Her kommer filliste</div>
+		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row sheetHeading"
+			data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false"
+			aria-controls="{{ 'sheetInfo-' + $index }}">
+			<div class="col-md-4">{{sheetData.sheet.title}}</div>
+			<div class="col-md-4">{{sheetData.sheet.composedBy}}</div>
+			<div class="col-md-4">{{sheetData.sheet.arrangedBy}}</div>
+		</div>
+		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row topBorder collapse"
+			id="{{ 'sheetInfo-' + $index }}">
+			<div class="col-md-12">
+				<div class="col-md-5">
+					<div>
+						<span class="listLabel">Beskrivelse: </span>{{sheetData.sheet.description}}
+					</div>
+					<div>
+						<span class="listLabel">Registrert: </span>{{sheetData.sheet.registeredDate | date:'dd.MM.yyyy
+						HH:mm'}}<span class="listLabel"> av </span>{{sheetData.sheet.registeredBy}}
+					</div>
+					<div>
+						<span class="listLabel">Note id: </span>{{sheetData.sheet.noteId}}
+					</div>
+					<div>
+						<a class="" href="#/sheets/{{sheetData.sheet.noteId}}"><span
+							class="glyphicon glyphicon-edit" aria-hidden="true"></span> Endre</a>
+					</div>
+					<div>
+						<a class="" href=><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Slett</a>
+					</div>
+				</div>
+				<div class="col-md-7">TODO Her kommer filliste</div>
+			</div>
 		</div>
 	</div>
-	
+
 </div>
