@@ -74,7 +74,7 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy' ])
 		    // optional method
 		    'request': function(config) {
 		    	$rootScope.$emit('HttpStart', {config: config});
-		    	if (config.url.startsWith("rest/") && AuthToken.hasAuthToken()) {
+		    	if (config.url.substr(0, 5) === "rest/" && AuthToken.hasAuthToken()) {
 		    		 config.headers['Authorization'] = AuthToken.getAuthToken();
 		    	}
 		    	return config;
