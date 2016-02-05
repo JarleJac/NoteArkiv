@@ -40,18 +40,24 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 
 	@Override
 	public Response addNote(SheetParam param) {
-		SheetParam result = runWithTransaction(this::internalAddNote, param);
+		SheetParam result = runWithTransaction(this::internalAddOrUpdateNote, param);
 		return Response.ok(result).build();
 	}
-	private SheetParam internalAddNote(EntityManager em, SheetParam param)
+	private SheetParam internalAddOrUpdateNote(EntityManager em, SheetParam param)
 	{
 		if (param == null || param.getSheet() == null || StringUtils.isEmpty(param.getSheet().getTitle())) {
 			throw new ValidationErrorException("Tittel kan ikke være blank.");
 		}
 		if (param.getSheet().getTitle().equals("FUCK"))
 			throw new RuntimeException("Bad language!");
-		
-		Note sheetResult = noteDao.insertNote(param.getSheet());
+		Note sheetResult;
+		if (param.getSheet().getNoteId() != 0) {
+			sheetResult = noteDao.updateNote(param.getSheet());
+		}
+		else {
+			sheetResult = noteDao.insertNote(param.getSheet());
+		}
+			
 		return noteDao.getSheetData(sheetResult);
 	}
 
@@ -62,8 +68,8 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 
 	@Override
 	public Response updateNote(SheetParam param) {
-		throw new ValidationErrorException("updateNote er ikke implementert!");
-//		return null;
+		SheetParam result = runWithTransaction(this::internalAddOrUpdateNote, param);
+		return Response.ok(result).build();
 	}
 
 }

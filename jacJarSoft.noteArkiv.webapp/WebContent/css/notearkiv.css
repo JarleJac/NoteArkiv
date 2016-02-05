@@ -38,7 +38,7 @@ h3.pagetop {
 
 fieldset.voices-border {
     border: 1px groove #ddd !important;
-    padding: 0 1.4em 1.4em 1.4em !important;
+    padding: 0 0 0 0.8em !important;
     margin: 0 0 0 15px !important;
 /*     -webkit-box-shadow:  0px 0px 0px 0px #000; */
 /*             box-shadow:  0px 0px 0px 0px #000; */
@@ -50,6 +50,7 @@ fieldset.voices-border {
      text-align: left !important;
      width:auto;
      padding:0 10px;
+     margin-bottom: 10px;
      border-bottom:none;
  }
 

@@ -25,6 +25,10 @@ public class NoteDao extends AbstractDao {
 		getEntityManager().persist(sheet);
 		return sheet;
 	}
+	public Note updateNote(Note sheet) {
+		getEntityManager().merge(sheet);
+		return sheet;
+	}
 
 	public SheetSearchList sheetSearch(SheetSearchParam param) {
 		String from = "";
@@ -52,5 +56,6 @@ public class NoteDao extends AbstractDao {
 		sheetData.setSheet(sheet);
 		return sheetData;
 	}
+
 
 }

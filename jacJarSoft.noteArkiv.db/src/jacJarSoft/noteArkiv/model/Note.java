@@ -80,5 +80,17 @@ public class Note extends AbstractEntity {
 	public void setRegisteredBy(String registeredBy) {
 		this.registeredBy = registeredBy;
 	}
+	public String getTags() {
+		return tags;
+	}
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+	public String getVoices() {
+		return voices;
+	}
+	public void setVoices(String voices) {
+		this.voices = voices;
+	}
 
 }

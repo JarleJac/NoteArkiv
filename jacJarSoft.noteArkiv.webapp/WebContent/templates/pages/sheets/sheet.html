@@ -21,17 +21,19 @@
   </div>
   <div class="form-group">
     <label for="description" class="col-sm-12">Beskrivelse</label>
-    <div class="col-sm-11">
+    <div class="col-sm-12">
       <textarea class="form-control ta-vertical" id="description" data-ng-model="sheet.description" placeholder="En beskrivelse" ></textarea>
     </div>
   </div>
   <div class="form-group">
-  	<fieldset class="voices-border col-sm-4 col-lg-4  col-md-4">
+  	<fieldset class="voices-border col-xs-12 col-sm-4 col-lg-2  col-md-3">
   		<legend class="voices-border">Stemmer</legend>
-		<label><input type="checkbox" value="false">Sopran</label>
-		<label><input type="checkbox" value="true">Sopran 2</label>
+			<span data-ng-repeat="voice in selectedVoices">
+				<label style="width: 6em"><input type="checkbox" data-ng-model="voice.selected"> {{voice.name}}</label>
+				<br data-ng-if="$odd">
+			</span>
   	</fieldset>
-  	<fieldset class="voices-border col-sm-9 col-lg-7  col-md-7">
+  	<fieldset class="voices-border col-xs-12 col-sm-7 col-lg-9  col-md-8">
   		<legend class="voices-border">Sjanger</legend>
   	</fieldset>
   </div>
