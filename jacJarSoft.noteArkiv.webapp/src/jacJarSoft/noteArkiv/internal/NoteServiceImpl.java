@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import jacJarSoft.noteArkiv.api.SheetParam;
 import jacJarSoft.noteArkiv.api.SheetSearchParam;
 import jacJarSoft.noteArkiv.dao.NoteDao;
+import jacJarSoft.noteArkiv.dao.TagsDao;
 import jacJarSoft.noteArkiv.dao.VoiceDao;
 import jacJarSoft.noteArkiv.model.Note;
+import jacJarSoft.noteArkiv.model.Tag;
 import jacJarSoft.noteArkiv.service.NoteService;
 import jacJarSoft.util.StringUtils;
 
@@ -19,6 +21,8 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	private NoteDao noteDao;
 	@Autowired
 	private VoiceDao voiceDao;
+	@Autowired
+	private TagsDao tagsDao;
 
 	@Override
 	public Response getNote(long noteId) {
@@ -72,4 +76,32 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 		return Response.ok(result).build();
 	}
 
+	@Override
+	public Response getTags() {
+		return Response.ok(tagsDao.getTags()).build();
+	}
+
+	@Override
+	public Response addTag(Tag tag) {
+		Tag result = runWithTransaction(this::internalAddTag, tag);
+		return Response.ok(result).build();
+	}
+	private Tag internalAddTag(EntityManager em, Tag tag) {
+		if (tagsDao.doesTagWithNameExist(tag.getName()))
+			throw new ValidationErrorException("Sjanger med det navnet finnes allerede");
+		return tagsDao.insertTag(tag);
+	}
+
+	@Override
+	public Response deleteTag(long tagId) {
+		Void result = runWithTransaction(this::internalDeleteTag, tagId);
+		return Response.ok(result).build();
+	}
+
+
+	private Void internalDeleteTag(EntityManager em, long tagId) {
+		Tag tag = tagsDao.getTag(tagId);
+		tagsDao.deleteTag(tag);
+		return null;	
+	}
 }

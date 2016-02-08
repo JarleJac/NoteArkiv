@@ -9,37 +9,25 @@ import javax.persistence.TableGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name="VOICES")
-@XmlRootElement(name="Voice")
-public class Voice  extends AbstractEntity {
-	public Voice() {}
-	public Voice(String code, String name){
-		this.code = code;
-		this.name = name;
-	}
+@Table(name="TAGS")
+@XmlRootElement(name="Tag")
+public class Tag extends AbstractEntity {
 	@Id
-	@GeneratedValue(generator="sqlite_person")
-	@TableGenerator(name="sqlite_voice", table="sqlite_sequence",
+	@GeneratedValue(generator="sqlite_tag")
+	@TableGenerator(name="sqlite_tag", table="sqlite_sequence",
 	    pkColumnName="name", valueColumnName="seq",
-	    pkColumnValue="VOICES",
+	    pkColumnValue="TAGS",
 	    initialValue=1, allocationSize=1)	
-	@Column(name="VOICE_ID")
+	@Column(name="TAG_ID")
 	private int id;
-	@Column(name="VOICE_CODE")
-	private String code;
-	@Column(name="VOICE_NAME")
+	@Column(name="TAG_NAME")
 	private String name;
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
 	}
 	public String getName() {
 		return name;
@@ -47,4 +35,5 @@ public class Voice  extends AbstractEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 }

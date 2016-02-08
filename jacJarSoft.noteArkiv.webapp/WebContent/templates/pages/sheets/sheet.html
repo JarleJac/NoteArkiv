@@ -21,20 +21,41 @@
   </div>
   <div class="form-group">
     <label for="description" class="col-sm-12">Beskrivelse</label>
-    <div class="col-sm-12">
+    <div class="col-sm-9 col-md-10 col-lg-8">
       <textarea class="form-control ta-vertical" id="description" data-ng-model="sheet.description" placeholder="En beskrivelse" ></textarea>
     </div>
   </div>
   <div class="form-group">
-  	<fieldset class="voices-border col-xs-12 col-sm-4 col-lg-2  col-md-3">
+  	<fieldset data-cg-busy="{promise:getVoicesPromise,message:'Henter stemmer'}"  class="voices-border col-xs-11 col-sm-4 col-lg-2  col-md-3">
   		<legend class="voices-border">Stemmer</legend>
 			<span data-ng-repeat="voice in selectedVoices">
 				<label style="width: 6em"><input type="checkbox" data-ng-model="voice.selected"> {{voice.name}}</label>
 				<br data-ng-if="$odd">
 			</span>
   	</fieldset>
-  	<fieldset class="voices-border col-xs-12 col-sm-7 col-lg-9  col-md-8">
+  	<fieldset data-cg-busy="{promise:getTagsPromise,message:'Henter sjangere'}" class="voices-border col-xs-11 col-sm-9 col-lg-5  col-md-6">
   		<legend class="voices-border">Sjanger</legend>
+  		<div class="col-xs-12 col-sm-4">
+		    <label for="connected">Tilknyttet<span class="visible-xs-inline"> ({{connectedTags.length}})</span></label><br>
+		    <select class="tagsSelect" name="connected" id="connected" size="6" data-ng-model="connected" 
+		    	data-ng-options="tag.name for tag in connectedTags track by tag.id" data-ng-dblclick="disconnect()">
+		    </select><br>
+			<button class="btn btn-default btn-xs"  data-ng-click="disconnect()">Frakoble</button>
+  		</div>
+  		
+  		<div class="col-xs-6 col-sm-4">
+		    <label for="available">Tilgjengelige<span class="visible-xs-inline"> ({{availableTags.length}})</span></label><br>
+		    <select class="tagsSelect" name="available" id="available" size="6" data-ng-model="available" 
+		    	data-ng-options="tag.name for tag in availableTags track by tag.id" data-ng-dblclick="connect()">
+		    </select><br>
+			<button class="btn btn-default btn-xs"  data-ng-click="connect()">Tilknytt</button>
+  		</div>
+  		<div class="col-xs-6 col-sm-3">
+		    <label for="available">Ny sjanger</label><br>
+		    <input type="text" class="form-control" id="newTag" data-ng-model="newTag">
+			<button data-cg-busy="{promise:addTagPromise,message:'Lagrer'}" class="btn btn-default"  data-ng-click="addTag()">Legg til</button><br>
+			<button class="btn btn-default"  data-ng-click="deleteTag()">Slett</button>
+  		</div>
   	</fieldset>
   </div>
 <!--   <div class="form-group"> -->
@@ -56,17 +77,8 @@
 			class="form-control col-xs-4" id="registeredDate" data-ng-model="sheet.registeredDate">
 	</div>
   </div>
-	<!--   <div class="form-group"> -->
-<!--     <div class="col-lg-offset-2 col-lg-1 col-md-10"> -->
-<!--       <div class="checkbox"> -->
-<!--         <label> -->
-<!--           <input type="checkbox"> Remember me -->
-<!--         </label> -->
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
   <div class="form-group">
-    <div class="col-sm-12 text-right">
+    <div class="col-sm-9 col-md-10 col-lg-8 text-right">
       <button type="submit" class="btn btn-default"  data-ng-click="newSheet()">Ny</button>
       <button type="submit" class="btn btn-default"  data-ng-click="saveSheet()">Lagre</button>
     </div>

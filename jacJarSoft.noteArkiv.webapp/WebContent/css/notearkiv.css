@@ -54,6 +54,11 @@ fieldset.voices-border {
      border-bottom:none;
  }
 
+select.tagsSelect {
+	width: 10em
+}
+
+
 /* START
 copy bootstrap navbar color
 http://work.smarchal.com/twbscolor/

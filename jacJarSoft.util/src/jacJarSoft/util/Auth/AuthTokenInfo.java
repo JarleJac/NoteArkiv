@@ -11,7 +11,7 @@ public class AuthTokenInfo {
 	private String tokenPart;
 	private Date creationDateTime;
 	private String uuid;
-	private static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+	private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 	
 	public AuthTokenInfo(String user, String tokenPart) {
 		this.user = user;
@@ -67,7 +67,7 @@ public class AuthTokenInfo {
 		AuthTokenInfo tokenInfo = new AuthTokenInfo(parts[2], parts[1]);
 		tokenInfo.setUuid(parts[0]);
 		try {
-			tokenInfo.setCreationDateTime(df.parse(parts[3]));
+			tokenInfo.setCreationDateTime(tokenInfo.df.parse(parts[3]));
 		} catch (ParseException e) {
 			throw new IllegalArgumentException("Illegal dateTime in token string",e);
 		}

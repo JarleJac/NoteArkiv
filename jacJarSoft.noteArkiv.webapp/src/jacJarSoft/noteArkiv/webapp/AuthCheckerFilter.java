@@ -1,6 +1,7 @@
 package jacJarSoft.noteArkiv.webapp;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.Filter;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jacJarSoft.noteArkiv.AppContext;
+import jacJarSoft.util.Auth.AuthException;
 import jacJarSoft.util.Auth.AuthTokenInfo;
 import jacJarSoft.util.Auth.AuthTokenUtil;
 
@@ -51,8 +53,8 @@ public class AuthCheckerFilter implements Filter 	 {
 					//TODO check timeout using tokenInfo.getCreationDateTime();
 					logger.fine("Authenticated: " + tokenInfo.getUser());
 					authOk = true;
-				} catch (Exception e) {
-					logger.fine("not auth, ex.message: " + e.getMessage() );
+				} catch (AuthException e) {
+					logger.log(Level.SEVERE, "not auth, exception: " + e.getMessage(), e);
 				}
 			}
 		}

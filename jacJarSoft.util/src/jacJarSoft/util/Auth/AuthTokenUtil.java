@@ -29,7 +29,7 @@ public class AuthTokenUtil {
 			encryptedToken = encrypt(key);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
 				| BadPaddingException e) {
-			throw new RuntimeException("Unable to encrypt AuthToken",e);
+			throw new AuthException("Unable to encrypt AuthToken",e);
 		} 
 		logger.fine("Encrypted: " + encryptedToken );
 		return AuthTokenInfo.AuthSchema + " " + encryptedToken;
@@ -41,7 +41,7 @@ public class AuthTokenUtil {
 			tokenString = decrypt(encryptedToken);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
 				| BadPaddingException e) {
-			throw new RuntimeException("Unable to decrypt AuthToken",e);
+			throw new AuthException("Unable to decrypt AuthToken",e);
 		}
 		AuthTokenInfo tokenInfo = AuthTokenInfo.fromTokenString(tokenString);
 		return tokenInfo;
