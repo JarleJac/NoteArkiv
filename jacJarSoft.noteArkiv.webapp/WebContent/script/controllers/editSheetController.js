@@ -75,11 +75,20 @@ angular.module('notearkiv').controller('editSheetController', function($scope, $
 			$scope.newTag = "";
 		});
 	}
-	$scope.deleteTag() = function() {
+	var deleteFromTagList = function(i, fromList, scopeFrom) {
+		fromList.splice(i,1);
+		if (fromList.length <= i)
+			i = fromList.length - 1;
+		if (i != -1)
+			$scope[scopeFrom] = fromList[i];
+	}
+	$scope.deleteTag = function() {
 		if (!$scope.available)
 			return;
 		$scope.deleteTagPromise = Tags.deleteTag($scope.available);
 		$scope.deleteTagPromise.then(function successCallback(result) {
+			var i = getTagIndex($scope.availableTags, $scope.available.id);
+			deleteFromTagList(i, $scope.availableTags, "available");
 		});
 	}
 	var switchList = function(fromList, toList, scopeFrom, scopeTo) {
@@ -97,12 +106,7 @@ angular.module('notearkiv').controller('editSheetController', function($scope, $
 			  return 0;
 			});
 		$scope[scopeTo] = $scope[scopeFrom]
-		fromList.splice(i,1);
-		if (fromList.length <= i)
-			i = fromList.length - 1;
-		if (i != -1)
-			$scope[scopeFrom] = fromList[i];
-		
+		deleteFromTagList(i, fromList, scopeFrom);
 	} 
 	$scope.connect = function() {
 		switchList($scope.availableTags, $scope.connectedTags, "available", "connected")

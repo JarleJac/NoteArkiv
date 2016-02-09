@@ -57,7 +57,7 @@ public interface NoteService {
 	@DELETE
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/tags/{tagId}")
-	public Response deleteTag(@PathParam("noteId") long tagId);
+	public Response deleteTag(@PathParam("tagId") int tagId);
 
 	
 }

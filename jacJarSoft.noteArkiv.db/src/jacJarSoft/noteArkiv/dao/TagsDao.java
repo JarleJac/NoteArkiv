@@ -27,7 +27,7 @@ public class TagsDao extends AbstractDao {
 	public void deleteTag(Tag tag) {
 		getEntityManager().remove(tag);
 	}
-	public Tag getTag(long tagId) {
+	public Tag getTag(int tagId) {
 		Tag tag = getEntityManager().find(Tag.class, tagId);
 		return tag;
 	}

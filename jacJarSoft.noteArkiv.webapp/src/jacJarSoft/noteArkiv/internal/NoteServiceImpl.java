@@ -93,13 +93,13 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	}
 
 	@Override
-	public Response deleteTag(long tagId) {
+	public Response deleteTag(int tagId) {
 		Void result = runWithTransaction(this::internalDeleteTag, tagId);
 		return Response.ok(result).build();
 	}
 
 
-	private Void internalDeleteTag(EntityManager em, long tagId) {
+	private Void internalDeleteTag(EntityManager em, int tagId) {
 		Tag tag = tagsDao.getTag(tagId);
 		tagsDao.deleteTag(tag);
 		return null;	

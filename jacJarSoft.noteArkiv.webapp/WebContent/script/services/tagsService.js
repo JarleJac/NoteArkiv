@@ -78,6 +78,10 @@ angular.module('notearkiv').factory('Tags', function TagsFactory($q, $http) {
 		addTag : function(tag) {
 			tagsCache.expire();
 			return $http({method: 'POST', url : 'rest/noteservice/tags', data: tag});
+		},
+		deleteTag : function(tag) {
+			tagsCache.expire();
+			return $http({method: 'DELETE', url : 'rest/noteservice/tags/' + tag.id});
 		}
 	}
 }
