@@ -1,13 +1,14 @@
 /**
  * 
  */
-angular.module('notearkiv').controller('mainController', function($rootScope, $scope, $http, $location, Auth) {
+angular.module('notearkiv').controller('mainController', function($rootScope, $scope, $timeout, $http, $location, Auth) {
 	var controller = this;
 	$scope.requestedPath = $location.path();
 	$scope.rquestedQuery = $location.search();
 	$scope.userName = "";
 	$scope.userId = "";
 	$scope.initPath = "/";
+	$scope.okMessages = [];
 
 	this.resetError = function() {
     	$scope.errorOccured = false;
@@ -18,6 +19,17 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
     	$scope.errorMsg = msg;
     	$("body").scrollTop($('#mainContainer').offset().top);
 	}
+	this.addOkMessage = function(msg) {
+    	$("body").scrollTop($('#mainContainer').offset().top);
+    	$scope.okMessages.push(msg);
+    	$timeout(function(){
+    		var ix = $scope.okMessages.indexOf(msg);
+    		$scope.okMessages.splice(ix,1);
+    	}, 5000);
+	}
+    $rootScope.$on('OkMessage', function(ev, args){
+    	controller.addOkMessage(args);
+    });
     $rootScope.$on('HttpStart', function(ev, args){
     	controller.resetError();
     });

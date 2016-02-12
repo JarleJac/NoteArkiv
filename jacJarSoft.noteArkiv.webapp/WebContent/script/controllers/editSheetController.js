@@ -2,7 +2,7 @@
  * 
  */
 
-angular.module('notearkiv').controller('editSheetController', function($scope, $q, $http,  $routeParams, $location, Voices, Tags) {
+angular.module('notearkiv').controller('editSheetController', function($rootScope, $scope, $q, $http,  $routeParams, $location, Voices, Tags) {
 	$scope.connectedTags = [];
 	$scope.availableTags = [];
 	$scope.connected = null;
@@ -62,6 +62,8 @@ angular.module('notearkiv').controller('editSheetController', function($scope, $
 		$scope.savePromise.then(function successCallback(result) {
 			if ($scope.isNew)
 				$location.path("/sheets/" + result.data.sheet.noteId).replace();
+			else
+		    	$rootScope.$emit('OkMessage', "Note ble lagret ok.");
 		});
 	}
 	$scope.addTag = function() {
@@ -72,6 +74,7 @@ angular.module('notearkiv').controller('editSheetController', function($scope, $
 		$scope.addTagPromise.then(function successCallback(result) {
 			$scope.connectedTags.push(result.data);
 			$scope.connected = result.data;
+	    	$rootScope.$emit('OkMessage', "Sjanger " + $scope.newTag + " ble lagt til.");
 			$scope.newTag = "";
 		});
 	}
@@ -87,6 +90,7 @@ angular.module('notearkiv').controller('editSheetController', function($scope, $
 			return;
 		$scope.deleteTagPromise = Tags.deleteTag($scope.available);
 		$scope.deleteTagPromise.then(function successCallback(result) {
+	    	$rootScope.$emit('OkMessage', "Sjanger " + $scope.available.name + " ble slettet.");
 			var i = getTagIndex($scope.availableTags, $scope.available.id);
 			deleteFromTagList(i, $scope.availableTags, "available");
 		});
