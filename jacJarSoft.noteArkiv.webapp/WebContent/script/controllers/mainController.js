@@ -36,7 +36,10 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
     $rootScope.$on('HttpError', function(ev, args){
     	var data = args.rejection.data;
     	var msg;
-    	if (typeof data.msgType === "undefined" ) {
+    	if (args.rejection.status <= 0) {
+    		msg = "kan ikke kontakte server, det er mulig systemet er nede. Prøv igjen senere."
+    	}
+    	else if (typeof data.msgType === "undefined" ) {
         	msg = args.rejection.status + " - " + args.rejection.statusText;
     	} else {
         	msg = data.msg;
