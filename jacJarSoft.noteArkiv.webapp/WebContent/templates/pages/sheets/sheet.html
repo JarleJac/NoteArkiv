@@ -1,6 +1,6 @@
-<h3 class="pagetop">Note informasjon</h3>
-<!-- <div style="background-color: aqua;"> -->
-<form data-cg-busy="{promise:getPromise,message:'Henter note'}" data-cg-busy="{promise:sacePromise,message:'Lagrer note',minDuration:2000}" class="form-horizontal">
+<h3 data-ng-show="isNew" class="pagetop">Registrer ny note</h3>
+<h3 data-ng-hide="isNew" class="pagetop">Note info for: "{{sheet.title}}"</h3>
+<form data-cg-busy="{promise:getPromise,message:'Henter note'}" data-cg-busy="{promise:sacePromise,message:'Lagrer note',minDuration:2000}" class="form-horizontal main">
   <div class="form-group">
     <label for="title" class="col-sm-2 col-md-1 control-label">Tittel</label>
     <div class="col-sm-7 col-lg-5 col-md-6">
@@ -58,23 +58,10 @@
   		</div>
   	</fieldset>
   </div>
-<!--   <div class="form-group"> -->
-<!--   </div> -->
-  <div class="form-group">
-	<div class="col-xs-6 col-sm-3 col-md-2">
-		<label for="noteId" class="col-xs-6 col-sm-2 col-md-1 control-label">Note nr</label> 
-		<input type="text" readonly
-			class="form-control" id="noteId" data-ng-model="sheet.noteId">
-	</div>
-	<div class="col-xs-6 col-sm-3 col-md-2">
-		<label for="registeredBy" class="col-xs-6 col-sm-2 col-md-1 control-label">Reg. av</label> 
-		<input type="text" readonly
-			class="form-control" id="registeredBy" data-ng-model="sheet.registeredBy">
-	</div>
-	<div class="col-xs-6 col-sm-3 col-lg-2 col-md-3">
-		<label for="registeredDate" class="col-xs-6 col-sm-2 col-md-1 control-label">Reg. dato</label> 
-		<input type="date" readonly
-			class="form-control col-xs-4" id="registeredDate" data-ng-model="sheet.registeredDate">
+  <div class="form-group" data-ng-hide="isNew">
+	<div class="col-xs-8 col-sm-7 col-md-6">
+		<span class="listLabel">Note id: </span>{{sheet.noteId}} <span class="listLabel">Registrert: </span>{{sheet.registeredDate | date:'dd.MM.yyyy
+						HH:mm'}}<span class="listLabel"> av </span>{{sheet.registeredBy}}
 	</div>
   </div>
   <div class="form-group">
@@ -82,9 +69,32 @@
       <button type="submit" class="btn btn-default"  data-ng-click="newSheet()">Ny</button>
       <button type="submit" class="btn btn-default"  data-ng-click="saveSheet()">Lagre</button>
     </div>
-<!--     <div class="col-sm-offset-8 col-lg-offset-5 col-md-offset-6 col-xs-1 col-sm-1"> -->
-<!--       <button type="submit" class="btn btn-default text-right"  data-ng-click="saveSheet()">Lagre</button> -->
-<!--     </div> -->
   </div>
 </form>
-<!-- </div> -->
+<h3 data-ng-hide="isNew" class="pagetop">Filer for: "{{sheet.title}}"</h3>
+<div data-ng-hide="isNew" class="" data-cg-busy="{promise:getFilesPromise,message:'Henter filer'}">
+	<div class="col-xs-12 col-sm-9 col-md-8 col-lg-7">
+		<div  data-ng-repeat="file in files">
+			<div data-ng-if="$first" class="row listHeading">
+				<div class="col-md-4">Filnavn</div>
+				<div class="col-md-4">Beskrivelse</div>
+				<div class="col-md-3">Aktivitet</div>
+			</div>
+			<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row">
+				<div class="col-md-4">{{file.name}}</div>
+				<div class="col-md-4">{{file.description}}</div>
+				<div class="col-md-3">TODO</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-2 col-sm-2 ">
+		<input type="file" value="legg til fil" data-nv-file-select="" data-uploader="uploader" />
+		<ul>
+            <li data-ng-repeat="item in uploader.queue">
+                Name: <span data-ng-bind="item.file.name"></span>
+                <input type="text" class="form-control" id="newTag" data-ng-model="item.myData.description"><button data-ng-click="item.upload()">upload</button>
+            </li>
+        </ul>      <button type="submit" class="btn btn-default"  data-ng-click="newFile()">Ny fil</button>
+	</div>
+</div>
+  

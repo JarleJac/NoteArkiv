@@ -1,6 +1,7 @@
 package jacJarSoft.noteArkiv.service;
 
 import javax.jws.WebService;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,6 +11,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
 import jacJarSoft.noteArkiv.api.SheetParam;
 import jacJarSoft.noteArkiv.api.SheetSearchParam;
@@ -33,6 +37,19 @@ public interface NoteService {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/note")
 	public Response addNote(SheetParam param);
+
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/note/{sheetId}/file")
+	public Response getSheetFiles(@PathParam("sheetId") long sheetId);
+
+	@POST
+	@Consumes({MediaType.MULTIPART_FORM_DATA})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/note/{sheetId}/file")
+	public Response addSheetFile(@PathParam("sheetId") long sheetId,
+								@Multipart("description") String description,
+								@Multipart("file") Attachment file);
 
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})

@@ -47,6 +47,10 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
     	controller.setError(msg);
     		
     }); 	
+    $rootScope.$on('ErrorMsg', function(ev, args){
+    	controller.setError(args);
+    		
+    }); 	
 	$scope.isLoggedOn = function() {
 		return Auth.isLoggedOn();
 	}

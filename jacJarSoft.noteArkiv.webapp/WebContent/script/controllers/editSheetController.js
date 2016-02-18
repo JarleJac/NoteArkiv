@@ -2,12 +2,33 @@
  * 
  */
 
-angular.module('notearkiv').controller('editSheetController', function($rootScope, $scope, $q, $http,  $routeParams, $location, Voices, Tags) {
+angular.module('notearkiv').controller('editSheetController', 
+		function($rootScope, $scope, $q, $http,  $routeParams, $location, Sheets, Voices, Tags, AuthToken, FileUploader) {
 	$scope.connectedTags = [];
 	$scope.availableTags = [];
+	$scope.files = [];
 	$scope.connected = null;
 	$scope.available = null;
+	$scope.uploader = new FileUploader({
+        url: 'rest/noteservice/note/' + $routeParams.sheetId + '/file',
+	    headers : {
+	        'Authorization': AuthToken.getAuthToken()
+	    }
+    });
 	
+	$scope.uploader.onErrorItem = function(fileItem, response, status, headers) {
+		$rootScope.$emit('ErrorMsg', "Opplasting av fil " + fileItem.file.name + " feilet. Feilkode: " + status);
+    };
+	$scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        console.info('onSuccessItem', fileItem, response, status, headers);
+    };
+    $scope.uploader.onAfterAddingFile = function(fileItem) {
+    	fileItem.myData = {description: ""};
+    };
+    $scope.uploader.onBeforeUploadItem = function(fileItem) {
+    	fileItem.formData.push({description: fileItem.myData.description});
+    };
+
 	var getVoices = function(selectedVoices) {
 		$scope.getVoicesPromise = Voices.getSelectedVoices(selectedVoices);
 		$scope.getVoicesPromise.then(function successCallback(voiceResult) {
@@ -37,6 +58,12 @@ angular.module('notearkiv').controller('editSheetController', function($rootScop
 			}
 		});
 	};
+	var getFiles = function(sheetId) {
+		$scope.getFilesPromise = Sheets.getFiles(sheetId);
+		$scope.getFilesPromise.then(function successCallback(files) {
+			$scope.files = files;
+		});
+	}
 	$scope.isNew = $routeParams.sheetId === "new" ? true : false;
 	if ($scope.isNew) {
 		$scope.sheet = undefined;
@@ -50,6 +77,7 @@ angular.module('notearkiv').controller('editSheetController', function($rootScop
 			$scope.sheet = result.data.sheet;
 			getVoices($scope.sheet.voices);
 			getTags($scope.sheet.tags);
+			getFiles($scope.sheet.noteId);
 		});
 	}
 	$scope.saveSheet = function() {
@@ -62,8 +90,7 @@ angular.module('notearkiv').controller('editSheetController', function($rootScop
 		$scope.savePromise.then(function successCallback(result) {
 			if ($scope.isNew)
 				$location.path("/sheets/" + result.data.sheet.noteId).replace();
-			else
-		    	$rootScope.$emit('OkMessage', "Note ble lagret ok.");
+			$rootScope.$emit('OkMessage', "Note ble lagret ok.");
 		});
 	}
 	$scope.addTag = function() {
@@ -121,6 +148,8 @@ angular.module('notearkiv').controller('editSheetController', function($rootScop
 	$scope.newSheet = function() {
 		$scope.sheet = undefined;
 		$location.path("/sheets/new");
+	}
+	$scope.newFile = function() {
 	}
 })
 ;
