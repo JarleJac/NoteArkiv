@@ -57,6 +57,10 @@ public class AuthCheckerFilter implements Filter 	 {
 					logger.log(Level.SEVERE, "not auth, exception: " + e.getMessage(), e);
 				}
 			}
+			else
+			{
+				logger.warning("Not Auth, no header");
+			}
 		}
 		if (authOk)
 		{
