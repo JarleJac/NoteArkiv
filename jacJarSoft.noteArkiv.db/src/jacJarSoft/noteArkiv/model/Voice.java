@@ -18,7 +18,7 @@ public class Voice  extends AbstractEntity {
 		this.name = name;
 	}
 	@Id
-	@GeneratedValue(generator="sqlite_person")
+	@GeneratedValue(generator="sqlite_voice")
 	@TableGenerator(name="sqlite_voice", table="sqlite_sequence",
 	    pkColumnName="name", valueColumnName="seq",
 	    pkColumnValue="VOICES",
