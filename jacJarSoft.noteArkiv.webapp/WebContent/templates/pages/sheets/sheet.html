@@ -71,30 +71,72 @@
     </div>
   </div>
 </form>
-<h3 data-ng-hide="isNew" class="pagetop">Filer for: "{{sheet.title}}"</h3>
+<h3 data-ng-hide="isNew" >Filer for: "{{sheet.title}}"</h3>
 <div data-ng-hide="isNew" class="" data-cg-busy="{promise:getFilesPromise,message:'Henter filer'}">
-	<div class="col-xs-12 col-sm-9 col-md-8 col-lg-7">
+	<div class="col-xs-12">
+		<h4 class="sub-heading">Lagrede filer</h4>
 		<div  data-ng-repeat="file in files">
 			<div data-ng-if="$first" class="row listHeading">
-				<div class="col-md-4">Filnavn</div>
-				<div class="col-md-4">Beskrivelse</div>
-				<div class="col-md-3">Aktivitet</div>
+				<div class="col-xs-4">Filnavn</div>
+				<div class="col-xs-4">Beskrivelse</div>
+				<div class="col-xs-1">KB</div>
+				<div class="col-xs-3">Aktivitet</div>
 			</div>
 			<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row">
-				<div class="col-md-4">{{file.name}}</div>
-				<div class="col-md-4">{{file.description}}</div>
-				<div class="col-md-3">TODO</div>
+				<div class="col-xs-4">{{file.name}}</div>
+				<div class="col-xs-4">{{file.description}}</div>
+				<div class="col-xs-1">{{file.fileSize/1024|number:2}}</div>
+				<div class="col-xs-3">
+					<button type="button" class="btn btn-danger btn-xs" data-ng-click="deleteFile(file.fileId)">
+						<span class="glyphicon glyphicon-trash"></span> Slett</button>
+					<a href="rest/noteservice/notefile/{{file.fileId}}/download?authInfo={{authInfo}}" class="btn btn-primary btn-xs" role="button">
+						<span class="glyphicon glyphicon-download"></span> Last ned</a>	
+					<a href="rest/noteservice/notefile/{{file.fileId}}?authInfo={{authInfo}}" target="_blank" class="btn btn-primary btn-xs" role="button">
+						<span class="glyphicon glyphicon-open-file"></span> Åpne</a>	
+				</div>
+			</div>
+		</div>
+		<div data-ng-if="files.length === 0">Ingen filer er registrert</div>
+	</div>
+	<div class="col-xs-12" style=" margin-bottom: 10px; margin-top: 10px; ">
+		<h4 class="sub-heading">Velg filer som skal lastes opp</h4>
+		<div class="col-xs-6" style="text-align: center; vertical-align: middle; display:table-cell;">
+			<input style="display: inline-block;" type="file" value="legg til fil" data-nv-file-select="" data-uploader="uploader" multiple />
+		</div>
+		<div class="col-xs-6">
+			<div class="well my-drop-zone" data-nv-file-drop="" data-nv-file-over="" id="fileDrop" data-over-class="drag-over" data-uploader="uploader">
+				Dra filer hit for å laste dem opp
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-2 col-sm-2 ">
-		<input type="file" value="legg til fil" data-nv-file-select="" data-uploader="uploader" />
-		<ul>
-            <li data-ng-repeat="item in uploader.queue">
-                Name: <span data-ng-bind="item.file.name"></span>
-                <input type="text" class="form-control" id="newTag" data-ng-model="item.myData.description"><button data-ng-click="item.upload()">upload</button>
-            </li>
-        </ul>      <button type="submit" class="btn btn-default"  data-ng-click="newFile()">Ny fil</button>
+	<div class="col-xs-12">
+		<h4 class="sub-heading">Filer klar for opplasting</h4>
+		<div data-ng-if="uploader.queue.length === 0">Ingen filer klar for opplasting</div>
+		<div  data-ng-repeat="item in uploader.queue">
+			<div data-ng-if="$first" class="row listHeading">
+				<div class="col-xs-4">Filnavn</div>
+				<div class="col-xs-4">Beskrivelse</div>
+				<div class="col-xs-1">KB</div>
+				<div class="col-xs-3">Aktivitet</div>
+			</div>
+			<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row">
+				<div class="col-xs-4"><input type="text" class="form-control" data-ng-model="item.myData.name"></div>
+				<div class="col-xs-4"><input type="text" class="form-control" data-ng-model="item.myData.description"></div>
+				<div class="col-xs-1">{{ item.file.size/1024|number:2 }}</div>
+				<div class="col-xs-3"><button type="button" class="btn btn-danger btn-xs" data-ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Fjern</button></div>
+			</div>
+			<div data-ng-if="$last">
+				<div>
+					Opplastningsstatus:
+					<div class="progress" style="">
+						<div class="progress-bar" role="progressbar" data-ng-style="{ 'width': uploader.progress + '%' }"></div>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-default" data-ng-click="uploadFiles()">Last opp
+					filer</button>
+			</div>
+		</div>
 	</div>
 </div>
   

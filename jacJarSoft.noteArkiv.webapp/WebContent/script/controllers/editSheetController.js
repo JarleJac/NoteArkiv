@@ -9,24 +9,30 @@ angular.module('notearkiv').controller('editSheetController',
 	$scope.files = [];
 	$scope.connected = null;
 	$scope.available = null;
+	$scope.authInfo = encodeURIComponent(AuthToken.getAuthToken());
 	$scope.uploader = new FileUploader({
         url: 'rest/noteservice/note/' + $routeParams.sheetId + '/file',
 	    headers : {
 	        'Authorization': AuthToken.getAuthToken()
 	    }
     });
-	
+	$("#fileDrop").on('dragleave', function () {
+	    $(this).removeClass('drag-over');
+	});
 	$scope.uploader.onErrorItem = function(fileItem, response, status, headers) {
 		$rootScope.$emit('ErrorMsg', "Opplasting av fil " + fileItem.file.name + " feilet. Feilkode: " + status);
     };
-	$scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
-        console.info('onSuccessItem', fileItem, response, status, headers);
+	$scope.uploader.onCompleteAll = function() {
+        getFiles($scope.sheet.noteId);
+        $scope.uploader.clearQueue();
     };
     $scope.uploader.onAfterAddingFile = function(fileItem) {
-    	fileItem.myData = {description: ""};
+    	fileItem.myData = {description: "", name: fileItem.file.name};
     };
     $scope.uploader.onBeforeUploadItem = function(fileItem) {
     	fileItem.formData.push({description: fileItem.myData.description});
+    	fileItem.formData.push({name: fileItem.myData.name});
+    	fileItem.formData.push({size: fileItem.file.size});
     };
 
 	var getVoices = function(selectedVoices) {
@@ -92,6 +98,9 @@ angular.module('notearkiv').controller('editSheetController',
 				$location.path("/sheets/" + result.data.sheet.noteId).replace();
 			$rootScope.$emit('OkMessage', "Note ble lagret ok.");
 		});
+	}
+	$scope.uploadFiles = function() {
+		$scope.uploader.uploadAll();
 	}
 	$scope.addTag = function() {
 		if (!$scope.newTag)

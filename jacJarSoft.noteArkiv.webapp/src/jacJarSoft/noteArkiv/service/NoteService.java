@@ -43,13 +43,24 @@ public interface NoteService {
 	@Path("/note/{sheetId}/file")
 	public Response getSheetFiles(@PathParam("sheetId") long sheetId);
 
+	@GET
+	@Produces({MediaType.APPLICATION_OCTET_STREAM})
+	@Path("/notefile/{fileId}/download")
+	public Response downLoadFile(@PathParam("fileId") long fileId);
+	@GET
+	@Produces({MediaType.APPLICATION_OCTET_STREAM})
+	@Path("/notefile/{fileId}")
+	public Response getFileData(@PathParam("fileId") long fileId);
+
 	@POST
 	@Consumes({MediaType.MULTIPART_FORM_DATA})
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/note/{sheetId}/file")
 	public Response addSheetFile(@PathParam("sheetId") long sheetId,
-								@Multipart("description") String description,
-								@Multipart("file") Attachment file);
+			@Multipart("name") String name,
+			@Multipart("description") String description,
+			@Multipart("size") long size,
+			@Multipart("file") Attachment file);
 
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})

@@ -9,6 +9,7 @@ import jacJarSoft.util.Version;
 public class NoteArkivAppInfo {
 	private static Logger logger = Logger.getLogger(NoteArkivAppInfo.class.getName());
 	private static Version version;
+	public static final long MAX_FILE_SIZE = 104857600;
 	static {
 		Properties props = new Properties();
 		try {

@@ -46,6 +46,9 @@ public class AuthCheckerFilter implements Filter 	 {
 		else {
 			logger.fine("Checking auth for: " + pathInfo );
 			String authHeader = req.getHeader("Authorization");
+			if (authHeader == null) {
+				authHeader = req.getParameter("authInfo");
+			}
 			if (authHeader != null) {
 				logger.fine("got header: " + authHeader );
 				try {

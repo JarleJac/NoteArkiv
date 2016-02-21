@@ -5,7 +5,12 @@ textarea.ta-vertical {
 h3.pagetop {
 	margin-top: 0px;
 }
-
+h4.sub-heading {
+	color: #46ba4e;
+}
+.drag-over { 
+	background-color:  #ecf8ed;
+}
 .small-spacer {
     margin-top: 5px; 
 }
