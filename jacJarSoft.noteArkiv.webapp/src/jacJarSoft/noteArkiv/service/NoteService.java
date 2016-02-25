@@ -52,6 +52,11 @@ public interface NoteService {
 	@Path("/notefile/{fileId}")
 	public Response getFileData(@PathParam("fileId") long fileId);
 
+	@DELETE
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/notefile/{fileId}")
+	public Response deleteFile(@PathParam("fileId") long fileId);
+
 	@POST
 	@Consumes({MediaType.MULTIPART_FORM_DATA})
 	@Produces({MediaType.APPLICATION_JSON})

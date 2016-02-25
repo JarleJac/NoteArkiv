@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;;
@@ -65,25 +64,33 @@ public class DbUtil {
 		}
 		return result;
 	}
-	public static <R> R runWithConnection(EntityManager em, Function<Connection,R> function) {
+	@FunctionalInterface
+	public interface SqlFunction<R> {
+		R apply(Connection con) throws SQLException;
+	}
+	public static <R> R runWithConnection(EntityManager em, SqlFunction<R> function) {
 		R ret = null;
-		EntityTransaction transaction = em.getTransaction();
-		if (transaction.isActive())
-		{
-			ret = unwrapConnectionAndRun(em, function);
-		}
-		else
-		{
-			try
+		try {
+			EntityTransaction transaction = em.getTransaction();
+			if (transaction.isActive())
 			{
-				transaction.begin();
 				ret = unwrapConnectionAndRun(em, function);
-				transaction.commit();
 			}
-			finally {
-				if (transaction.isActive())
-					transaction.rollback();
+			else
+			{
+				try
+				{
+					transaction.begin();
+					ret = unwrapConnectionAndRun(em, function);
+					transaction.commit();
+				}
+				finally {
+					if (transaction.isActive())
+						transaction.rollback();
+				}
 			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 		return ret;
 	}
@@ -110,7 +117,7 @@ public class DbUtil {
 		return ret;
 	}
 
-	private static <R> R unwrapConnectionAndRun(EntityManager em, Function<Connection, R> function) {
+	private static <R> R unwrapConnectionAndRun(EntityManager em, SqlFunction<R> function) throws SQLException {
 		R ret;
 		Connection connection = em.unwrap(Connection.class);
 		ret = function.apply(connection);

@@ -167,6 +167,18 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	}
 	
 	@Override
+	public Response deleteFile(long fileId) {
+		Void result = runWithTransaction(this::internalDeleteFile, fileId);
+		return Response.ok(result).build();
+	}
+	private Void internalDeleteFile(EntityManager em, long fileId) {
+		NoteFile noteFile = sheetFileDao.getNoteFile(fileId);
+		if (null == noteFile)
+			throw new ValidationErrorException("Finner ikke fil med id " + fileId);
+		sheetFileDao.deleteFile(noteFile);
+		return null;	
+	}
+	@Override
 	public Response searchSheets(SheetSearchParam param) {
 		return Response.ok(noteDao.sheetSearch(param)).build();
 	}

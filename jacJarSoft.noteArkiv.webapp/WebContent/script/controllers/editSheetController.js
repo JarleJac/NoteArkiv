@@ -105,6 +105,11 @@ angular.module('notearkiv').controller('editSheetController',
 	$scope.selectFiles = function() {
 		$("#fileSelect").click();
 	}
+	$scope.deleteFile = function(fileId) {
+		Sheets.deleteFile(fileId).then(function successCallback(result) {
+			getFiles($scope.sheet.noteId);
+		});
+	}
 	$scope.addTag = function() {
 		if (!$scope.newTag)
 			return;

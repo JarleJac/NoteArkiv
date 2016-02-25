@@ -14,8 +14,8 @@ angular.module('notearkiv').factory('Sheets', function SheetsFactory($http) {
 				throw result;
 			});
 		},
-		xxx : function() {
-			return null;
+		deleteFile : function(fileId) {
+			return $http({method: 'DELETE', url : 'rest/noteservice/notefile/' + fileId  });
 		}
 	}
 }
