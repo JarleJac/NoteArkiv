@@ -102,6 +102,9 @@ angular.module('notearkiv').controller('editSheetController',
 	$scope.uploadFiles = function() {
 		$scope.uploader.uploadAll();
 	}
+	$scope.selectFiles = function() {
+		$("#fileSelect").click();
+	}
 	$scope.addTag = function() {
 		if (!$scope.newTag)
 			return;

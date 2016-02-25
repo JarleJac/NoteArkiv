@@ -101,7 +101,8 @@
 	<div class="col-xs-12" style=" margin-bottom: 10px; margin-top: 10px; ">
 		<h4 class="sub-heading">Velg filer som skal lastes opp</h4>
 		<div class="col-xs-6" style="text-align: center; vertical-align: middle; display:table-cell;">
-			<input style="display: inline-block;" type="file" value="legg til fil" data-nv-file-select="" data-uploader="uploader" multiple />
+			<input  style="display: none;" type="file" data-nv-file-select="" data-uploader="uploader" multiple id="fileSelect" />
+			<button style="display: inline-block;" type="submit" class="btn btn-default btn-lg " data-ng-click="selectFiles()">Velg filer</button>
 		</div>
 		<div class="col-xs-6">
 			<div class="well my-drop-zone" data-nv-file-drop="" data-nv-file-over="" id="fileDrop" data-over-class="drag-over" data-uploader="uploader">
