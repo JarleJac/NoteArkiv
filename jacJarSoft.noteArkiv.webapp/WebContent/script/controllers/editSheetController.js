@@ -3,7 +3,8 @@
  */
 
 angular.module('notearkiv').controller('editSheetController', 
-		function($rootScope, $scope, $q, $http,  $routeParams, $location, Sheets, Voices, Tags, AuthToken, FileUploader) {
+		function($rootScope, $scope, $q, $http,  $routeParams, $location, 
+				Sheets, Voices, Tags, AuthToken, FileUploader, SimpleDlg) {
 	$scope.connectedTags = [];
 	$scope.availableTags = [];
 	$scope.files = [];
@@ -105,10 +106,14 @@ angular.module('notearkiv').controller('editSheetController',
 	$scope.selectFiles = function() {
 		$("#fileSelect").click();
 	}
-	$scope.deleteFile = function(fileId) {
-		Sheets.deleteFile(fileId).then(function successCallback(result) {
-			getFiles($scope.sheet.noteId);
-		});
+	$scope.deleteFile = function(fileId, fileName) {
+		SimpleDlg.runSimpleConfirmDlg("Bekreft sletting", "Er du sikker på at du vil slette " + fileName)
+			.result.then(function (result) {
+				Sheets.deleteFile(fileId).then(function successCallback(result) {
+					getFiles($scope.sheet.noteId);
+				});
+				
+			}); 
 	}
 	$scope.addTag = function() {
 		if (!$scope.newTag)

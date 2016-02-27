@@ -11,7 +11,7 @@ var GravatarUtil = {
 } 
 
 
-angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload' ])
+angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.bootstrap' ])
 .config(function($routeProvider, $provide, $httpProvider) {
 	$routeProvider
 	.when('/', {
