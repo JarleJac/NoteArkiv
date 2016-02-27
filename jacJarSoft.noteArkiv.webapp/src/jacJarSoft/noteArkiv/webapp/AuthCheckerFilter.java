@@ -35,19 +35,19 @@ public class AuthCheckerFilter implements Filter 	 {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
+		HttpServletRequest httpReq = (HttpServletRequest) request;
+		HttpServletResponse httpRes = (HttpServletResponse) response;
 
 		boolean authOk = false;
 		AuthTokenInfo tokenInfo = null;
-		String pathInfo = req.getPathInfo();
-		if (pathInfo.equals("/appservice/logon") || pathInfo.startsWith("/services") || (pathInfo.equals("/") && (req.getParameterValues("_wadl") != null)))
+		String pathInfo = httpReq.getPathInfo();
+		if (pathInfo.equals("/appservice/logon") || pathInfo.startsWith("/services") || (pathInfo.equals("/") && (httpReq.getParameterValues("_wadl") != null)))
 			authOk = true;
 		else {
 			logger.fine("Checking auth for: " + pathInfo );
-			String authHeader = req.getHeader("Authorization");
+			String authHeader = httpReq.getHeader("Authorization");
 			if (authHeader == null) {
-				authHeader = req.getParameter("authInfo");
+				authHeader = httpReq.getParameter("authInfo");
 			}
 			if (authHeader != null) {
 				logger.fine("got header: " + authHeader );
@@ -70,14 +70,19 @@ public class AuthCheckerFilter implements Filter 	 {
 			AppContext appContext = AppContext.get();
 			if (tokenInfo != null)
 				appContext.setCurrentUser(tokenInfo.getUser());
+
+			httpRes.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+			httpRes.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+			httpRes.setDateHeader("Expires", 0); // Proxies.
 			
 			chain.doFilter(request, response);
-			
+
+
 			appContext.close();
 			AppContext.remove();
 		}
 		else {
-			res.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			httpRes.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 		}
 	}
 
