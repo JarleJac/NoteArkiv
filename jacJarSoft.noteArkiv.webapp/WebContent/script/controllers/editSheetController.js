@@ -110,6 +110,7 @@ angular.module('notearkiv').controller('editSheetController',
 		SimpleDlg.runSimpleConfirmDlg("Bekreft sletting", "Er du sikker på at du vil slette " + fileName)
 			.result.then(function (result) {
 				Sheets.deleteFile(fileId).then(function successCallback(result) {
+			    	$rootScope.$emit('OkMessage', "File " + fileName + " ble slettet.");
 					getFiles($scope.sheet.noteId);
 				});
 				
@@ -137,12 +138,15 @@ angular.module('notearkiv').controller('editSheetController',
 	$scope.deleteTag = function() {
 		if (!$scope.available)
 			return;
-		$scope.deleteTagPromise = Tags.deleteTag($scope.available);
-		$scope.deleteTagPromise.then(function successCallback(result) {
-	    	$rootScope.$emit('OkMessage', "Sjanger " + $scope.available.name + " ble slettet.");
-			var i = getTagIndex($scope.availableTags, $scope.available.id);
-			deleteFromTagList(i, $scope.availableTags, "available");
-		});
+		SimpleDlg.runSimpleConfirmDlg("Bekreft sletting", "Er du sikker på at du vil slette sjanger " + $scope.available.name)
+		.result.then(function (result) {
+			$scope.deleteTagPromise = Tags.deleteTag($scope.available);
+			$scope.deleteTagPromise.then(function successCallback(result) {
+		    	$rootScope.$emit('OkMessage', "Sjanger " + $scope.available.name + " ble slettet.");
+				var i = getTagIndex($scope.availableTags, $scope.available.id);
+				deleteFromTagList(i, $scope.availableTags, "available");
+			});
+		}); 
 	}
 	var switchList = function(fromList, toList, scopeFrom, scopeTo) {
 		var i = getTagIndex(fromList, $scope[scopeFrom].id);
