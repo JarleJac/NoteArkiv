@@ -1,14 +1,16 @@
 /**
  * 
  */
-angular.module('notearkiv').factory('SearchSheets', function SearchSheetsFactory($http) {
+angular.module('notearkiv').factory('SearchSheets', function SearchSheetsFactory($http, Tags, Voices) {
 	var lastSearchResult;
 
 	internalSearch = function(searchParam) {
 		return $http({method: 'POST', url : 'rest/noteservice/note/search', data: searchParam })
 		.then(function successCallback(result) {
 			for (var ix = 0; ix < result.data.sheetList.length; ix++) {
-				result.data.sheetList[ix].sheet.registeredDate = new Date(result.data.sheetList[ix].sheet.registeredDate)
+				result.data.sheetList[ix].sheet.registeredDate = new Date(result.data.sheetList[ix].sheet.registeredDate);
+				Tags.getTagsDescrString(result.data.sheetList[ix].sheet);
+				Voices.getVoicesDescrString(result.data.sheetList[ix].sheet);
 			}
 			lastSearchResult = result.data;
 			return lastSearchResult;

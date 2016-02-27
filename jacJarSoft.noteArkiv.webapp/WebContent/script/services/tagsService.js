@@ -24,7 +24,7 @@ CacheObject.prototype.isExpired = function() {
 
 angular.module('notearkiv').factory('Tags', function TagsFactory($q, $http) {
 
-	var timeToLiveSeconds = 30;
+	var timeToLiveSeconds = 300;
 	var tagsCache = new CacheObject();
 	var rqInProgress = null;
 	
@@ -70,9 +70,22 @@ angular.module('notearkiv').factory('Tags', function TagsFactory($q, $http) {
 				
 				var selectedIdArr = filterIdsString === null ? [] : filterIdsString.split(",");
 				return resultArr.filter(function(tag) {
-					var isSelected = selectedIdArr.includes(tag.id.toString());
+					var isSelected = selectedIdArr.indexOf(tag.id.toString()) != -1;
 					return (include && isSelected) || (!include && !isSelected);
 				});
+			});
+		},
+		getTagsDescrString : function(sheet) {
+			return getTags().then(function successCallback(result) {
+				var selectedIdArr = sheet.tags === null ? [] : sheet.tags.split(",");
+				var resultArr = [];
+				resultArr.push.apply(resultArr,result);
+				
+				var selectedTags = resultArr.filter(function(tag) {
+					return selectedIdArr.indexOf(tag.id.toString()) != -1;
+				}).map(function(tag) {return tag.name;});
+				sheet.tagsDescr = selectedTags.join(", ");
+				return sheet;
 			});
 		},
 		addTag : function(tag) {
