@@ -1,9 +1,9 @@
 /**
  * 
  */
-angular.module('notearkiv').controller('searchController', function($scope, $http, SearchSheets) {
+angular.module('notearkiv').controller('searchController', function($scope, $http, $routeParams, SearchSheets) {
 	var controller = this;
-	$scope.tab = "current";
+	$scope.tab = $routeParams.tab;
 
 	//TODO Revise this popover activation
 	$(function () {

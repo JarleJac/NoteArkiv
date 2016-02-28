@@ -1,15 +1,15 @@
 <h3 class="pagetop">Søk</h3>
 <ul class="nav nav-tabs">
 	<li role="presentation" data-ng-class="{ active: isTabSet('current') }"><a
-		data-ng-click="setTab('current')" href=>Gjeldende</a></li>
+		href="#/search/current">Gjeldende</a></li>
 	<li role="presentation" data-ng-class="{ active: isTabSet('lists') }"><a
-		data-ng-click="setTab('lists')" href=>Lister</a></li>
+		href="#/search/lists">Lister</a></li>
 	<li role="presentation" data-ng-class="{ active: isTabSet('newest') }"><a
-		data-ng-click="setTab('newest')" href=>nyeste</a></li>
+		href="#/search/newest">nyeste</a></li>
 	<li role="presentation" data-ng-class="{ active: isTabSet('simple') }"><a
-		data-ng-click="setTab('simple')" href=>Enkel søk</a></li>
+		href="#/search/simple">Enkel søk</a></li>
 	<li role="presentation" data-ng-class="{ active: isTabSet('advansed') }"><a
-		data-ng-click="setTab('advansed')" href=>Avansert søk</a></li>
+		href="#/search/advansed">Avansert søk</a></li>
 </ul>
 <div class="small-spacer"> </div>
 <div data-ng-show="isTabSet('current')">

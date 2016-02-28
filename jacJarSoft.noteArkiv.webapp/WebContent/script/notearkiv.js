@@ -23,7 +23,7 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 	.when('/about', {
 		templateUrl : 'templates/pages/home/about.html'
 	})
-	.when('/search', {
+	.when('/search/:tab', {
 		templateUrl : 'templates/pages/search/index.html',
 		controller : 'searchController',
 		access: {
@@ -59,6 +59,12 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
             requiresLogin: true
         }
 		
+	})
+	.when('/users', {
+		templateUrl : 'templates/pages/users/users.html',
+		access: {
+            requiresLogin: true
+        }
 	})
 	.when('/users/profile/:userId', {
 		templateUrl : 'templates/pages/users/profile.html',
