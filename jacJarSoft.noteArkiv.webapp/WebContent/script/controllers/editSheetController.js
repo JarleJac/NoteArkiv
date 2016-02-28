@@ -65,10 +65,19 @@ angular.module('notearkiv').controller('editSheetController',
 			}
 		});
 	};
+	var getSplitFileName = function(fName) {
+		var ext = fName.slice((Math.max(0, fName.lastIndexOf(".")) || Infinity) + 1);
+		var name = fName.substr(0,fName.length - (ext.length+1));
+		return {name: name, ext : ext};
+	}
 	var getFiles = function(sheetId) {
 		$scope.getFilesPromise = Sheets.getFiles(sheetId);
 		$scope.getFilesPromise.then(function successCallback(files) {
-			$scope.files = files;
+			$scope.files = files.map(function(file) {
+				file.isEditMode = false;
+				file.splitName = getSplitFileName(file.name);
+				return file;
+			});
 		});
 	}
 	$scope.isNew = $routeParams.sheetId === "new" ? true : false;
@@ -115,6 +124,20 @@ angular.module('notearkiv').controller('editSheetController',
 				});
 				
 			}); 
+	}
+	var markEditFile = function(fileId) {
+		$scope.files.forEach(function(file) {
+			if (fileId >= 0 && file.fileId === fileId)
+				file.isEditMode = true;
+			else
+				file.isEditMode = false;
+		});	
+	}
+	$scope.editFile = function(fileId) {
+		markEditFile(fileId);
+	}
+	$scope.cancelEditFile = function() {
+		markEditFile(-1);
 	}
 	$scope.addTag = function() {
 		if (!$scope.newTag)
