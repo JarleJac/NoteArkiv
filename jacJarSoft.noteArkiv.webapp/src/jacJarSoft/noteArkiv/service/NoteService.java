@@ -29,6 +29,11 @@ public interface NoteService {
 	@Path("/note/{noteId}")
 	public Response getNote(@PathParam("noteId") long noteId);
 
+	@DELETE
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/note/{noteId}")
+	public Response deleteNote(@PathParam("noteId") long noteId);
+
 	@PUT
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/note")

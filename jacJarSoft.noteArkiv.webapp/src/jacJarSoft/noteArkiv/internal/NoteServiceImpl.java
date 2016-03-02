@@ -51,6 +51,16 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 		return Response.ok(result).build();
 	}
 	@Override
+	public Response deleteNote(long noteId) {
+		Note note = noteDao.getNote(noteId);
+		if (note == null)
+			throw new ValidationErrorException("Finner ikke note " + noteId);
+		return runWithTransaction((ec, p)-> {
+			noteDao.deleteNote(note);
+			return Response.ok().build();
+		}, null);
+	}
+	@Override
 	public Response getSheetFiles(long sheetId) {
 		List<NoteFile> list = sheetFileDao.getSheetFiles(sheetId);
 		return Response.ok(list).build();

@@ -109,6 +109,16 @@ angular.module('notearkiv').controller('editSheetController',
 			$rootScope.$emit('OkMessage', "Note ble lagret ok.");
 		});
 	}
+	$scope.deleteSheet = function() {
+		SimpleDlg.runSimpleConfirmDlg("Bekreft sletting", "Er du sikker på at du vil slette " + $scope.sheet.title)
+		.result.then(function (result) {
+			$scope.deletePromise = Sheets.deleteSheet($scope.sheet);
+			$scope.deletePromise.then(function successCallback(result) {
+				$location.path("/sheets/new").replace();
+				$rootScope.$emit('OkMessage', "Note ble slettet.");
+			});
+		}); 
+	}
 	$scope.uploadFiles = function() {
 		$scope.uploader.uploadAll();
 	}

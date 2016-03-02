@@ -57,5 +57,10 @@ public class NoteDao extends AbstractDao {
 		return sheetData;
 	}
 
+	public void deleteNote(Note note) {
+		getEntityManager().remove(note);
+		
+	}
+
 
 }
