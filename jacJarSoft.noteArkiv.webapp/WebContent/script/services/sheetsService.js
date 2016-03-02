@@ -16,6 +16,18 @@ angular.module('notearkiv').factory('Sheets', function SheetsFactory($http) {
 		},
 		deleteFile : function(fileId) {
 			return $http({method: 'DELETE', url : 'rest/noteservice/notefile/' + fileId  });
+		},
+		saveFile : function(file) {
+			fileToSave = {
+					fileId: file.fileId,
+					noteId: file.noteId,
+					name: file.name,
+					description: file.description,
+					fileSize: file.fileSize,
+					registeredDate: file.registeredDate,
+					registeredBy: file.registeredBy,
+			}
+			return $http({method: 'PUT', url : 'rest/noteservice/notefile/' + file.fileId, data: fileToSave});
 		}
 	}
 }

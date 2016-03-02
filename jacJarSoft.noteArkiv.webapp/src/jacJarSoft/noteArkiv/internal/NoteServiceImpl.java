@@ -179,6 +179,15 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 		return null;	
 	}
 	@Override
+	public Response updateFile(long fileId, NoteFile file) {
+		if (fileId != file.getFileId())
+			throw new RuntimeException("Mismatch between url pram and file id!");
+		Response resp = runWithTransaction((ec, p)-> {
+			return Response.ok(sheetFileDao.updateFile(file)).build();
+		}, null);
+		return resp;
+	}
+	@Override
 	public Response searchSheets(SheetSearchParam param) {
 		return Response.ok(noteDao.sheetSearch(param)).build();
 	}

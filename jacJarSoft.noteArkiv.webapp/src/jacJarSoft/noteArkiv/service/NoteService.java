@@ -17,6 +17,7 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
 import jacJarSoft.noteArkiv.api.SheetParam;
 import jacJarSoft.noteArkiv.api.SheetSearchParam;
+import jacJarSoft.noteArkiv.model.NoteFile;
 import jacJarSoft.noteArkiv.model.Tag;
 
 @Path("/noteservice")
@@ -56,6 +57,11 @@ public interface NoteService {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/notefile/{fileId}")
 	public Response deleteFile(@PathParam("fileId") long fileId);
+
+	@PUT
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/notefile/{fileId}")
+	public Response updateFile(@PathParam("fileId") long fileId, NoteFile file);
 
 	@POST
 	@Consumes({MediaType.MULTIPART_FORM_DATA})

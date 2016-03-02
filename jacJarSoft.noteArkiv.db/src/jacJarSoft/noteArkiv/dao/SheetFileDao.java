@@ -49,5 +49,9 @@ public class SheetFileDao extends AbstractDao {
 			return null;
 		});
 	}
+	public NoteFile updateFile(NoteFile file) {
+		getEntityManager().merge(file);
+		return file;
+	}
 
 }

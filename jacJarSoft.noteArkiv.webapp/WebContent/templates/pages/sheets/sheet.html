@@ -98,7 +98,7 @@
 						<span class="glyphicon glyphicon-open-file"></span> Åpne</a>	
 				</div>
 			</div>
-			<div data-ng-if="file.isEditMode" data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row">
+			<div data-ng-if="file.isEditMode" data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'">
 				<div class="row">
 					<label class="col-xs-2 control-label" >Navn</label>
 					<div class="col-xs-6"><input class="form-control" type="text" style="display: inline; width: 85%" data-ng-model="file.splitName.name"><span >.{{file.splitName.ext}}</span></div>
@@ -135,14 +135,19 @@
 		<div data-ng-if="uploader.queue.length === 0">Ingen filer klar for opplasting</div>
 		<div  data-ng-repeat="item in uploader.queue">
 			<div data-ng-if="$first" class="row listHeading">
-				<div class="col-xs-4">Filnavn</div>
-				<div class="col-xs-4">Beskrivelse</div>
+				<div class="col-xs-8">Filnavn/beskrivelse</div>
 				<div class="col-xs-1">KB</div>
 				<div class="col-xs-3">Aktivitet</div>
 			</div>
-			<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row">
-				<div class="col-xs-4"><input type="text" class="form-control" data-ng-model="item.myData.name"></div>
-				<div class="col-xs-4"><input type="text" class="form-control" data-ng-model="item.myData.description"></div>
+			<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'">
+				<div class="row">
+					<label class="col-xs-2 control-label" >Navn</label>
+					<div class="col-xs-6"><input class="form-control" type="text" style="display: inline; width: 85%" data-ng-model="item.myData.splitName.name"><span >.{{item.myData.splitName.ext}}</span></div>
+				</div>
+				<div class="row">
+					<label class="col-xs-2 control-label">Beskrivelse</label>
+					<div class="col-xs-6"><input type="text" class="form-control" data-ng-model="item.myData.description"></div>
+				</div>
 				<div class="col-xs-1">{{ item.file.size/1024|number:2 }}</div>
 				<div class="col-xs-3"><button type="button" class="btn btn-danger btn-xs" data-ng-click="item.remove()">
                                         <span class="glyphicon glyphicon-trash"></span> Fjern</button></div>

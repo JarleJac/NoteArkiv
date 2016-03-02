@@ -28,11 +28,11 @@ angular.module('notearkiv').controller('editSheetController',
         $scope.uploader.clearQueue();
     };
     $scope.uploader.onAfterAddingFile = function(fileItem) {
-    	fileItem.myData = {description: "", name: fileItem.file.name};
+    	fileItem.myData = {description: "", splitName: getSplitFileName(fileItem.file.name)};
     };
     $scope.uploader.onBeforeUploadItem = function(fileItem) {
     	fileItem.formData.push({description: fileItem.myData.description});
-    	fileItem.formData.push({name: fileItem.myData.name});
+    	fileItem.formData.push({name: fileItem.myData.splitName.name + "." + fileItem.myData.splitName.ext});
     	fileItem.formData.push({size: fileItem.file.size});
     };
 
@@ -119,7 +119,7 @@ angular.module('notearkiv').controller('editSheetController',
 		SimpleDlg.runSimpleConfirmDlg("Bekreft sletting", "Er du sikker på at du vil slette " + fileName)
 			.result.then(function (result) {
 				Sheets.deleteFile(fileId).then(function successCallback(result) {
-			    	$rootScope.$emit('OkMessage', "File " + fileName + " ble slettet.");
+			    	$rootScope.$emit('OkMessage', "Fil " + fileName + " ble slettet.");
 					getFiles($scope.sheet.noteId);
 				});
 				
@@ -135,6 +135,20 @@ angular.module('notearkiv').controller('editSheetController',
 	}
 	$scope.editFile = function(fileId) {
 		markEditFile(fileId);
+	}
+	$scope.saveFile = function(fileId) {
+		for(ix=0; ix < $scope.files.length; ix++) {
+			file = $scope.files[ix];
+			if (file.fileId === fileId) {
+				file.name = file.splitName.name + "." + file.splitName.ext
+				file.isEditMode = false;
+				Sheets.saveFile(file).then(function successCallback(result) {
+			    	$rootScope.$emit('OkMessage', "Fil " + file.name + " ble lagret.");
+					getFiles($scope.sheet.noteId);
+				});
+				break;
+			}
+		};	
 	}
 	$scope.cancelEditFile = function() {
 		markEditFile(-1);
