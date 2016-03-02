@@ -1,2 +1,27 @@
-<h3 class="pagetop">Hurtiglister</h3>
-<p>Her kommer det mulighet for å vedlikeholde brukere</p>
+<h3 data-cg-busy="{promise:getPromise,message:'Henter brukere ...'}" class="pagetop">Brukere</h3>
+
+<div>
+	<button type="submit" class="btn btn-default"  data-ng-click="newUser()"><span class="glyphicon glyphicon-user"></span> Ny</button>
+</div>
+<div >
+	<h4 class="sub-heading">Registrerte brukere</h4>
+	<div class="form-inline">
+		<label for="search" class="control-label">Filter</label>
+		<input type="text" class="form-control" data-ng-model="userFilter" placeholder="filtrer brukere">
+	</div>
+	<div data-ng-repeat="user in users | filter: userFilter">
+		<div data-ng-if="$first" class="row listHeading">
+			<div class="col-md-4">Id</div>
+			<div class="col-md-4">Navn</div>
+			<div class="col-md-3">E-post</div>
+		</div>
+		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row sheetHeading">
+<!-- 			data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false"
+			aria-controls="{{ 'sheetInfo-' + $index }}"
+ -->			
+			<div class="col-md-4">{{user.no}}</div>
+			<div class="col-md-4">{{user.name}}</div>
+			<div class="col-md-4">{{user.eMail}}</div>
+		</div>
+	</div>
+</div>	

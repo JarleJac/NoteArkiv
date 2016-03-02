@@ -62,6 +62,7 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 	})
 	.when('/users', {
 		templateUrl : 'templates/pages/users/users.html',
+		controller : 'usersController',
 		access: {
             requiresLogin: true
         }

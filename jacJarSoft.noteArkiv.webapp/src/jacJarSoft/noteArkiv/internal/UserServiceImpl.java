@@ -63,4 +63,14 @@ public class UserServiceImpl extends BaseService implements UserService {
 		return Response.ok(ret).build();
 	}
 
+	@Override
+	public Response addUser(User user) {
+		return runWithTransaction((ec, p)-> {
+			return Response.ok(userDao.addUser(user)).build();
+		}, null);
+	}
+	@Override
+	public Response getUsers() {
+		return Response.ok(userDao.getUsers()).build();
+	}
 }

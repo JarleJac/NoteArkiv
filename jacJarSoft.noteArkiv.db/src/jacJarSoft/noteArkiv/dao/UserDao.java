@@ -1,5 +1,7 @@
 package jacJarSoft.noteArkiv.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import jacJarSoft.noteArkiv.model.User;
@@ -18,10 +20,19 @@ public class UserDao extends AbstractDao {
 		getEntityManager().merge(user);
 		return user;
 	}
+	public User addUser(User user) {
+		getEntityManager().persist(user);
+		return user;
+	}
 	public User getUser(String userNo) {
 		
 		User user = getEntityManager().find(User.class, userNo);
 		return user;
+	}
+	public List<User> getUsers() {
+		
+		List<User> users = getEntityManager().createQuery("select u from User u", User.class).getResultList();
+		return users;
 	}
 
 }
