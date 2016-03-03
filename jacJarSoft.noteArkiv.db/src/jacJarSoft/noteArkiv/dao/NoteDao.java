@@ -38,7 +38,7 @@ public class NoteDao extends AbstractDao {
 			where = where + "where title like '%" + param.getTitle() + "%'";
 		}
 		@SuppressWarnings("unchecked")
-		List<Note> sheets = (List<Note>) getEntityManager().createNativeQuery("select * from notes " + from + " " + where, Note.class).getResultList();
+		List<Note> sheets = (List<Note>) getEntityManager().createNativeQuery("select * from notes " + from + " " + where + " order by title", Note.class).getResultList();
 		
 		SheetSearchList result = new SheetSearchList();
 		List<SheetParam> sheetList = result.getSheetList();
