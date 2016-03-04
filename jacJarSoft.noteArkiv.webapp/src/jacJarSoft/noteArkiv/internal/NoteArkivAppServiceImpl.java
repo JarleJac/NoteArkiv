@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 import jacJarSoft.noteArkiv.dao.UserDao;
+import jacJarSoft.noteArkiv.model.AccessLevel;
 import jacJarSoft.noteArkiv.model.AppInfo;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.NoteArkivAppService;
@@ -31,6 +32,8 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 		User user = userDao.logon(userLogonInfo);
 		if (null == user)
 			throw new ValidationErrorException("Uggyldig bruker og/eller passord");
+		if (user.getAccessLevel() == AccessLevel.DISABLED)
+			throw new ValidationErrorException("Bruker har blitt sperret");
 
 		LogonInfoReturn lir = new LogonInfoReturn(user);
 		lir.setAuthToken(AuthTokenUtil.createToken(user.getNo(), "NoteArkiv " + NoteArkivAppInfo.getVersion().toVersionString(true)));
