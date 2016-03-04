@@ -147,10 +147,10 @@
 				<div class="row">
 					<label class="col-xs-2 control-label">Beskrivelse</label>
 					<div class="col-xs-6"><input type="text" class="form-control" data-ng-model="item.myData.description"></div>
+					<div class="col-xs-1">{{ item.file.size/1024|number:2 }}</div>
+					<div class="col-xs-3"><button type="button" class="btn btn-danger btn-xs" data-ng-click="item.remove()">
+	                                        <span class="glyphicon glyphicon-trash"></span> Fjern</button></div>
 				</div>
-				<div class="col-xs-1">{{ item.file.size/1024|number:2 }}</div>
-				<div class="col-xs-3"><button type="button" class="btn btn-danger btn-xs" data-ng-click="item.remove()">
-                                        <span class="glyphicon glyphicon-trash"></span> Fjern</button></div>
 			</div>
 			<div data-ng-if="$last">
 				<div>
