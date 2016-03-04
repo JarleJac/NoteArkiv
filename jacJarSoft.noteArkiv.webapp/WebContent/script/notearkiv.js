@@ -141,7 +141,7 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
         	if (next.access.requiresLogin && !Auth.isLoggedOn() && !Auth.islogonInProgress()) {
         		$location.path("/logon").replace();
         	}
-        	if (next.access.accessLevel !== undefined) {
+        	if (next.access.accessLevel !== undefined && !Auth.islogonInProgress()) {
         		if (!Auth.isUserAuth(Auth.getAccessLevel(next.access.accessLevel))) {
         			$location.path("/").replace();
     				$rootScope.$emit('ErrorMsg', "Du har ikke tilgang til den siden!");

@@ -11,7 +11,8 @@ public class UserDao extends AbstractDao {
 
 	public User logon(User logonInfo) {
 		User user = getEntityManager().find(User.class, logonInfo.getNo());
-		if (!user.getPassword().equals(logonInfo.getPassword()))
+		
+		if (user == null || !user.getPassword().equals(logonInfo.getPassword()))
 			return null;
 		return user;
 	}
