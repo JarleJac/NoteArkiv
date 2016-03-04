@@ -37,4 +37,9 @@ public interface UserService {
 	@Path("/user")
 	public Response addUser(User user);
 
+	@PUT
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/user")
+	public Response updateUser(User user);
+
 }

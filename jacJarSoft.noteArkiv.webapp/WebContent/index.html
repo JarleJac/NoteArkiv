@@ -27,11 +27,11 @@
           <ul class="nav navbar-nav navbar-right">
             <li ><a href="#/" data-toggle="collapse" data-target="#navbar.in">Hjem</a></li>
             <li data-ng-show="isLoggedOn()" ><a href="#/search/current" data-toggle="collapse" data-target="#navbar.in">Søk</a></li>
-            <li data-ng-show="isLoggedOn()" class="dropdown">
+            <li data-ng-show="hasAccess('AUTHOR')" class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#/sheets/new" data-toggle="collapse" data-target="#navbar.in">Ny note</a></li>
-                <li><a href="#/users" data-toggle="collapse" data-target="#navbar.in">Brukere</a></li>
+                <li data-ng-show="hasAccess('ADMIN')"><a href="#/users" data-toggle="collapse" data-target="#navbar.in">Brukere</a></li>
                 <li><a href="#/quicklists" data-toggle="collapse" data-target="#navbar.in">Hurtiglister</a></li>
 <!--                 <li role="separator" class="divider"></li> -->
 <!--                 <li class="dropdown-header">Nav header</li> -->

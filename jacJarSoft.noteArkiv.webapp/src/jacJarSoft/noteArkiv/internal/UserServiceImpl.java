@@ -12,6 +12,7 @@ import jacJarSoft.noteArkiv.webapi.ChangePassword;
 import jacJarSoft.noteArkiv.webapi.LogonInfo;
 import jacJarSoft.noteArkiv.webapi.UserInfoReturn;
 import jacJarSoft.util.PasswordUtil;
+import jacJarSoft.util.StringUtils;
 
 public class UserServiceImpl extends BaseService implements UserService {
 	@Autowired
@@ -65,8 +66,35 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 	@Override
 	public Response addUser(User user) {
+		validateUser(user, true);
+		User readUser = userDao.getUser(user.getNo());
+		if (readUser != null)
+			throw new ValidationErrorException("Bruker id "+ user.getNo() +" finnes fra før!");
+
+		user.setPassword(PasswordUtil.getPasswordMd5Hash(user.getPassword()));
+		user.setMustChangePassword(true);
 		return runWithTransaction((ec, p)-> {
 			return Response.ok(userDao.addUser(user)).build();
+		}, null);
+	}
+	private void validateUser(User user, boolean isNew) {
+		if (StringUtils.isEmpty(user.getNo()))
+			throw new ValidationErrorException("Bruker id kan ikke være blank");
+		if (StringUtils.isEmpty(user.getName()))
+			throw new ValidationErrorException("Bruker navn kan ikke være blank");
+		if (isNew && StringUtils.isEmpty(user.getPassword()))
+			throw new ValidationErrorException("passord kan ikke være blank");
+	}
+
+	@Override
+	public Response updateUser(User user) {
+		validateUser(user, false);
+		return runWithTransaction((ec, p)-> {
+			User readUser = userDao.getUser(user.getNo());
+			readUser.setAccessLevel(user.getAccessLevel());
+			readUser.seteMail(user.geteMail());
+			readUser.setName(user.getName());
+			return Response.ok(userDao.updateUser(readUser)).build();
 		}, null);
 	}
 	@Override

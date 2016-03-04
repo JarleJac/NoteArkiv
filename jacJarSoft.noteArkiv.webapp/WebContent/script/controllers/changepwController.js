@@ -7,7 +7,7 @@ angular.module('notearkiv').controller('changepwController', function($scope, $h
 	$scope.errorMsg = null;
 	$scope.info = {"user": Auth.getUser().no};
 	if($routeParams.mustChange) {
-		$scope.changePwMsg="En administrator har satt ditt passord. Du må bytte passord.";
+		$scope.changePwMsg="En administrator har satt ditt passord, eller det har blitt resatt. Du må bytte passord.";
 	}
 	$scope.doChangePassword = function() {
 		if ($scope.info.newpassword != $scope.info.repeatpassword) {
@@ -16,7 +16,7 @@ angular.module('notearkiv').controller('changepwController', function($scope, $h
 		}
 		$scope.errorMsg = null;
 		
-		$http({method: "PUT", url : "rest/userservice/user/"+$scope.info.user+"/changepw", data: $scope.info })
+		Auth.changePw($scope.info )
 		.then(function successCallback(result) {
 			$scope.$parent.changePwOk();
 		});

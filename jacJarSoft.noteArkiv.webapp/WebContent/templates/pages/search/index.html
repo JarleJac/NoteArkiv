@@ -89,7 +89,7 @@ Her kommer det avansert søk med mange muligheter.
 					<div>
 						<span class="listLabel">Note id: </span>{{sheetData.sheet.noteId}}
 					</div>
-					<div>
+					<div data-ng-show="hasAccess('AUTHOR')">
 						<a class="btn btn-primary" href="#/sheets/{{sheetData.sheet.noteId}}"><span
 							class="glyphicon glyphicon-edit" aria-hidden="true"></span> Endre</a>
 					</div>

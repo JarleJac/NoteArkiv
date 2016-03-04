@@ -100,9 +100,14 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 		localStorage.removeItem("password");
 		$scope.logonResult = null;
 		$scope.logonInfo = null;
+		$scope.requestedPath = null;
+		$scope.rquestedQuery = null;
 		Auth.setLoggedOn(false);
 		$scope.userName = null;
 		$location.path("/").replace();
+	}
+	$scope.hasAccess = function(strLevel) {
+		return Auth.isUserAuth(Auth.getAccessLevel(strLevel));
 	}
 
 	var user = localStorage.getItem("user");

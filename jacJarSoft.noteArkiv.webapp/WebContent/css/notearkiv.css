@@ -39,6 +39,9 @@ h4.sub-heading {
 .listLabel {
 	font-weight: bold;
 }
+label.horz-radio {
+	margin-right: 10px;
+}
 
 
 fieldset.voices-border {

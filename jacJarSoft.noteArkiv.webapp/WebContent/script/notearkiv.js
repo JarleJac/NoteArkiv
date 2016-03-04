@@ -1,5 +1,6 @@
 var currentUser;
 var currentUserName;
+var noteArkiv = {}
 
 var GravatarUtil = {
 		getUrl : function(info, size) {
@@ -27,7 +28,8 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 		templateUrl : 'templates/pages/search/index.html',
 		controller : 'searchController',
 		access: {
-            requiresLogin: true
+            requiresLogin: true,
+            accessLevel: "READER"
         }
 	})
 	.when('/sheets/:sheetId', {
@@ -35,14 +37,16 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 		controller : 'editSheetController',
 		controllerAs : 'editSheetCtrl',
 		access: {
-            requiresLogin: true
+            requiresLogin: true,
+            accessLevel: "AUTHOR"
         }
 		
 	})
 	.when('/quicklists', {
 		templateUrl : 'templates/pages/quicklists/index.html',
 		access: {
-            requiresLogin: true
+            requiresLogin: true,
+            accessLevel: "AUTHOR"
         }
 		
 	})
@@ -56,7 +60,8 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 		controller : 'changepwController',
 		controllerAs : 'changepwCtrl',
 		access: {
-            requiresLogin: true
+            requiresLogin: true,
+            accessLevel: "READER"
         }
 		
 	})
@@ -64,21 +69,24 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 		templateUrl : 'templates/pages/users/users.html',
 		controller : 'usersController',
 		access: {
-            requiresLogin: true
+            requiresLogin: true,
+            accessLevel: "ADMIN"
         }
 	})
 	.when('/users/:userNo', {
 		templateUrl : 'templates/pages/users/user.html',
 		controller : 'userController',
 		access: {
-            requiresLogin: true
+            requiresLogin: true,
+            accessLevel: "ADMIN"
         }
 	})
 	.when('/users/profile/:userId', {
 		templateUrl : 'templates/pages/users/profile.html',
 		controller : 'userProfileController',
 		access: {
-            requiresLogin: true
+            requiresLogin: true,
+            accessLevel: "READER"
         }
 		
 	})
@@ -132,6 +140,12 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
         if (next.access !== undefined) {
         	if (next.access.requiresLogin && !Auth.isLoggedOn() && !Auth.islogonInProgress()) {
         		$location.path("/logon").replace();
+        	}
+        	if (next.access.accessLevel !== undefined) {
+        		if (!Auth.isUserAuth(Auth.getAccessLevel(next.access.accessLevel))) {
+        			$location.path("/").replace();
+    				$rootScope.$emit('ErrorMsg', "Du har ikke tilgang til den siden!");
+        		}
         	}
         		
 //            authorised = authorization.authorize(next.access.loginRequired,

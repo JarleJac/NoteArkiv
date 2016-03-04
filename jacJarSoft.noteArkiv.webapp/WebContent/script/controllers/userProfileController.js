@@ -2,7 +2,12 @@
  * 
  */
 
-angular.module('notearkiv').controller('userProfileController', function($scope, $http,  $routeParams) {
+angular.module('notearkiv').controller('userProfileController', function($scope, $location, $http,  $routeParams, Auth) {
+	if (Auth.getUser().no != $routeParams.userId) {
+		$location.path("/").replace();
+		$rootScope.$emit('ErrorMsg', "Du har ikke tilgang til den siden!");
+		return;
+	}
 	$scope.user;
 	var gravatarInfo;
 	$http({method: "GET", url : "rest/userservice/user/"+$routeParams.userId })

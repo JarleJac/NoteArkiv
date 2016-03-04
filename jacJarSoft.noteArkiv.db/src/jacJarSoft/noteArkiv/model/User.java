@@ -2,6 +2,8 @@ package jacJarSoft.noteArkiv.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
@@ -22,12 +24,9 @@ public class User extends AbstractEntity{
 	private String eMail;
 	@Column(name="MUST_CHANGE_PASSWORD")
 	private boolean mustChangePassword;
-	@Column(name="IS_SYSADMIN")
-	private boolean isSysadmin;
-	@Column(name="IS_ADMIN")
-	private boolean isAdmin;
-	@Column(name="IS_AUTHOR")
-	private boolean isAuthor;
+	@Column(name="ACCESS_LEVEL")
+	@Enumerated(EnumType.STRING)
+	private AccessLevel accessLevel;
 	public String getNo() {
 		return no;
 	}
@@ -52,24 +51,6 @@ public class User extends AbstractEntity{
 	public void setMustChangePassword(boolean mustChangePassword) {
 		this.mustChangePassword = mustChangePassword;
 	}
-	public boolean isSysadmin() {
-		return isSysadmin;
-	}
-	public void setSysadmin(boolean isSysadmin) {
-		this.isSysadmin = isSysadmin;
-	}
-	public boolean isAdmin() {
-		return isAdmin;
-	}
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-	public boolean isAuthor() {
-		return isAuthor;
-	}
-	public void setAuthor(boolean isAuthor) {
-		this.isAuthor = isAuthor;
-	}
 	@PostLoad
 	private void postLoad() {
 		//password = "**hidden**";
@@ -79,5 +60,11 @@ public class User extends AbstractEntity{
 	}
 	public void seteMail(String eMail) {
 		this.eMail = eMail;
+	}
+	public AccessLevel getAccessLevel() {
+		return accessLevel;
+	}
+	public void setAccessLevel(AccessLevel accessLevel) {
+		this.accessLevel = accessLevel;
 	}
 }

@@ -1,6 +1,14 @@
 /**
  * 
  */
+noteArkiv.Auth = {}
+noteArkiv.Auth.AccessLevel = {
+	SYSADMIN: 100,
+	ADMIN: 50,
+	AUTHOR: 40,
+	READER: 10,
+	DISABLED: 0
+}
 angular.module('notearkiv').factory('Auth', function AuthFactory($http, AuthToken) {
 	var isLoggedOn = false;
 	var user;
@@ -8,6 +16,16 @@ angular.module('notearkiv').factory('Auth', function AuthFactory($http, AuthToke
 	var logonInfo;
 	var logonInProgress = false;
 	return {
+		isUserAuth : function(level) {
+			if (!isLoggedOn)
+				return false;
+			if (this.getAccessLevel(user.accessLevel) >= level)
+				return true;
+			return false;
+		},
+		getAccessLevel : function(strLevel) {
+			return noteArkiv.Auth.AccessLevel[strLevel];
+		},
 		getUser : function() {
 			return user;
 		},
@@ -38,6 +56,16 @@ angular.module('notearkiv').factory('Auth', function AuthFactory($http, AuthToke
 				return {
 					user: result.data.user
 				}
+			}, function errorCallback(result) {
+				throw result;
+			});
+			
+		},
+		changePw : function(info) {
+			return $http({method: "PUT", url : "rest/userservice/user/"+info.user+"/changepw", data: info })
+			.then(function successCallback(result) {
+				logonInfo.password = info.newpassword;
+				return result;
 			}, function errorCallback(result) {
 				throw result;
 			});
