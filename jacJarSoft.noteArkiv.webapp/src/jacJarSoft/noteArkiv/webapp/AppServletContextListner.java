@@ -1,6 +1,8 @@
 package jacJarSoft.noteArkiv.webapp;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -23,8 +25,7 @@ public class AppServletContextListner implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		servletContext = sce.getServletContext();
 		initLogging(servletContext.getInitParameter("logging.props"));
-//		String dbFileName = "test.db";
-//		db = new NoteArkivDatabase(dbFileName);
+		initPeristenceFactory(servletContext.getInitParameter("persistence.props"));
 		
 		EntityManagerFactory entityManagerFactory = PersistenceFactory.getEntityManagerFactory();
 		servletContext.setAttribute(ENTITY_MANAGER_FACTORY, entityManagerFactory);		
@@ -38,6 +39,18 @@ public class AppServletContextListner implements ServletContextListener {
 			if (entityManager != null)
 			entityManager.close();
 		}
+		
+	}
+
+	private void initPeristenceFactory(String persistencePropsFile) {
+		Properties persistenceProps = new Properties();
+		try (InputStream inputStream = servletContext.getResourceAsStream(persistencePropsFile)) {
+			persistenceProps.load(inputStream);
+			PersistenceFactory.setOverrideProperties(persistenceProps);
+		} catch (IOException e) {
+			throw new RuntimeException("error loading persistence properties", e);
+		}
+		
 		
 	}
 

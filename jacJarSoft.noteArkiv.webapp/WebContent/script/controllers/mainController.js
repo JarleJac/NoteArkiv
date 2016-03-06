@@ -9,7 +9,15 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 	$scope.userId = "";
 	$scope.initPath = "/";
 	$scope.okMessages = [];
+	$scope.appInfo = {};
 
+	this.loadAppInfo = function() {
+		$http({method: 'GET', url : 'rest/appservice/getsystemInfo'})
+		.then(function successCallback(result) {
+			$scope.appInfo = result.data;
+		});
+	}
+	this.loadAppInfo();
 	this.resetError = function() {
     	$scope.errorOccured = false;
     	$scope.errorMsg = null;
@@ -110,6 +118,7 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 		return Auth.isUserAuth(Auth.getAccessLevel(strLevel));
 	}
 
+	
 	var user = localStorage.getItem("user");
 	var password = localStorage.getItem("password");
 	if (user != null) {

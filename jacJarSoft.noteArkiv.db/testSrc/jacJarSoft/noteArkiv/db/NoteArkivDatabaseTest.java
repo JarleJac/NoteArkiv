@@ -24,6 +24,7 @@ public class NoteArkivDatabaseTest {
 		resetDbFile(dbFile);
 
 		Properties addedOrOverridenProperties = new Properties();
+		addedOrOverridenProperties.setProperty("javax.persistence.jdbc.driver", "org.sqlite.JDBC");
 		addedOrOverridenProperties.setProperty("javax.persistence.jdbc.url", "jdbc:sqlite:" + dbFile.getAbsolutePath());
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("noteArkivDb", addedOrOverridenProperties);
 		try {

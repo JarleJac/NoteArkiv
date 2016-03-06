@@ -1,3 +1,33 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 25px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 20px;
+  background-color: #ecf8ed;
+}
+.footer-text {
+	text-align: center;
+	font-style: italic;
+	font-size: small;
+	padding: 0;
+	margin: 0;
+	
+/*   margin: 20px 0; */
+}
+/* Sticky footer styles end
+-------------------------------------------------- */
+
 textarea.ta-vertical {
 	resize: vertical;
 }
