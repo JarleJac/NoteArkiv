@@ -9,19 +9,21 @@
 		<label for="search" class="control-label">Filter</label>
 		<input type="text" class="form-control" data-ng-model="userFilter" placeholder="filtrer brukere">
 	</div>
-	<div data-ng-repeat="user in users | filter: userFilter">
+	<div data-ng-repeat="userData in users | filter:userFilter | orderBy:predicate:reverse">
 		<div data-ng-if="$first" class="row listHeading">
-			<div class="col-md-4">Id</div>
-			<div class="col-md-4">Navn</div>
-			<div class="col-md-3">E-post</div>
+			<div class="col-xs-3"><a class="listHeading" data-ng-click="setSort('user.no')">Id</a> <span data-ng-show="predicate === 'user.no'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
+			<div class="col-xs-3"><a class="listHeading" data-ng-click="setSort('user.name')">Navn</a> <span data-ng-show="predicate === 'user.name'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
+			<div class="col-xs-3"><a class="listHeading" data-ng-click="setSort('accessLevelText')">Tilgang</a> <span data-ng-show="predicate === 'accessLevelText'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
+			<div class="col-xs-3"><a class="listHeading" data-ng-click="setSort('user.eMail')">E-post</a> <span data-ng-show="predicate === 'user.eMail'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
 		</div>
 		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row sheetHeading">
 <!-- 			data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false"
 			aria-controls="{{ 'sheetInfo-' + $index }}"
  -->			
-			<div class="col-md-4"><a href="#/users/{{user.no}}">{{user.no}}</a></div>
-			<div class="col-md-4">{{user.name}}</div>
-			<div class="col-md-4">{{user.eMail}}</div>
+			<div class="col-xs-3"><a href="#/users/{{userData.user.no}}">{{userData.user.no}}</a></div>
+			<div class="col-xs-3">{{userData.user.name}}</div>
+			<div class="col-xs-3">{{userData.accessLevelText}}</div>
+			<div class="col-xs-3">{{userData.user.eMail}}</div>
 		</div>
 	</div>
 </div>	

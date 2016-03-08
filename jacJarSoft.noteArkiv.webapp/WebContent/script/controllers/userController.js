@@ -38,5 +38,8 @@ angular.module('notearkiv').controller('userController', function($rootScope, $s
 	$scope.deleteUser = function() {
 //		$location.path("/users/new");
 	}
+	$scope.getAccessLevelText = function(level) {
+		return Users.getAccessLevelText(level);
+	} 
 })
 ;
