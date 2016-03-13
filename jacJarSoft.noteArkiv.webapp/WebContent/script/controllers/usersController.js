@@ -2,11 +2,12 @@
  * 
  */
 
-angular.module('notearkiv').controller('usersController', function($scope, $location,  Users) {
+angular.module('notearkiv').controller('usersController', function($scope, $location, Users, State) {
+	$scope.getStateName = function() { return "usersController";}
+	State.getOrRegisterScopeVariables(["predicate", "reverse"],["user.name", false]);
 	$scope.users = [];
-	$scope.predicate = "user.name";
-	$scope.reverse = false;
-	
+//	$scope.predicate = "user.name";
+//	$scope.reverse = false;
 	$scope.setSort = function(sortOn) {
 		$scope.reverse = ($scope.predicate === sortOn) ? !$scope.reverse : false;		
 		$scope.predicate = sortOn;

@@ -134,8 +134,14 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 	$httpProvider.interceptors.push('myHttpInterceptor');
 	
 })
-.run(function($rootScope, $location, Auth) {
-	$rootScope.$on('$routeChangeStart', function (event, next) {
+.run(function($rootScope, $location, Auth, State) {
+	$rootScope.$on('$routeChangeStart', function (event, next, current) {
+		State.backFwdUsed = true;
+		if ($rootScope.normalLink === true) {
+			State.backFwdUsed = false;
+		}
+		$rootScope.normalLink = undefined;
+		$rootScope.$broadcast('savestate');		
         var authorised;
         if (next.access !== undefined) {
         	if (next.access.requiresLogin && !Auth.isLoggedOn() && !Auth.islogonInProgress()) {
@@ -148,16 +154,54 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
         		}
         	}
         		
-//            authorised = authorization.authorize(next.access.loginRequired,
-//                                                 next.access.permissions,
-//                                                 next.access.permissionCheckType);
-//            if (authorised === jcs.modules.auth.enums.authorised.loginRequired) {
-//                $location.path(jcs.modules.auth.routes.login);
-//            } else if (authorised === jcs.modules.auth.enums.authorised.notAuthorised) {
-//                $location.path(jcs.modules.auth.routes.notAuthorised).replace();
-//            }
         }
     });	
+//	$rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+//		if ($rootScope.normalLink !== undefined) {
+//		}
+//    });	
+})
+.run(function($rootScope, $location, $route, $window) {
+	$rootScope.$on('$locationChangeSuccess', function() {
+	    $rootScope.actualLocation = $location.path();
+	});	
+
+	$rootScope.$watch(function () {return $location.path()}, function (newLocation, oldLocation) {
+
+	    //true only for onPopState
+	    if($rootScope.actualLocation === newLocation) {
+
+//	    	$route.current.scope.isBack = true;
+//	        var back,
+//	            historyState = $window.history.state;
+//
+//	        back = !!(historyState && historyState.position <= $rootScope.stackPosition);
+//
+//	        if (back) {
+//	            //back button
+//	            $rootScope.stackPosition--;
+//	        } else {
+//	            //forward button
+//	            $rootScope.stackPosition++;
+//	        }
+
+	    } else {
+	        //normal-way change of page (via link click)
+	    	$rootScope.normalLink = true;
+//	        if ($route.current) {
+//		    	$route.current.scope.isBack = false;
+//
+////	            $window.history.replaceState({
+////	                position: $rootScope.stackPosition
+////	            });
+//
+//	            $rootScope.stackPosition++;
+//
+//	        }
+
+	    }
+
+	 });
 })
 ;
 	
