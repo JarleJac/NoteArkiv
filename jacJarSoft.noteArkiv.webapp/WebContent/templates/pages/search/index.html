@@ -47,30 +47,30 @@ Her kommer det avansert søk med mange muligheter.
 </div>
 <div class="small-spacer"> </div>
 
-<div data-cg-busy="{promise:getPromise,message:'Søker ...'}">
+<div data-cg-busy="{promise:getPromise,message:'Søker ...'}" id="searchResult">
 	<h4 class="sub-heading">Søkeresultat</h4>
-	<div data-ng-show="hasResult() &&  getSheetList().length === 0">Fant desverre ingen noter som passer til søket</div>
+	<div data-ng-show="hasResult() &&  sheetList.length === 0">Fant desverre ingen noter som passer til søket</div>
 <!-- 	<div data-ng-show="hasResult()" class="form-inline"> -->
 <!-- 		<label for="search" class="control-label">Filter</label> -->
 <!-- 		<input type="text" class="form-control" data-ng-model="search" placeholder="filtrer resultatet"> -->
 <!-- 	</div> -->
 	<div data-ng-show="hasResult()"
-		data-ng-repeat="sheetData in getSheetList() | filter: {sheet: {title :search}}">
+		data-ng-repeat="sheetData in sheetList | orderBy:predicate:reverse" >
 <!-- 		data-ng-repeat="sheetData in getSheetList() | filter: {sheet: {title :search}}"> -->
 		<div data-ng-if="$first" class="row listHeading">
-			<div class="col-md-4">Tittel</div>
-			<div class="col-md-4">Komponist</div>
-			<div class="col-md-3">Arrangør</div>
+			<div class="col-md-4"><a class="listHeading" data-ng-click="setSort('sheet.title')">Tittel</a> <span data-ng-show="predicate === 'sheet.title'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
+			<div class="col-md-4"><a class="listHeading" data-ng-click="setSort('sheet.composedBy')">Komponist</a> <span data-ng-show="predicate === 'sheet.composedBy'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
+			<div class="col-md-3"><a class="listHeading" data-ng-click="setSort('sheet.arrangedBy')">Arrangør</a> <span data-ng-show="predicate === 'sheet.arrangedBy'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
 		</div>
-		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row sheetHeading"
+		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'"  class="row sheetHeading"
 			data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false"
 			aria-controls="{{ 'sheetInfo-' + $index }}">
 			<div class="col-md-4">{{sheetData.sheet.title}}</div>
 			<div class="col-md-4">{{sheetData.sheet.composedBy}}</div>
 			<div class="col-md-4">{{sheetData.sheet.arrangedBy}}</div>
 		</div>
-		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row topBorder collapse"
-			id="{{ 'sheetInfo-' + $index }}">
+		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" data-ng-class="{in: sheetData.expanded}" class="row topBorder collapse"
+			id="{{ 'sheetInfo-' + $index }}" data-ix="{{$index}}">
 			<div class="col-md-12">
 				<div class="col-md-5">
 					<div>

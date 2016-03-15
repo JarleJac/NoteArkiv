@@ -11,6 +11,11 @@ angular.module('notearkiv').factory('SearchSheets', function SearchSheetsFactory
 				result.data.sheetList[ix].sheet.registeredDate = new Date(result.data.sheetList[ix].sheet.registeredDate);
 				Tags.getTagsDescrString(result.data.sheetList[ix].sheet);
 				Voices.getVoicesDescrString(result.data.sheetList[ix].sheet);
+				result.data.sheetList[ix].expanded = false;
+				if (result.data.sheetList[ix].sheet.arrangedBy === null)
+					result.data.sheetList[ix].sheet.arrangedBy = "";
+				if (result.data.sheetList[ix].sheet.composedBy === null)
+					result.data.sheetList[ix].sheet.composedBy = "";
 			}
 			lastSearchResult = result.data;
 			return lastSearchResult;
