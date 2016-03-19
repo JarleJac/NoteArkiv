@@ -23,19 +23,29 @@ angular.module('notearkiv').controller('searchController', function($scope, $htt
 		});
 	}
 
+	var getSheet = function(sheetId) {
+		for(i=0; i<$scope.sheetList.length; i++) {
+			if ($scope.sheetList[i].sheet.noteId == sheetId)
+				return $scope.sheetList[i];
+		}
+		return null;
+	}
 	//TODO Revise this popover activation
 	$(function () {
 		  $('[data-toggle="popover"]').popover()
 		})
-	$("#searchResult").on('shown.bs.collapse', function (e) {
-		var ix = $("#"+e.target.id).data("ix");
-		var sheetData = $scope.sheetList[ix];
+	$("#searchResult").on('show.bs.collapse', function (e) {
+		var sheetId = $("#"+e.target.id).data("sheet-id");
+		var sheetData = getSheet(sheetId);
 		sheetData.expanded = true;
 		getFiles(sheetData);
+		$scope.$apply();
 	});	
 	$("#searchResult").on('hidden.bs.collapse', function (e) {
-		var ix = $("#"+e.target.id).data("ix");
-		$scope.sheetList[ix].expanded = false;
+		var sheetId = $("#"+e.target.id).data("sheet-id");
+		var sheetData = getSheet(sheetId);
+		sheetData.expanded = false;
+		$scope.$apply();
 	});	
 	$scope.setTab = function(tab) {
 		$scope.tab = tab;

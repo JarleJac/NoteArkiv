@@ -61,7 +61,17 @@ a.listHeading {
 .listodd {
 	background-color: #fffffa;
 }
-
+div.expanded {
+	margin-bottom: 10px;
+	margin-top: 10px;
+	margin-left: -15px;
+	margin-right: -15px;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom: 2px;
+    border-radius: 25px;
+    border: 1px solid #46ba4e;
+}
 .topBorder {
 	border-top-width: thin;
 	border-top-style: solid;
