@@ -97,7 +97,28 @@ Her kommer det avansert søk med mange muligheter.
 <!-- 						<a class="btn btn-danger" href=><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Slett</a> -->
 <!-- 					</div> -->
 				</div>
-				<div class="col-md-7">TODO Her kommer filliste</div>
+				<div class="col-md-7">
+					<div class="listLabel">Filer</div>
+					<div data-ng-repeat="file in sheetData.files" >
+						<div data-ng-if="$first" class="row listHeading">
+							<div class="col-xs-6"><span class="listHeading">Filnavn/KB</span></div>
+							<div class="col-xs-6"><span class="listHeading">Beskrivelse/Aktivitet</span></div>
+						</div>
+						<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'"  class="row sheetHeading">
+							<div class="col-xs-6">{{file.name}}</div>
+							<div class="col-xs-6">{{file.description}}</div>
+						</div>
+						<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'"  class="row sheetHeading">
+							<div class="col-xs-6">{{file.fileSize/1024|number:2}}</div>
+							<div class="col-xs-6">
+								<a href="rest/noteservice/notefile/{{file.fileId}}/download?authInfo={{authInfo}}" class="btn btn-primary btn-xs" role="button">
+									<span class="glyphicon glyphicon-download"></span> Last ned</a>	
+								<a href="rest/noteservice/notefile/{{file.fileId}}?authInfo={{authInfo}}" target="_blank" class="btn btn-primary btn-xs" role="button">
+									<span class="glyphicon glyphicon-open-file"></span> Åpne</a>	
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -1,7 +1,7 @@
 /**
  * 
  */
-angular.module('notearkiv').controller('searchController', function($scope, $http, $routeParams, SearchSheets, State) {
+angular.module('notearkiv').controller('searchController', function($scope, $http, $routeParams, SearchSheets, Sheets, State, AuthToken) {
 	var controller = this;
 	$scope.tab = $routeParams.tab;
 	$scope.getStateName = function() { return "searchController" + $scope.tab;}
@@ -13,6 +13,15 @@ angular.module('notearkiv').controller('searchController', function($scope, $htt
 		$scope.reverse = ($scope.predicate === sortOn) ? !$scope.reverse : false;		
 		$scope.predicate = sortOn;
 	}
+	$scope.authInfo = encodeURIComponent(AuthToken.getAuthToken());
+	var getFiles = function(sheetData) {
+		if (sheetData.files != null)
+			return;
+		sheetData.getFilesPromise = Sheets.getFiles(sheetData.sheet.noteId);
+		sheetData.getFilesPromise.then(function successCallback(files) {
+			sheetData.files = files;
+		});
+	}
 
 	//TODO Revise this popover activation
 	$(function () {
@@ -20,7 +29,9 @@ angular.module('notearkiv').controller('searchController', function($scope, $htt
 		})
 	$("#searchResult").on('shown.bs.collapse', function (e) {
 		var ix = $("#"+e.target.id).data("ix");
-		$scope.sheetList[ix].expanded = true;
+		var sheetData = $scope.sheetList[ix];
+		sheetData.expanded = true;
+		getFiles(sheetData);
 	});	
 	$("#searchResult").on('hidden.bs.collapse', function (e) {
 		var ix = $("#"+e.target.id).data("ix");
