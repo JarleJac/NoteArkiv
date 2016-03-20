@@ -64,11 +64,11 @@ div.expandedHeadingEven {
 div.sublistHeadingOdd {
 	margin-top: 5px;
 	font-weight: bolder;
-	background-color: #ffffcc; 
+	background-color: #99bbff; 
 }
 div.expandedHeadingOdd {
 	FONT-WEIGHT: BOLDER;
- 	background-color: #ffffcc;  
+ 	background-color: #99bbff;  
     border-top-left-radius : 15px;
     border-top-right-radius : 15px;
 }
@@ -82,7 +82,7 @@ a.listHeading {
 	background-color: #ecf8ed;
 }
 .listodd {
-	background-color: #fffffa;
+	background-color: #e6eeff;
 }
 .sublistodd {
 	border-top-width: thin;
@@ -143,10 +143,10 @@ select.tagsSelect {
 }
 
 form.main {
-	background-color: #fffffa;
+	background-color: #e6eeff;
 	border-style: solid;
 	border-width: 1px;
-	border-color: #ffff66;
+	border-color: #99bbff;
 	padding-left : 10px;
 	padding-right: 10px;
 	padding-top: 10px;
