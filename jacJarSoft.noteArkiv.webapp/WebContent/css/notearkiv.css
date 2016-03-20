@@ -50,6 +50,29 @@ div.listHeading {
 	background-color: #46ba4e; /*#d9d9d9;*/ 
 	font-size: larger;
 }
+div.sublistHeadingEven {
+	margin-top: 5px;
+	font-weight: bolder;
+	background-color: #b5e3b8; 
+}
+div.expandedHeadingEven {
+	font-weight: bolder;
+ 	background-color: #b5e3b8;  
+    border-top-left-radius : 15px;
+    border-top-right-radius : 15px;
+}
+div.sublistHeadingOdd {
+	margin-top: 5px;
+	font-weight: bolder;
+	background-color: #ffffcc; 
+}
+div.expandedHeadingOdd {
+	FONT-WEIGHT: BOLDER;
+ 	background-color: #ffffcc;  
+    border-top-left-radius : 15px;
+    border-top-right-radius : 15px;
+}
+
 a.listHeading {
 	color: black;
 	cursor: pointer;
@@ -61,6 +84,14 @@ a.listHeading {
 .listodd {
 	background-color: #fffffa;
 }
+.sublistodd {
+	border-top-width: thin;
+	border-top-style: solid;
+}
+.sublisteven {
+	border-top-width: thin;
+	border-top-style: solid;
+}
 div.expanded {
 	margin-bottom: 10px;
 	margin-top: 10px;
@@ -68,14 +99,14 @@ div.expanded {
 	margin-right: -15px;
 	padding-left: 15px;
 	padding-right: 15px;
-	padding-bottom: 2px;
-    border-radius: 25px;
+	padding-bottom: 10px;
+    border-radius: 15px;
     border: 1px solid #46ba4e;
 }
 .topBorder {
 	border-top-width: thin;
 	border-top-style: solid;
-	border-top-color: #d9d9d9;
+	border-top-color:  #46ba4e;
 }
 .sheetHeading {
 	cursor: pointer;
