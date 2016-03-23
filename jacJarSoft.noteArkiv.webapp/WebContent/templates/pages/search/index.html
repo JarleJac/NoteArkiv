@@ -19,7 +19,18 @@ Viser de notene som det øves på for tiden.... Snart
 her kommer en mulighet for å søke på noter tilhørende en gitt liste.
 </div>
 <div data-ng-show="isTabSet('newest')">
-Viser de notene som er registrert de siste x dagene. (kommer snart)
+	<form class="form-inline">
+		<span>Vis de notene som er registrert de siste</span>  
+			<select data-ng-model="days">
+				<option value="7">7</option>
+				<option value="30">30</option>
+				<option value="60">60</option>
+				<option value="180">180</option>
+				<option value="365">365</option>
+			</select>
+		<span>dagene.</span>
+		<button type="submit" class="btn btn-default" data-ng-click="searchNewest()">Søk</button>
+	</form>
 </div>
 <div data-ng-show="isTabSet('simple')">
 	<form class="form-inline">

@@ -6,8 +6,8 @@ angular.module('notearkiv').controller('searchController', function($scope, $htt
 	$scope.tab = $routeParams.tab;
 	$scope.getStateName = function() { return "searchController" + $scope.tab;}
 	State.getOrRegisterScopeVariables(
-			["predicate", "reverse", "sheetList", "title"],
-			["sheet.title", false, undefined, ""]);
+			["predicate", "reverse", "sheetList", "title", "days"],
+			["sheet.title", false, undefined, "", "7"]);
 
 	$scope.setSort = function(sortOn) {
 		$scope.reverse = ($scope.predicate === sortOn) ? !$scope.reverse : false;		
@@ -62,5 +62,19 @@ angular.module('notearkiv').controller('searchController', function($scope, $htt
 			$scope.sheetList = result.sheetList;
 		})
 	};
+	$scope.searchNewest = function() {
+		$scope.getPromise = SearchSheets.searchNewest($scope.days);
+		$scope.getPromise.then(function successCallback(result) {
+			$scope.sheetList = result.sheetList;
+		})
+	};
+	
+	if (!State.backFwdUsed) {
+		switch($scope.tab) {
+		case "newest":
+			$scope.searchNewest();
+			break;
+		}
+	}
 })
 ;

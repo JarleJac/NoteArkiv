@@ -30,6 +30,11 @@ angular.module('notearkiv').factory('SearchSheets', function SearchSheetsFactory
 			return internalSearch(simpleParam);
 			
 		},
+		searchNewest : function(searchParam) {
+			var newestParam = {days: searchParam}
+			return internalSearch(newestParam);
+			
+		},
 		hasResult : function() {
 			return lastSearchResult !== undefined;
 		}, 

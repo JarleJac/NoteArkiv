@@ -4,6 +4,7 @@ public class SheetSearchParam {
 	private String title;
     private String composedBy;
     private String arrangedBy;
+    private int days;
 	public String getTitle() {
 		return title;
 	}
@@ -21,6 +22,12 @@ public class SheetSearchParam {
 	}
 	public void setArrangedBy(String arrangedBy) {
 		this.arrangedBy = arrangedBy;
+	}
+	public int getDays() {
+		return days;
+	}
+	public void setDays(int days) {
+		this.days = days;
 	}
 
 }
