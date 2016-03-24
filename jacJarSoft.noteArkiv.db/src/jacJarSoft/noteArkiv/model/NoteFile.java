@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name="NOTE_FILES")
 @XmlRootElement(name="NoteFile")
-public class NoteFile extends AbstractEntity {
+public class NoteFile extends RegisteredAwareEntity {
 	@Id
 	@GeneratedValue(generator="sqlite_note_files")
 	@TableGenerator(name="sqlite_note_files", table="sqlite_sequence",
@@ -30,10 +30,6 @@ public class NoteFile extends AbstractEntity {
     private String description;
 	@Column(name="FILE_SIZE")
 	private long fileSize;
-	@Column(name="REGISTERED_DATE")
-    private Date registeredDate;
-	@Column(name="REGISTERED_BY")
-    private String registeredBy;
 	public long getFileId() {
 		return fileId;
 	}
@@ -63,18 +59,6 @@ public class NoteFile extends AbstractEntity {
 	}
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
-	}
-	public Date getRegisteredDate() {
-		return registeredDate;
-	}
-	public void setRegisteredDate(Date registeredDate) {
-		this.registeredDate = registeredDate;
-	}
-	public String getRegisteredBy() {
-		return registeredBy;
-	}
-	public void setRegisteredBy(String registeredBy) {
-		this.registeredBy = registeredBy;
 	}
 
 }

@@ -1,7 +1,5 @@
 package jacJarSoft.noteArkiv.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name="NOTES")
 @XmlRootElement(name="Note")
-public class Note extends AbstractEntity {
+public class Note extends RegisteredAwareEntity {
 	@Id
 	@GeneratedValue(generator="sqlite_notes")
 	@TableGenerator(name="sqlite_notes", table="sqlite_sequence",
@@ -34,10 +32,6 @@ public class Note extends AbstractEntity {
     private String  voices;
 	@Column(name="DESCRIPTION")
     private String description;
-	@Column(name="REGISTERED_DATE")
-    private Date registeredDate;
-	@Column(name="REGISTERED_BY")
-    private String registeredBy;
 	public long getNoteId() {
 		return noteId;
 	}
@@ -67,18 +61,6 @@ public class Note extends AbstractEntity {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public Date getRegisteredDate() {
-		return registeredDate;
-	}
-	public void setRegisteredDate(Date registeredDate) {
-		this.registeredDate = registeredDate;
-	}
-	public String getRegisteredBy() {
-		return registeredBy;
-	}
-	public void setRegisteredBy(String registeredBy) {
-		this.registeredBy = registeredBy;
 	}
 	public String getTags() {
 		return tags;

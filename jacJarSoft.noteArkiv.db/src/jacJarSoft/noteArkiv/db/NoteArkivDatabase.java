@@ -2,6 +2,7 @@ package jacJarSoft.noteArkiv.db;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -9,6 +10,8 @@ import javax.persistence.EntityManager;
 
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 import jacJarSoft.noteArkiv.model.AccessLevel;
+import jacJarSoft.noteArkiv.model.Note;
+import jacJarSoft.noteArkiv.model.NoteFile;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.model.Voice;
 import jacJarSoft.util.DbUtil;
@@ -78,6 +81,37 @@ public class NoteArkivDatabase {
 
 	private void upgradeFromVersion1(Connection connection) throws SQLException {
 		upgradeUsersFromVer1(connection);
+		upgradeNotesFromVersion1(connection);
+	}
+
+	private void upgradeNotesFromVersion1(Connection connection) throws SQLException {
+		@SuppressWarnings("unchecked")
+		List<Note> sheets = (List<Note>) entityManager.createNativeQuery("select * from notes", Note.class).getResultList();
+		for(Note sheet : sheets) {
+			entityManager.detach(sheet);
+		}
+		
+		String sql = "drop table notes";
+		DbUtil.execUpdateSql(connection,sql);
+		createNotes(connection);
+
+		for(Note sheet : sheets) {
+			entityManager.persist(sheet);
+		}
+
+	
+		@SuppressWarnings("unchecked")
+		List<NoteFile> sheetFiles = (List<NoteFile>) entityManager.createNativeQuery("select * from note_files", NoteFile.class).getResultList();
+		for(NoteFile sheetFile : sheetFiles) {
+			entityManager.detach(sheetFile);
+		}
+		sql = "drop table note_files";
+		DbUtil.execUpdateSql(connection,sql);
+		createNoteFiles(connection);
+
+		for(NoteFile sheetFile : sheetFiles) {
+			entityManager.persist(sheetFile);
+		}
 	}
 
 	private void upgradeUsersFromVer1(Connection connection) throws SQLException {
@@ -141,7 +175,7 @@ public class NoteArkivDatabase {
             		"TAGS text, " +
             		"VOICES text, " +
             		"DESCRIPTION text, " +
-            		"REGISTERED_DATE integer, " +
+            		"REGISTERED_DATE text, " +
             		"REGISTERED_BY text " +
             		");";
 		DbUtil.execUpdateSql(connection,sql);
@@ -155,7 +189,7 @@ public class NoteArkivDatabase {
 	                 "FILE_NAME  text, " +
 	                 "DESCRIPTION text, " +
 	                 "FILE_SIZE integer, " + 
-	                 "REGISTERED_DATE integer, " +
+	                 "REGISTERED_DATE text, " +
 	                 "REGISTERED_BY text " +
 	                 ");";
 		DbUtil.execUpdateSql(connection,sql);
