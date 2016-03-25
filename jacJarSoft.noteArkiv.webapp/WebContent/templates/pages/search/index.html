@@ -109,6 +109,10 @@ Her kommer det avansert søk med mange muligheter.
 				<div data-ng-show="hasAccess('AUTHOR')">
 					<a class="btn btn-sm btn-primary" href="#/sheets/{{sheetData.sheet.noteId}}"><span
 						class="glyphicon glyphicon-edit" aria-hidden="true"></span> Endre</a>
+					<button type="button" class="btn btn-sm btn-primary" data-ng-click="toggleCurrent(sheetData)">
+						<span class="glyphicon star"
+						data-ng-class="{'glyphicon-star selectedStar': sheetData.inCurrent, 'glyphicon-star-empty': !sheetData.inCurrent}">
+						</span> Gjeldende</button>
 				</div>
 			</div>
 			<div class="col-xs-12">

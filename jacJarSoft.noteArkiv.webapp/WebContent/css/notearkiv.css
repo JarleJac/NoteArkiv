@@ -44,7 +44,15 @@ h4.sub-heading {
 .small-spacer {
     margin-top: 5px; 
 }
-
+.star {
+	font-size: 1.2em;
+	padding-top: 2px;
+	margin-top: -3px;
+	margin-bottom: -4px
+}
+.selectedStar {
+	color: yellow;
+}
 div.listHeading {
 	font-weight: bolder;
 	background-color: #46ba4e; /*#d9d9d9;*/ 

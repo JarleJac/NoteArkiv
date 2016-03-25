@@ -1,7 +1,7 @@
 /**
  * 
  */
-angular.module('notearkiv').controller('searchController', function($scope, $http, $routeParams, SearchSheets, Sheets, State, AuthToken) {
+angular.module('notearkiv').controller('searchController', function($scope, $http, $routeParams, SearchSheets, Sheets, Lists, State, AuthToken) {
 	var controller = this;
 	$scope.tab = $routeParams.tab;
 	$scope.getStateName = function() { return "searchController" + $scope.tab;}
@@ -67,6 +67,19 @@ angular.module('notearkiv').controller('searchController', function($scope, $htt
 		$scope.getPromise.then(function successCallback(result) {
 			$scope.sheetList = result.sheetList;
 		})
+	};
+	$scope.toggleCurrent = function(sheetData) {
+		if (sheetData.inCurrent) {
+			Lists.disconnectFromList(1, sheetData.sheet.noteId)
+			.then(function successCallback(result) {
+				sheetData.inCurrent = false;
+			})
+		} else {
+			Lists.connectToList(1, sheetData.sheet.noteId)
+			.then(function successCallback(result) {
+				sheetData.inCurrent = true;
+			})
+		}
 	};
 	
 	if (!State.backFwdUsed) {

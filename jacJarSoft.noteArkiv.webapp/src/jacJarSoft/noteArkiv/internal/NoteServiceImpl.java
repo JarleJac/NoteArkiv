@@ -2,6 +2,7 @@ package jacJarSoft.noteArkiv.internal;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import javax.activation.DataHandler;
 import javax.activation.MimetypesFileTypeMap;
@@ -14,16 +15,19 @@ import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jacJarSoft.noteArkiv.api.SheetParam;
+import jacJarSoft.noteArkiv.api.SheetSearchList;
 import jacJarSoft.noteArkiv.api.SheetSearchParam;
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 import jacJarSoft.noteArkiv.dao.NoteDao;
 import jacJarSoft.noteArkiv.dao.SheetFileDao;
+import jacJarSoft.noteArkiv.dao.SheetListDao;
 import jacJarSoft.noteArkiv.dao.TagsDao;
 import jacJarSoft.noteArkiv.dao.VoiceDao;
 import jacJarSoft.noteArkiv.model.Note;
 import jacJarSoft.noteArkiv.model.NoteFile;
 import jacJarSoft.noteArkiv.model.NoteFileData;
 import jacJarSoft.noteArkiv.model.SheetList;
+import jacJarSoft.noteArkiv.model.SheetListNote;
 import jacJarSoft.noteArkiv.model.Tag;
 import jacJarSoft.noteArkiv.service.NoteService;
 import jacJarSoft.util.StringUtils;
@@ -38,24 +42,22 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	private VoiceDao voiceDao;
 	@Autowired
 	private TagsDao tagsDao;
+	@Autowired
+	private SheetListDao sheetListDao;
 
 	@Override
 	public Response getNote(long noteId) {
 		if (noteId <= 0) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
-		Note note = noteDao.getNote(noteId);
-		if (note == null)
-			throw new ValidationErrorException("Finner ikke note " + noteId);
-	
-		SheetParam result = noteDao.getSheetData(note);
+		Note note = getVerifiedNote(noteId);
+
+		SheetParam result = getSheetData(getSheetsInCurrentList(), note);
 		return Response.ok(result).build();
 	}
 	@Override
 	public Response deleteNote(long noteId) {
-		Note note = noteDao.getNote(noteId);
-		if (note == null)
-			throw new ValidationErrorException("Finner ikke note " + noteId);
+		Note note = getVerifiedNote(noteId);
 		return runWithTransaction((ec, p)-> {
 			List<NoteFile> sheetFiles = sheetFileDao.getSheetFiles(noteId);
 			sheetFiles.forEach(sheetFile-> {
@@ -64,6 +66,18 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 			noteDao.deleteNote(note);
 			return Response.ok().build();
 		}, null);
+	}
+	private Note getVerifiedNote(long noteId) {
+		Note note = noteDao.getNote(noteId);
+		if (note == null)
+			throw new ValidationErrorException("Finner ikke note " + noteId);
+		return note;
+	}
+	private SheetList getVerifiedList(long listId) {
+		SheetList list = sheetListDao.getList(listId);
+		if (list == null)
+			throw new ValidationErrorException("Finner ikke liste " + listId);
+		return list;
 	}
 	@Override
 	public Response getSheetFiles(long sheetId) {
@@ -96,7 +110,7 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 			sheetResult = noteDao.insertNote(param.getSheet());
 		}
 			
-		return noteDao.getSheetData(sheetResult);
+		return  getSheetData(getSheetsInCurrentList(), sheetResult);
 	}
 
 	@Override
@@ -204,7 +218,26 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	}
 	@Override
 	public Response searchSheets(SheetSearchParam param) {
-		return Response.ok(noteDao.sheetSearch(param)).build();
+		List<Note> sheets = noteDao.sheetSearch(param);
+
+		SheetSearchList result = new SheetSearchList();
+		List<SheetParam> sheetList = result.getSheetList();
+		
+		Set<Long> currentSheets = getSheetsInCurrentList();
+		
+		for (Note sheet : sheets) {
+			SheetParam sheetData = getSheetData(currentSheets, sheet);
+			sheetList.add(sheetData);
+		}
+		
+		return Response.ok(result).build();
+	}
+	private SheetParam getSheetData(Set<Long> currentSheets, Note sheet) {
+		return noteDao.getSheetData(sheet, currentSheets.contains(new Long(sheet.getNoteId())));
+	}
+	private Set<Long> getSheetsInCurrentList() {
+		Set<Long> currentSheets = sheetListDao.getLinkedSheets(1);
+		return currentSheets;
 	}
 
 	@Override
@@ -263,12 +296,23 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	}
 	@Override
 	public Response connectListSheet(long listId, long sheetId) {
-		// TODO Auto-generated method stub
-		return null;
+		Note note = getVerifiedNote(sheetId);
+		SheetList list = getVerifiedList(listId);
+		return runWithTransaction((ec, p)-> {
+			SheetListNote link = new SheetListNote(list.getListId(), note.getNoteId());
+			sheetListDao.insertLink(link);
+			return Response.ok().build();
+		}, null);
 	}
 	@Override
 	public Response disconnectListSheet(long listId, long sheetId) {
-		// TODO Auto-generated method stub
-		return null;
+		Note note = getVerifiedNote(sheetId);
+		SheetList list = getVerifiedList(listId);
+		return runWithTransaction((ec, p)-> {
+			SheetListNote link = sheetListDao.getLink(list.getListId(), note.getNoteId());
+			if (link != null)
+				sheetListDao.deleteLink(link);
+			return Response.ok().build();
+		}, null);
 	}
 }

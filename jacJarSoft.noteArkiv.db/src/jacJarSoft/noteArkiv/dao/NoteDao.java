@@ -40,7 +40,7 @@ public class NoteDao extends AbstractDao {
 			where = where + " and " + clauseToAdd;
 		return where;
 	}
-	public SheetSearchList sheetSearch(SheetSearchParam param) {
+	public List<Note> sheetSearch(SheetSearchParam param) {
 		String from = "";
 		String where = "";
 		
@@ -57,20 +57,14 @@ public class NoteDao extends AbstractDao {
 		@SuppressWarnings("unchecked")
 		List<Note> sheets = (List<Note>)getEntityManager().createNativeQuery("select * from notes " + from + " " + where + " order by title", Note.class).getResultList();
 		
-		SheetSearchList result = new SheetSearchList();
-		List<SheetParam> sheetList = result.getSheetList();
-		
-		for (Note sheet : sheets) {
-			SheetParam sheetData = getSheetData(sheet);
-			sheetList.add(sheetData);
-		}
 			
-		return result;
+		return sheets;
 	}
 
-	public SheetParam getSheetData(Note sheet) {
+	public SheetParam getSheetData(Note sheet, boolean inCurrent) {
 		SheetParam sheetData = new SheetParam();
 		sheetData.setSheet(sheet);
+		sheetData.setInCurrent(inCurrent);
 		return sheetData;
 	}
 
