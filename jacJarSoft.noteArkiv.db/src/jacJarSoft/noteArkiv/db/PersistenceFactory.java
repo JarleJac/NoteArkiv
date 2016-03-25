@@ -9,8 +9,16 @@ import javax.persistence.Persistence;
 public class PersistenceFactory {
 	private static Properties overrideProperties = null;
 	public static EntityManagerFactory getEntityManagerFactory() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("noteArkivDb", overrideProperties);
+		Properties props = getProperties();
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("noteArkivDb", props);
 		return factory;
+	}
+	private static Properties getProperties() {
+		Properties props = new Properties();
+		if (overrideProperties != null)
+			props.putAll(overrideProperties);
+		props.setProperty("eclipselink.session-event-listener", "jacJarSoft.noteArkiv.db.MySessionEventAdapter");
+		return props;
 	}
 	public static EntityManager getEntityManager() {
 		EntityManagerFactory factory = getEntityManagerFactory();

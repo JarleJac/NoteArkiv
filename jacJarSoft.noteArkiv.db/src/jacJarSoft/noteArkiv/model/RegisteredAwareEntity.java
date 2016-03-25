@@ -1,17 +1,11 @@
 package jacJarSoft.noteArkiv.model;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PostLoad;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
-
-import jacJarSoft.noteArkiv.db.SqliteDateTimeFormater;
 
 
 @MappedSuperclass
@@ -34,9 +28,7 @@ public abstract class RegisteredAwareEntity extends AbstractEntity {
 
 	public void setRegisteredDate(Date registeredDate) {
 		this.registeredDate = registeredDate;
-		Instant instant = Instant.ofEpochMilli(registeredDate.getTime());
-	    LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
-	    registeredDateStr = ldt.format(SqliteDateTimeFormater.Formatter);
+	    registeredDateStr = getDateStrFromDate(registeredDate);
 	}
 
 	@XmlTransient
@@ -50,13 +42,13 @@ public abstract class RegisteredAwareEntity extends AbstractEntity {
 	}
 
 	private void setRegDateFromStr() {
-		LocalDateTime ldt = LocalDateTime.parse(registeredDateStr, SqliteDateTimeFormater.Formatter);
-	    registeredDate = Date.from(ldt.toInstant(ZoneOffset.UTC));
+	    registeredDate = getDateFromDateStr(registeredDateStr);
 	}
 
-	@PostLoad
+	@Override
 	protected void postLoad() {
 	    setRegDateFromStr();
+	    super.postLoad();
 	}
 
 	public String getRegisteredBy() {

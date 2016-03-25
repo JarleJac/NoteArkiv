@@ -23,6 +23,7 @@ import jacJarSoft.noteArkiv.dao.VoiceDao;
 import jacJarSoft.noteArkiv.model.Note;
 import jacJarSoft.noteArkiv.model.NoteFile;
 import jacJarSoft.noteArkiv.model.NoteFileData;
+import jacJarSoft.noteArkiv.model.SheetList;
 import jacJarSoft.noteArkiv.model.Tag;
 import jacJarSoft.noteArkiv.service.NoteService;
 import jacJarSoft.util.StringUtils;
@@ -56,6 +57,10 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 		if (note == null)
 			throw new ValidationErrorException("Finner ikke note " + noteId);
 		return runWithTransaction((ec, p)-> {
+			List<NoteFile> sheetFiles = sheetFileDao.getSheetFiles(noteId);
+			sheetFiles.forEach(sheetFile-> {
+				sheetFileDao.deleteFile(sheetFile);
+			});
 			noteDao.deleteNote(note);
 			return Response.ok().build();
 		}, null);
@@ -235,5 +240,35 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 		Tag tag = tagsDao.getTag(tagId);
 		tagsDao.deleteTag(tag);
 		return null;	
+	}
+	@Override
+	public Response getLists() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Response addList(SheetList list) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Response updateList(SheetList list) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Response deleteList(long listId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Response connectListSheet(long listId, long sheetId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Response disconnectListSheet(long listId, long sheetId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

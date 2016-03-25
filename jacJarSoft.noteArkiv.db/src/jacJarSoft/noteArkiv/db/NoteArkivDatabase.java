@@ -2,6 +2,7 @@ package jacJarSoft.noteArkiv.db;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 import jacJarSoft.noteArkiv.model.AccessLevel;
 import jacJarSoft.noteArkiv.model.Note;
 import jacJarSoft.noteArkiv.model.NoteFile;
+import jacJarSoft.noteArkiv.model.SheetList;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.model.Voice;
 import jacJarSoft.util.DbUtil;
@@ -82,6 +84,9 @@ public class NoteArkivDatabase {
 	private void upgradeFromVersion1(Connection connection) throws SQLException {
 		upgradeUsersFromVer1(connection);
 		upgradeNotesFromVersion1(connection);
+
+		createLists(connection);
+        createListNoteLink(connection);
 	}
 
 	private void upgradeNotesFromVersion1(Connection connection) throws SQLException {
@@ -143,6 +148,40 @@ public class NoteArkivDatabase {
         createNoteFiles(connection);
         createTags(connection);
         createUsers(connection);
+        createLists(connection);
+        createListNoteLink(connection);
+	}
+
+
+	private void createLists(Connection connection) throws SQLException {
+		String sql =
+                "CREATE TABLE IF NOT EXISTS LISTS " + 
+					"(LIST_ID integer primary key autoincrement, " +  
+					"LIST_NAME text, " +
+					"LIST_DATE text, " +
+            		"REGISTERED_DATE text, " +
+            		"REGISTERED_BY text " +
+					");";
+		DbUtil.execUpdateSql(connection,sql);
+		initAutoIncrementSequence(connection, "LISTS");
+		AddCurrentList();
+	}
+	private void AddCurrentList() {
+		SheetList list = new SheetList();
+		list.setListDateStr("1913-07-29 00:00:00");
+		list.setName("Notene vi jobber med nå");
+		list.setRegisteredBy("sysadmin");
+		list.setRegisteredDate(new Date());
+		entityManager.persist(list);
+	}
+
+	private void createListNoteLink(Connection connection) throws SQLException {
+		String sql =
+                "CREATE TABLE IF NOT EXISTS LIST_NOTES " + 
+					"(LIST_ID integer REFERENCES LISTS(LIST_ID) ON DELETE CASCADE, " +  
+					"NOTE_ID integer  REFERENCES NOTES(NOTE_ID) ON DELETE CASCADE" +
+					");";
+		DbUtil.execUpdateSql(connection,sql);
 	}
 
 	private void createVoices(Connection connection) throws SQLException {

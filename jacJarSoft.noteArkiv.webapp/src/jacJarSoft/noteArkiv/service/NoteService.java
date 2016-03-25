@@ -18,6 +18,7 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import jacJarSoft.noteArkiv.api.SheetParam;
 import jacJarSoft.noteArkiv.api.SheetSearchParam;
 import jacJarSoft.noteArkiv.model.NoteFile;
+import jacJarSoft.noteArkiv.model.SheetList;
 import jacJarSoft.noteArkiv.model.Tag;
 
 @Path("/noteservice")
@@ -103,5 +104,33 @@ public interface NoteService {
 	@Path("/tags/{tagId}")
 	public Response deleteTag(@PathParam("tagId") int tagId);
 
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/list/")
+	public Response getLists();
+
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/list/")
+	public Response addList(SheetList list);
+
+	@PUT
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/list/")
+	public Response updateList(SheetList list);
 	
+	@DELETE
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/list/{listId}")
+	public Response deleteList(@PathParam("listId") long listId);
+
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/list/{listId}")
+	public Response connectListSheet(@PathParam("listId") long listId, long sheetId);
+
+	@DELETE
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/list/{listId}/{noteId}")
+	public Response disconnectListSheet(@PathParam("listId") long listId, @PathParam("noteId") long sheetId);
 }

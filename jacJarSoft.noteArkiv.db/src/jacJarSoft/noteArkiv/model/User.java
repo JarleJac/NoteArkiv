@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -50,10 +49,6 @@ public class User extends AbstractEntity{
 	}
 	public void setMustChangePassword(boolean mustChangePassword) {
 		this.mustChangePassword = mustChangePassword;
-	}
-	@PostLoad
-	private void postLoad() {
-		//password = "**hidden**";
 	}
 	public String geteMail() {
 		return eMail;

@@ -44,3 +44,4 @@ CREATE TABLE IF NOT EXISTS note_files
                           registered_by text 
              );
 insert into note_files select note_file_id, note_id, file_name, description, file_size, datetime(registered_date /1000, 'unixepoch' ), registered_by  from note_files_old
+
