@@ -120,6 +120,9 @@ div.expanded {
 	cursor: pointer;
 	font-size: 1.2em;
 }
+.listRow {
+	font-size: 1.2em;
+}
 .listLabel {
 	font-weight: bold;
 }

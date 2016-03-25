@@ -65,7 +65,7 @@ Her kommer det avansert søk med mange muligheter.
 <!-- 		<label for="search" class="control-label">Filter</label> -->
 <!-- 		<input type="text" class="form-control" data-ng-model="search" placeholder="filtrer resultatet"> -->
 <!-- 	</div> -->
-	<div data-ng-show="hasResult()">
+	<div data-ng-show="hasResult() && sheetList.length > 0">
 		<div class="row listHeading">
 			<div class="col-xs-4"><a class="listHeading" data-ng-click="setSort('sheet.title')">Tittel</a> <span data-ng-show="predicate === 'sheet.title'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
 			<div class="col-xs-4"><a class="listHeading" data-ng-click="setSort('sheet.composedBy')">Komponist</a> <span data-ng-show="predicate === 'sheet.composedBy'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
