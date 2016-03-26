@@ -4,6 +4,7 @@
 angular.module('notearkiv').controller('searchController', function($scope, $http, $routeParams, SearchSheets, Sheets, Lists, State, AuthToken) {
 	var controller = this;
 	$scope.tab = $routeParams.tab;
+	$scope.listId = $routeParams.listId;
 	$scope.getStateName = function() { return "searchController" + $scope.tab;}
 	State.getOrRegisterScopeVariables(
 			["predicate", "reverse", "sheetList", "title", "days"],

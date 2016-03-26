@@ -1,2 +1,27 @@
-<h3 class="pagetop">Lister</h3>
-<p>Her kommer det lister</p>
+<h3 data-cg-busy="{promise:getPromise,message:'Henter lister ...'}" class="pagetop">Lister</h3>
+
+<div data-ng-show="hasAccess('AUTHOR')">
+	<button type="submit" class="btn btn-default"  data-ng-click="newList()"><span class="glyphicon glyphicon-list"></span> Ny</button>
+</div>
+<div >
+	<h4 class="sub-heading">Registrerte lister</h4>
+	<div class="form-inline">
+		<label for="search" class="control-label">Filter</label>
+		<input type="text" class="form-control" data-ng-model="listsFilter" placeholder="filtrer lister">
+	</div>
+	<div data-ng-repeat="list in lists | filter:listsFilter | orderBy:predicate:reverse">
+		<div data-ng-if="$first" class="row listHeading">
+			<div class="col-xs-9"><a class="listHeading" data-ng-click="setSort('name')">Navn</a> <span data-ng-show="predicate === 'name'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
+			<div class="col-xs-2"><a class="listHeading" data-ng-click="setSort('listDate')">Dato</a> <span data-ng-show="predicate === 'listDate'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
+			<div class="col-xs-1">Aktivitet</div>
+		</div>
+		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row listRow">
+			<div class="col-xs-9"><a href="#/search/list/{{list.listId}}">{{list.name}}</a></div>
+			<div class="col-xs-2">{{list.listDate | date:'dd.MM.yyyy'}}</div>
+			<div class="col-xs-1">
+				<a data-ng-show="hasAccess('AUTHOR')" href="#/lists/{{list.listId}}" class="btn btn-primary btn-xs" role="button">
+					<span class="glyphicon glyphicon-edit"></span> Endre</a>
+			</div>	
+		</div>
+	</div>
+</div>	

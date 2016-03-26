@@ -15,6 +15,10 @@ public class SheetListDao extends AbstractDao {
 		SheetList list = getEntityManager().find(SheetList.class, listId);
 		return list;
 	}
+	public List<SheetList> getLists() {
+		List<SheetList> lists = getEntityManager().createQuery("select l from SheetList l", SheetList.class).getResultList();
+		return lists;
+	}
 
 	public SheetListNote insertLink(SheetListNote link) {
 		getEntityManager().persist(link);

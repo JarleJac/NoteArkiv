@@ -169,7 +169,7 @@ public class NoteArkivDatabase {
 	private void AddCurrentList() {
 		SheetList list = new SheetList();
 		list.setListDateStr("1913-07-29 00:00:00");
-		list.setName("Notene vi jobber med nå");
+		list.setName("Gjeldende noter");
 		list.setRegisteredBy("sysadmin");
 		list.setRegisteredDate(new Date());
 		entityManager.persist(list);

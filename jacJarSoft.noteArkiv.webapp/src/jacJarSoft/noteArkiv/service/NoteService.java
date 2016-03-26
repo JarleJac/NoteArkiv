@@ -119,6 +119,11 @@ public interface NoteService {
 	@Path("/list/")
 	public Response updateList(SheetList list);
 	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/list/{listId}")
+	public Response getList(@PathParam("listId") long listId);
+	
 	@DELETE
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/list/{listId}")

@@ -276,8 +276,7 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	}
 	@Override
 	public Response getLists() {
-		// TODO Auto-generated method stub
-		return null;
+		return Response.ok(sheetListDao.getLists()).build();
 	}
 	@Override
 	public Response addList(SheetList list) {
@@ -314,5 +313,9 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 				sheetListDao.deleteLink(link);
 			return Response.ok().build();
 		}, null);
+	}
+	@Override
+	public Response getList(long listId) {
+		return Response.ok(sheetListDao.getList(listId)).build();
 	}
 }

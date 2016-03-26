@@ -32,6 +32,14 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
             accessLevel: "READER"
         }
 	})
+	.when('/search/:tab/:listId', {
+		templateUrl : 'templates/pages/search/search.html',
+		controller : 'searchController',
+		access: {
+            requiresLogin: true,
+            accessLevel: "READER"
+        }
+	})
 	.when('/sheets/:sheetId', {
 		templateUrl : 'templates/pages/sheets/sheet.html',
 		controller : 'editSheetController',
@@ -42,11 +50,21 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
         }
 		
 	})
-	.when('/quicklists', {
+	.when('/lists', {
 		templateUrl : 'templates/pages/lists/lists.html',
+		controller : 'listsController',
 		access: {
             requiresLogin: true,
             accessLevel: "READER"
+        }
+		
+	})
+	.when('/lists/:listId', {
+		templateUrl : 'templates/pages/lists/list.html',
+		controller : 'listController',
+		access: {
+            requiresLogin: true,
+            accessLevel: "AUTHOR"
         }
 		
 	})

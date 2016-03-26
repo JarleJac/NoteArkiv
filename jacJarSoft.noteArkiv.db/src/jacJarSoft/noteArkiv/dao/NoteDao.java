@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import jacJarSoft.noteArkiv.api.SheetParam;
-import jacJarSoft.noteArkiv.api.SheetSearchList;
 import jacJarSoft.noteArkiv.api.SheetSearchParam;
 import jacJarSoft.noteArkiv.db.SqliteDateTimeFormater;
 import jacJarSoft.noteArkiv.model.Note;
