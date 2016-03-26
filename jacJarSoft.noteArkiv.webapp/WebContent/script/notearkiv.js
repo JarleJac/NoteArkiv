@@ -25,7 +25,7 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 		templateUrl : 'templates/pages/home/about.html'
 	})
 	.when('/search/:tab', {
-		templateUrl : 'templates/pages/search/index.html',
+		templateUrl : 'templates/pages/search/search.html',
 		controller : 'searchController',
 		access: {
             requiresLogin: true,
@@ -43,10 +43,10 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 		
 	})
 	.when('/quicklists', {
-		templateUrl : 'templates/pages/quicklists/index.html',
+		templateUrl : 'templates/pages/lists/lists.html',
 		access: {
             requiresLogin: true,
-            accessLevel: "AUTHOR"
+            accessLevel: "READER"
         }
 		
 	})

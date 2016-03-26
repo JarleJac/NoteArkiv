@@ -1,22 +1,17 @@
-<h3 class="pagetop">Søk</h3>
+<h3 class="pagetop">Note søk</h3>
 <ul class="nav nav-tabs">
 	<li role="presentation" data-ng-class="{ active: isTabSet('current') }"><a
 		href="#/search/current">Gjeldende</a></li>
-	<li role="presentation" data-ng-class="{ active: isTabSet('lists') }"><a
-		href="#/search/lists">Lister</a></li>
 	<li role="presentation" data-ng-class="{ active: isTabSet('newest') }"><a
 		href="#/search/newest">nyeste</a></li>
 	<li role="presentation" data-ng-class="{ active: isTabSet('simple') }"><a
 		href="#/search/simple">Enkel søk</a></li>
-	<li role="presentation" data-ng-class="{ active: isTabSet('advansed') }"><a
-		href="#/search/advansed">Avansert søk</a></li>
+	<li role="presentation" data-ng-class="{ active: isTabSet('advanced') }"><a
+		href="#/search/advanced">Avansert søk</a></li>
 </ul>
 <div class="small-spacer"> </div>
 <div data-ng-show="isTabSet('current')">
 Viser de notene som det øves på for tiden.... Snart
-</div>
-<div data-ng-show="isTabSet('lists')">
-her kommer en mulighet for å søke på noter tilhørende en gitt liste.
 </div>
 <div data-ng-show="isTabSet('newest')">
 	<form class="form-inline">
@@ -53,7 +48,7 @@ her kommer en mulighet for å søke på noter tilhørende en gitt liste.
 <!-- 		</div> -->
 	</form>
 </div>
-<div data-ng-show="isTabSet('advansed')">
+<div data-ng-show="isTabSet('advanced')">
 Her kommer det avansert søk med mange muligheter.
 </div>
 <div class="small-spacer"> </div>
