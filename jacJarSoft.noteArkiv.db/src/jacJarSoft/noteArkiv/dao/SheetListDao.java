@@ -1,5 +1,6 @@
 package jacJarSoft.noteArkiv.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,6 +44,19 @@ public class SheetListDao extends AbstractDao {
 		id.noteId = sheetId;
 		SheetListNote link = getEntityManager().find(SheetListNote.class, id);
 		return link;
+	}
+	public SheetList updateList(SheetList list) {
+		getEntityManager().merge(list);
+		return list;
+	}
+	public SheetList insertList(SheetList list) {
+		list.setRegisteredDate(new Date());
+		list.setRegisteredBy(getCurrentUser());
+		getEntityManager().persist(list);
+		return list;
+	}
+	public void deleteList(SheetList list) {
+		getEntityManager().remove(list);
 	}
 	
 }

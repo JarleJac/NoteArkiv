@@ -2,6 +2,10 @@
  * 
  */
 angular.module('notearkiv').factory('Lists', function ListsFactory($http) {
+	var fixListAfterRead = function(list) {
+		list.listDate = new Date(list.listDate);
+		return list;
+	}
 	return {
 		connectToList : function(listsId, sheetId) {
 			return $http({method: 'POST', url : 'rest/noteservice/list/' + listsId, data: sheetId });
@@ -12,12 +16,29 @@ angular.module('notearkiv').factory('Lists', function ListsFactory($http) {
 		getList : function(listsId) {
 			return $http({method: 'GET', url : 'rest/noteservice/list/' + listsId })
 				.then(function successCallback(result) {
-					var list = result.data
-					list.listDate = new Date(list.listDate);
-					return list;
+					return fixListAfterRead(result.data);
 				}, function errorCallback(result) {
 					throw result;
 				});
+		},
+		addList : function(list) {
+			return $http({method: 'POST', url : 'rest/noteservice/list', data: list })
+				.then(function successCallback(result) {
+					return fixListAfterRead(result.data);
+				}, function errorCallback(result) {
+					throw result;
+				});
+		},
+		updateList : function(list) {
+			return $http({method: 'PUT', url : 'rest/noteservice/list', data: list })
+				.then(function successCallback(result) {
+					return fixListAfterRead(result.data);
+				}, function errorCallback(result) {
+					throw result;
+				});
+		},
+		deleteList : function(list) {
+			return $http({method: 'DELETE', url : 'rest/noteservice/list/' + list.listId });
 		},
 		getLists : function() {
 			return $http({method: 'GET', url : 'rest/noteservice/list/' })

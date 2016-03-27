@@ -20,6 +20,8 @@ public abstract class AbstractEntity {
 	}
 
 	protected Date getDateFromDateStr(String dateStr) {
+		if (dateStr == null)
+			return null;
 		LocalDateTime ldt = LocalDateTime.parse(dateStr, SqliteDateTimeFormater.Formatter);
 	    return Date.from(ldt.toInstant(ZoneOffset.UTC));
 		

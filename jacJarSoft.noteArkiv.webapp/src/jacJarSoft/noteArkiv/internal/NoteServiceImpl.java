@@ -280,18 +280,40 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	}
 	@Override
 	public Response addList(SheetList list) {
-		// TODO Auto-generated method stub
-		return null;
+		SheetList result = runWithTransaction(this::internalAddOrUpdateNote, list);
+		return Response.ok(result).build();
 	}
 	@Override
 	public Response updateList(SheetList list) {
-		// TODO Auto-generated method stub
-		return null;
+		SheetList result = runWithTransaction(this::internalAddOrUpdateNote, list);
+		return Response.ok(result).build();
+	}
+	private SheetList internalAddOrUpdateNote(EntityManager em, SheetList list)
+	{
+		if (list == null || StringUtils.isEmpty(list.getName())) {
+			throw new ValidationErrorException("Navn kan ikke være blank.");
+		}
+		if (list == null || list.getListDate() == null) {
+			throw new ValidationErrorException("Dato må angis.");
+		}
+		SheetList result;
+		if (list.getListId() != 0) {
+			result = sheetListDao.updateList(list);
+		}
+		else {
+			result = sheetListDao.insertList(list);
+		}
+			
+		return  result;
 	}
 	@Override
 	public Response deleteList(long listId) {
-		// TODO Auto-generated method stub
-		return null;
+		return runWithTransaction((ec, p)-> {
+			SheetList list = getVerifiedList(listId);
+			if (list != null)
+				sheetListDao.deleteList(list);
+			return Response.ok().build();	
+		}, null);
 	}
 	@Override
 	public Response connectListSheet(long listId, long sheetId) {

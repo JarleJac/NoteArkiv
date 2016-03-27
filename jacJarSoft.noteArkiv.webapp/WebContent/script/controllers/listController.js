@@ -2,7 +2,7 @@
  * 
  */
 
-angular.module('notearkiv').controller('listController', function($rootScope, $scope, $location, $routeParams, Lists, Auth) {
+angular.module('notearkiv').controller('listController', function($rootScope, $scope, $location, $routeParams, Lists, SimpleDlg) {
 	$scope.isNew = $routeParams.listId === "new" ? true : false;
 	if ($scope.isNew) {
 		$scope.list = {};
@@ -14,31 +14,30 @@ angular.module('notearkiv').controller('listController', function($rootScope, $s
 		});
 	}
 	$scope.newList = function() {
-		$location.path("/listss/new");
+		$location.path("/lists/new");
 	}
-	$scope.saveUser = function() {
+	$scope.saveList = function() {
 		if ($scope.isNew) {
-			if($scope.user.password !== $scope.repeatPassword) {
-				$rootScope.$emit('ErrorMsg', "Du må angi samme passord i begge passord feltene");
-				return;
-			} else {
-				$scope.savePromise = Users.addUser($scope.user);			
-			}
+			$scope.savePromise = Lists.addList($scope.list);			
 		} else {
-			$scope.savePromise = Users.updateUser($scope.user);			
+			$scope.savePromise = Lists.updateList($scope.list);			
 		}
 		$scope.savePromise.then(function successCallback(result) {
-			$rootScope.$emit('OkMessage', "Bruker ble lagret ok");
+			$rootScope.$emit('OkMessage', "Liste ble lagret ok");
 			if ($scope.isNew)
-				$location.path("/users/" + result.data.no);
+				$location.path("/lists/" + result.listId);
 		});
 		
 	}
-	$scope.deleteUser = function() {
-//		$location.path("/users/new");
+	$scope.deleteList = function() {
+		SimpleDlg.runSimpleConfirmDlg("Bekreft sletting", "Er du sikker på at du vil slette " + $scope.list.name)
+		.result.then(function (result) {
+			$scope.deletePromise = Lists.deleteList($scope.list);
+			$scope.deletePromise.then(function successCallback(result) {
+				$location.path("/lists/new").replace();
+				$rootScope.$emit('OkMessage', "Liste ble slettet.");
+			});
+		}); 
 	}
-	$scope.getAccessLevelText = function(level) {
-		return Users.getAccessLevelText(level);
-	} 
 })
 ;
