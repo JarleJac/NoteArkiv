@@ -1,0 +1,84 @@
+<div id="{{resultId}}">	
+	<div data-ng-show="hasResult() &&  searchListData.sheetList.length === 0">Fant desverre ingen noter som passer til søket</div>
+<!-- 	<div data-ng-show="hasResult()" class="form-inline"> -->
+<!-- 		<label for="search" class="control-label">Filter</label> -->
+<!-- 		<input type="text" class="form-control" data-ng-model="search" placeholder="filtrer resultatet"> -->
+<!-- 	</div> -->
+	<div data-ng-show="hasResult() && searchListData.sheetList.length > 0">
+		<div class="row listHeading">
+			<div class="col-xs-4"><a class="listHeading" data-ng-click="setSort('sheet.title')">Tittel</a> <span data-ng-show="searchListData.predicate === 'sheet.title'" class="glyphicon" data-ng-class="searchListData.reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
+			<div class="col-xs-4"><a class="listHeading" data-ng-click="setSort('sheet.composedBy')">Komponist</a> <span data-ng-show="searchListData.predicate === 'sheet.composedBy'" class="glyphicon" data-ng-class="searchListData.reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
+			<div class="col-xs-4"><a class="listHeading" data-ng-click="setSort('sheet.arrangedBy')">Arrangør</a> <span data-ng-show="searchListData.predicate === 'sheet.arrangedBy'" class="glyphicon" data-ng-class="searchListData.reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
+		</div>
+	</div>
+	<div data-ng-show="hasResult()"
+		data-ng-repeat="sheetData in searchListData.sheetList | orderBy:searchListData.predicate:searchListData.reverse" 
+		data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'"
+		data-ng-class="{expanded: sheetData.expanded}">
+<!-- 		data-ng-repeat="sheetData in getSheetList() | filter: {sheet: {title :search}}"> -->
+		<div   class="row sheetHeading" 
+			data-ng-class-odd="{expandedHeadingOdd: sheetData.expanded}" data-ng-class-even="{expandedHeadingEven: sheetData.expanded}"  
+			data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false"
+			aria-controls="{{ 'sheetInfo-' + $index }}">
+			<div class="col-xs-4">{{sheetData.sheet.title}}</div>
+			<div class="col-xs-4">{{sheetData.sheet.composedBy}}</div>
+			<div class="col-xs-4">{{sheetData.sheet.arrangedBy}}</div>
+		</div>
+		<div  data-ng-class="{in: sheetData.expanded}" class="row topBorder collapse"
+			id="{{ 'sheetInfo-' + $index }}" data-sheet-id="{{sheetData.sheet.noteId}}">
+			<div class="col-xs-12">
+				<div>
+					<span class="listLabel">Beskrivelse: </span>{{sheetData.sheet.description}}
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div>
+					<span class="listLabel">Stemmer: </span>{{sheetData.sheet.voicesDescr}}
+				</div>
+				<div>
+					<span class="listLabel">Note id: </span>{{sheetData.sheet.noteId}}
+					<span class="listLabel"> Registrert: </span>{{sheetData.sheet.registeredDate | date:'dd.MM.yyyy
+					HH:mm'}}<span class="listLabel"> av </span>{{sheetData.sheet.registeredBy}}
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div>
+					<span class="listLabel">Sjanger: </span>{{sheetData.sheet.tagsDescr}}
+				</div>
+				<div data-ng-show="hasAccess('AUTHOR')">
+					<a class="btn btn-sm btn-primary" href="#/sheets/{{sheetData.sheet.noteId}}"><span
+						class="glyphicon glyphicon-edit" aria-hidden="true"></span> Endre</a>
+					<button type="button" class="btn btn-sm btn-primary" data-ng-click="toggleCurrent(sheetData)">
+						<span class="glyphicon star"
+						data-ng-class="{'glyphicon-star selectedStar': sheetData.inCurrent, 'glyphicon-star-empty': !sheetData.inCurrent}">
+						</span> Gjeldende</button>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<div data-ng-show="sheetData.files.length == 0" >Det er ingen filer registrert</div>
+				<div data-ng-show="sheetData.files.length > 0" >
+					<div class="row"
+						data-ng-class-odd="'sublistHeadingOdd'" data-ng-class-even="'sublistHeadingEven'">
+						<div class="col-xs-4">Filnavn</div>
+						<div class="col-xs-4">Beskrivelse</div>
+						<div class="col-xs-1">KB</div>
+						<div class="col-xs-3">Aktivitet</div>
+					</div>
+				</div>
+				<div data-ng-repeat="file in sheetData.files" >
+					<div data-ng-class-odd="'sublistodd'" data-ng-class-even="'sublisteven'"  class="row">
+						<div class="col-xs-4">{{file.name}}</div>
+						<div class="col-xs-4">{{file.description}}</div>
+						<div class="col-xs-1">{{file.fileSize/1024|number:2}}</div>
+						<div class="col-xs-3">
+							<a href="rest/noteservice/notefile/{{file.fileId}}/download?authInfo={{authInfo}}" class="btn btn-primary btn-xs" role="button">
+								<span class="glyphicon glyphicon-download"></span> Last ned</a>	
+							<a href="rest/noteservice/notefile/{{file.fileId}}?authInfo={{authInfo}}" target="_blank" class="btn btn-primary btn-xs" role="button">
+								<span class="glyphicon glyphicon-open-file"></span> Åpne</a>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

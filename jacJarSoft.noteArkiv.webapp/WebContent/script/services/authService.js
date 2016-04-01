@@ -26,6 +26,9 @@ angular.module('notearkiv').factory('Auth', function AuthFactory($http, AuthToke
 		getAccessLevel : function(strLevel) {
 			return noteArkiv.Auth.AccessLevel[strLevel];
 		},
+		isUserAuthStr : function(strLevel) {
+			return this.isUserAuth(this.getAccessLevel(strLevel));
+		},
 		getUser : function() {
 			return user;
 		},
