@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//WebContent/templates/directives/sheets-list.html=UTF-8
 encoding//WebContent/templates/pages/home/about.html=UTF-8
 encoding//WebContent/templates/pages/home/index.html=UTF-8
+encoding//WebContent/templates/pages/lists/search.html=UTF-8
 encoding//WebContent/templates/pages/logon/changepw.html=UTF-8
 encoding//WebContent/templates/pages/search/search.html=UTF-8
 encoding//WebContent/templates/pages/sheets/sheet.html=UTF-8

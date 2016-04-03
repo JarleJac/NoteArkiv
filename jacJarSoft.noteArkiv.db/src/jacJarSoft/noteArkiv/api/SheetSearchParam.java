@@ -5,6 +5,7 @@ public class SheetSearchParam {
     private String composedBy;
     private String arrangedBy;
     private int days;
+    private Long listId;
 	public String getTitle() {
 		return title;
 	}
@@ -28,6 +29,12 @@ public class SheetSearchParam {
 	}
 	public void setDays(int days) {
 		this.days = days;
+	}
+	public Long getListId() {
+		return listId;
+	}
+	public void setListId(Long listId) {
+		this.listId = listId;
 	}
 
 }

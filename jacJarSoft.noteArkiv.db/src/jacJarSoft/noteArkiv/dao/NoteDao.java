@@ -53,8 +53,14 @@ public class NoteDao extends AbstractDao {
 			where = addWhere(where,"registered_date >= datetime('" +localDateFrom.format(SqliteDateTimeFormater.Formatter) + "')");
 		}
 
+		if (param.getListId() != null) {
+			from = "join LIST_NOTES LN on LN.LIST_ID = " + param.getListId().toString() + 
+					" AND LN.NOTE_ID = N.NOTE_ID ";
+		}
+		
+		String sql = "select * from NOTES N " + from + " " + where + " order by title";
 		@SuppressWarnings("unchecked")
-		List<Note> sheets = (List<Note>)getEntityManager().createNativeQuery("select * from notes " + from + " " + where + " order by title", Note.class).getResultList();
+		List<Note> sheets = (List<Note>)getEntityManager().createNativeQuery(sql, Note.class).getResultList();
 		
 			
 		return sheets;

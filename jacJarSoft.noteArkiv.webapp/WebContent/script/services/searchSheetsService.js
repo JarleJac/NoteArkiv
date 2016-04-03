@@ -35,6 +35,11 @@ angular.module('notearkiv').factory('SearchSheets', function SearchSheetsFactory
 			return internalSearch(newestParam);
 			
 		},
+		searchList : function(listId) {
+			var listParam = {listId: listId}
+			return internalSearch(listParam);
+			
+		},
 		hasResult : function() {
 			return lastSearchResult !== undefined;
 		}, 

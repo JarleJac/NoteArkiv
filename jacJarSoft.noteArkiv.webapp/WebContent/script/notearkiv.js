@@ -32,9 +32,9 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
             accessLevel: "READER"
         }
 	})
-	.when('/search/:tab/:listId', {
-		templateUrl : 'templates/pages/search/search.html',
-		controller : 'searchController',
+	.when('/search/list/:listId', {
+		templateUrl : 'templates/pages/lists/search.html',
+		controller : 'listSearchController',
 		access: {
             requiresLogin: true,
             accessLevel: "READER"

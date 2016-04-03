@@ -32,11 +32,20 @@ angular.module('notearkiv').controller('searchController', function($scope, $htt
 			$scope.searchListData.sheetList = result.sheetList;
 		})
 	};
+	$scope.searchCurrent = function() {
+		$scope.getPromise = SearchSheets.searchList(1);
+		$scope.getPromise.then(function successCallback(result) {
+			$scope.searchListData.sheetList = result.sheetList;
+		})
+	};
 	
 	if (!State.backFwdUsed) {
 		switch($scope.tab) {
 		case "newest":
 			$scope.searchNewest();
+			break;
+		case "current":
+			$scope.searchCurrent();
 			break;
 		}
 	}

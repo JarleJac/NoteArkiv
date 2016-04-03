@@ -1,0 +1,28 @@
+<h3 class="pagetop" data-cg-busy="{promise:getPromise,message:'Søker ...'}">Noter for liste: "{{list.name}}"</h3>
+<div ng-if="hasAccess('AUTHOR')"><button type="submit" class="btn btn-default" data-ng-click="toggleEditMode()">{{editMode? 'Avslutt':'Start'}} Redigeringsmodus</button></div>
+<div class="small-spacer"> </div>
+<div data-ng-if="editMode">
+	<ul class="nav nav-tabs">
+		<li role="presentation" data-ng-class="{ active: isTabSet('current') }"><a
+			data-ng-click="setTab('current')" href=>Noter på liste</a></li>
+		<li role="presentation" data-ng-class="{ active: isTabSet('search') }"><a
+			data-ng-click="setTab('search')" href=>Søk og legg til noter</a></li>
+	</ul>
+	<div class="small-spacer"> </div>
+	<div data-ng-show="isTabSet('current')">
+		<button type="submit" class="btn btn-default" data-ng-click="searchCurrent()">Slett merkede</button>
+		<div class="small-spacer"> </div>
+		<sheets-list data="currentListData" resultid="'currentResult'"></sheets-list>
+	</div>
+	<div data-ng-show="isTabSet('search')">
+		Søk frem noter.
+		<button type="submit" class="btn btn-default" data-ng-click="searchCurrent()">Legg til merkede</button>
+		<button type="submit" class="btn btn-default" data-ng-click="searchNewest()">Søk</button>
+		<div class="small-spacer"> </div>
+		<sheets-list data="searchListData" resultid="'searchResult'"></sheets-list>
+	</div>
+</div>
+<div data-ng-if="!editMode">
+	<sheets-list data="currentListData" resultid="'currentResult'"></sheets-list>
+</div>
+
