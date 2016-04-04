@@ -12,14 +12,14 @@
 	<div data-ng-show="isTabSet('current')">
 		<button type="submit" class="btn btn-default" data-ng-click="searchCurrent()">Slett merkede</button>
 		<div class="small-spacer"> </div>
-		<sheets-list data="currentListData" resultid="'currentResult'"></sheets-list>
+		<sheets-list data="currentListData" resultid="'currentResult'" selectable></sheets-list>
 	</div>
 	<div data-ng-show="isTabSet('search')">
 		Søk frem noter.
 		<button type="submit" class="btn btn-default" data-ng-click="searchCurrent()">Legg til merkede</button>
 		<button type="submit" class="btn btn-default" data-ng-click="searchNewest()">Søk</button>
 		<div class="small-spacer"> </div>
-		<sheets-list data="searchListData" resultid="'searchResult'"></sheets-list>
+		<sheets-list data="searchListData" resultid="'searchResult'" selectable></sheets-list>
 	</div>
 </div>
 <div data-ng-if="!editMode">

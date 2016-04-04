@@ -5,6 +5,7 @@
 angular.module('notearkiv').directive('sheetsList', ['Sheets', '$timeout', 'Auth', 'Lists', 'AuthToken', function(Sheets, $timeout, Auth, Lists, AuthToken) {
 
   function link(scope, element, attrs) {
+	scope.selectable = attrs.selectable === undefined ? false : true;
 	scope.authInfo = encodeURIComponent(AuthToken.getAuthToken());
 	  
 	scope.hasResult = function() {
@@ -29,6 +30,11 @@ angular.module('notearkiv').directive('sheetsList', ['Sheets', '$timeout', 'Auth
 				sheetData.inCurrent = true;
 			})
 		}
+	};
+
+	scope.toggleSelect = function(event, sheetData) {
+		sheetData.selected = !sheetData.selected;
+		event.stopPropagation();
 	};
 
 	var getFiles = function(sheetData) {
