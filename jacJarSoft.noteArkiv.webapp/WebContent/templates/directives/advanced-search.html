@@ -1,0 +1,43 @@
+<form  class="form-horizontal">
+  <div class="form-group">
+    <label for="title" class="col-sm-2 col-md-1 control-label">Tittel</label>
+    <div class="col-sm-7 col-lg-5 col-md-6">
+      <input type="text" class="form-control" id="title" data-ng-model="searchParam.title" placeholder="Tittel">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="composedBy" class="col-sm-2 col-md-1 control-label">Komponert</label>
+    <div class="col-sm-7 col-lg-5 col-md-6">
+      <input type="text" class="form-control" id="composedBy" data-ng-model="searchParam.composedBy" placeholder="Komponist">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="arrangedBy" class="col-sm-2 col-md-1 control-label">Arrangert</label>
+    <div class="col-sm-7 col-lg-5  col-md-6">
+      <input type="text" class="form-control" id="arrangedBy" data-ng-model="searchParam.arrangedBy" placeholder="Arrangør">
+    </div>
+  </div>
+  <div class="form-group">
+  	<fieldset data-cg-busy="{promise:getVoicesPromise,message:'Henter stemmer'}"  class="voices-border col-xs-11 col-sm-4 col-lg-2  col-md-3">
+  		<legend class="voices-border">Stemmer</legend>
+			<span data-ng-repeat="voice in selectedVoices">
+				<label style="width: 6em"><input type="checkbox" data-ng-model="voice.selected"> {{voice.name}}</label>
+				<br data-ng-if="$odd">
+			</span>
+  	</fieldset>
+  	<fieldset data-cg-busy="{promise:getTagsPromise,message:'Henter sjangere'}" class="voices-border col-xs-11 col-sm-4 col-lg-2  col-md-3">
+  		<legend class="voices-border">Sjanger</legend>
+  		<div class="col-xs-6 col-sm-4">
+		    <select class="tagsSelect" name="available" id="available" size="6" data-ng-model="available" 
+		    	data-ng-options="tag.name for tag in availableTags track by tag.id" >
+		    </select>
+  		</div>
+  	</fieldset>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-9 col-md-10 col-lg-8 text-right">
+      <button type="submit" class="btn btn-default"  data-ng-click="clear()">Nullstill</button>
+      <button type="submit" class="btn btn-primary"  data-ng-click="search()">Søk</button>
+    </div>
+  </div>
+</form>

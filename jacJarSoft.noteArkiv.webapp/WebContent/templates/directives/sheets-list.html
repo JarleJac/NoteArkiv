@@ -18,7 +18,7 @@
 <!-- 		data-ng-repeat="sheetData in getSheetList() | filter: {sheet: {title :search}}"> -->
 		<div   class="row sheetHeading" 
 			data-ng-class-odd="{expandedHeadingOdd: sheetData.expanded}" data-ng-class-even="{expandedHeadingEven: sheetData.expanded}"  
-			data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false"	aria-controls="{{ 'sheetInfo-' + $index }}">
+			data-toggle="collapse" data-target="{{ '#sheetInfo-' +resultId+ $index }}" aria-expanded="false"	aria-controls="{{ 'sheetInfo-' +resultId+ $index }}">
 			<div class="col-xs-4">
 				<a data-ng-if="selectable" data-ng-click="toggleSelect($event,sheetData)" 
 					data-ng-class="sheetData.selected ? 'check-selected' : 'uncheck-selected'" href=>
@@ -29,7 +29,7 @@
 			<div class="col-xs-4">{{sheetData.sheet.arrangedBy}}</div>
 		</div>
 		<div  data-ng-class="{in: sheetData.expanded}" class="row topBorder collapse"
-			id="{{ 'sheetInfo-' + $index }}" data-sheet-id="{{sheetData.sheet.noteId}}">
+			id="{{ 'sheetInfo-' +resultId+ $index }}" data-sheet-id="{{sheetData.sheet.noteId}}">
 			<div class="col-xs-12">
 				<div>
 					<span class="listLabel">Beskrivelse: </span>{{sheetData.sheet.description}}

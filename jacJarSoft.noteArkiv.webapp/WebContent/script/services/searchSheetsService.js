@@ -26,6 +26,10 @@ angular.module('notearkiv').factory('SearchSheets', function SearchSheetsFactory
 		});
 	}
 	return {
+		searchAdvanced : function(searchParam) {
+			return internalSearch(searchParam);
+			
+		},
 		searchSimple : function(searchParam) {
 			var simpleParam = {title: searchParam}
 			return internalSearch(simpleParam);
