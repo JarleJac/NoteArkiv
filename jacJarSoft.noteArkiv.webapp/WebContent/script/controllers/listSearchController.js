@@ -1,7 +1,7 @@
 /**
  * 
  */
-angular.module('notearkiv').controller('listSearchController', function($scope, $http, $routeParams, SearchSheets, State, Lists) {
+angular.module('notearkiv').controller('listSearchController', function($rootScope, $scope, $q, $http, $routeParams, SearchSheets, State, Lists) {
 	$scope.listId = $routeParams.listId;
 	$scope.getStateName = function() { return "listSearchController" + $scope.listId;}
 	State.getOrRegisterScopeVariables(
@@ -21,8 +21,22 @@ angular.module('notearkiv').controller('listSearchController', function($scope, 
 		return $scope.tab === tab;
 	};
 
+	$scope.addSelected = function() {
+		var deferred = $q.defer();
+		var promises = [];
+		$scope.searchListData.sheetList.forEach(function(sheetData) {
+			if (sheetData.selected) {
+				promises.push(Lists.connectToList($scope.listId, sheetData.sheet.noteId))				
+			}
+		  });
+		$q.all(promises).then(function successCallback(result) {
+			$scope.searchCurrent();
+			$rootScope.$emit('OkMessage', "Valgte noter er lagt til i lista.");
+		});
+	};
 	$scope.toggleEditMode = function() {
 		$scope.editMode = !$scope.editMode;
+		$scope.searchListData.sheetList = {};
 	};
 	$scope.searchCurrent = function() {
 		$scope.getListPromise = SearchSheets.searchList($scope.listId);

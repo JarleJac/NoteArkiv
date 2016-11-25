@@ -6,6 +6,8 @@ public class SheetSearchParam {
     private String arrangedBy;
     private int days;
     private Long listId;
+    private String voices;
+    private String tags;
 	public String getTitle() {
 		return title;
 	}
@@ -35,6 +37,18 @@ public class SheetSearchParam {
 	}
 	public void setListId(Long listId) {
 		this.listId = listId;
+	}
+	public String getVoices() {
+		return voices;
+	}
+	public void setVoices(String voices) {
+		this.voices = voices;
+	}
+	public String getTags() {
+		return tags;
+	}
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 
 }

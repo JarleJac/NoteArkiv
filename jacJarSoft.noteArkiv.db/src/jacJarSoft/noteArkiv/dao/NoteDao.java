@@ -1,8 +1,12 @@
 package jacJarSoft.noteArkiv.dao;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -46,6 +50,12 @@ public class NoteDao extends AbstractDao {
 		if (StringUtils.hasValue(param.getTitle())) {
 			where = addWhere(where,"title like '%" + param.getTitle() + "%'");
 		}
+		if (StringUtils.hasValue(param.getArrangedBy())) {
+			where = addWhere(where,"arranged_by like '%" + param.getArrangedBy() + "%'");
+		}
+		if (StringUtils.hasValue(param.getComposedBy())) {
+			where = addWhere(where,"composed_by like '%" + param.getComposedBy() + "%'");
+		}
 		if (param.getDays() > 0) {
 			LocalDateTime localDateFrom = LocalDateTime.now().minusDays(param.getDays());
 			
@@ -62,8 +72,41 @@ public class NoteDao extends AbstractDao {
 		@SuppressWarnings("unchecked")
 		List<Note> sheets = (List<Note>)getEntityManager().createNativeQuery(sql, Note.class).getResultList();
 		
+		Set<String> paramTagsSet = new HashSet<>();
+		Set<String> paramVoicesSet = new HashSet<>();
+		if (StringUtils.hasValue(param.getTags()))
+			paramTagsSet.addAll(Arrays.asList(param.getTags().split(",")));
+		if (StringUtils.hasValue(param.getVoices()))
+			paramVoicesSet.addAll(Arrays.asList(param.getVoices().split(",")));
+		if (paramTagsSet.size() > 0 || paramVoicesSet.size() > 0)
+		{
+			List<Note> origSheets = sheets;
+			sheets = new ArrayList<>();
+			for (Note sheet : origSheets)
+			{
+				boolean keep = true;
+				if (!isInSet(paramTagsSet, sheet.getTags()))
+					keep = false;
+				if (!isInSet(paramVoicesSet, sheet.getVoices()))
+					keep = false;
+				if (keep)
+					sheets.add(sheet);
+			}
+		}
 			
 		return sheets;
+	}
+
+	private boolean isInSet(Set<String> paramSet, String values) {
+		if (paramSet.size() == 0)
+			return true;
+		Set<String> valueSet = new HashSet<>();
+		if (StringUtils.hasValue(values))
+			valueSet.addAll(Arrays.asList(values.split(",")));
+
+		int size = valueSet.size();
+		valueSet.retainAll(paramSet);
+		return valueSet.size() == paramSet.size();
 	}
 
 	public SheetParam getSheetData(Note sheet, boolean inCurrent) {
