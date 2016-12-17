@@ -34,6 +34,19 @@ angular.module('notearkiv').controller('listSearchController', function($rootSco
 			$rootScope.$emit('OkMessage', "Valgte noter er lagt til i lista.");
 		});
 	};
+	$scope.deleteSelected = function() {
+		var deferred = $q.defer();
+		var promises = [];
+		$scope.currentListData.sheetList.forEach(function(sheetData) {
+			if (sheetData.selected) {
+				promises.push(Lists.disconnectFromList($scope.listId, sheetData.sheet.noteId))				
+			}
+		  });
+		$q.all(promises).then(function successCallback(result) {
+			$scope.searchCurrent();
+			$rootScope.$emit('OkMessage', "Valgte noter er fjernet fra lista.");
+		});
+	};
 	$scope.toggleEditMode = function() {
 		$scope.editMode = !$scope.editMode;
 		$scope.searchListData.sheetList = {};
