@@ -17,7 +17,17 @@ angular.module('notearkiv').directive('advancedSearch',
 		scope.searchParam.tags = scope.selectedTags.map(function(tag) {return tag.id}).join();
 		scope.getPromise = SearchSheets.searchAdvanced(scope.searchParam);
 		scope.getPromise.then(function successCallback(result) {
-			scope.searchListData.sheetList = result.sheetList;
+			if (scope.filterData !== undefined) {
+				scope.searchListData.sheetList = result.sheetList.filter(function(sheetData) {
+					for (i = 0; i < scope.filterData.sheetList.length; i++) { 
+					    if (scope.filterData.sheetList[i].sheet.noteId === sheetData.sheet.noteId)
+					    	return false;
+					}
+					return true;
+				});				
+			} else {
+				scope.searchListData.sheetList = result.sheetList;
+			}
 		})
 	  }
 	  scope.clear = function() {
@@ -61,7 +71,8 @@ angular.module('notearkiv').directive('advancedSearch',
     link: link,
     scope: {
     	searchListData: '=data',
-    	searchParam: '=searchParam'
+    	searchParam: '=searchParam',
+    	filterData: '=filterdata'
       },
     templateUrl: 'templates/directives/advanced-search.html'
   };
