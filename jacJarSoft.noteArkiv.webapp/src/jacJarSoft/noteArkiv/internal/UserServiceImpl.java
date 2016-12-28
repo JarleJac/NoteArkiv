@@ -57,11 +57,16 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 	@Override
 	public Response getUser(String userNo) {
+		User user = getVerifiedUser(userNo);
+		UserInfoReturn ret = new UserInfoReturn(user);
+		return Response.ok(ret).build();
+	}
+
+	private User getVerifiedUser(String userNo) {
 		User user = userDao.getUser(userNo);
 		if (user == null)
 			throw new ValidationErrorException("Ukjent bruker " + userNo);
-		UserInfoReturn ret = new UserInfoReturn(user);
-		return Response.ok(ret).build();
+		return user;
 	}
 
 	@Override
@@ -100,5 +105,14 @@ public class UserServiceImpl extends BaseService implements UserService {
 	@Override
 	public Response getUsers() {
 		return Response.ok(userDao.getUsers()).build();
+	}
+
+	@Override
+	public Response deleteUser(String userNo) {
+		User user = getVerifiedUser(userNo);
+		return runWithTransaction((ec, p)-> {
+			userDao.deleteUser(user);
+			return Response.ok().build();
+		}, null);
 	}
 }

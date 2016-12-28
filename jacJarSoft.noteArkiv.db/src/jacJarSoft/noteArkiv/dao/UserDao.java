@@ -35,5 +35,9 @@ public class UserDao extends AbstractDao {
 		List<User> users = getEntityManager().createQuery("select u from User u", User.class).getResultList();
 		return users;
 	}
+	public void deleteUser(User user) {
+		getEntityManager().remove(user);
+		
+	}
 
 }

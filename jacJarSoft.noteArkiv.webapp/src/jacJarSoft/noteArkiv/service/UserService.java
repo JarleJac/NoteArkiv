@@ -1,6 +1,7 @@
 package jacJarSoft.noteArkiv.service;
 
 import javax.jws.WebService;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -26,6 +27,11 @@ public interface UserService {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/user/{userNo}")
 	public Response getUser(@PathParam("userNo")String userNo);
+
+	@DELETE
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/user/{userNo}")
+	public Response deleteUser(@PathParam("userNo")String userNo);
 
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})

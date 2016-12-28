@@ -2,7 +2,7 @@
  * 
  */
 
-angular.module('notearkiv').controller('userController', function($rootScope, $scope, $location, $routeParams, Users, Auth) {
+angular.module('notearkiv').controller('userController', function($rootScope, $scope, $location, $routeParams, Users, Auth, SimpleDlg) {
 	$scope.isNew = $routeParams.userNo === "new" ? true : false;
 	if ($scope.isNew) {
 		$scope.user = {accessLevel: "READER"};
@@ -36,7 +36,14 @@ angular.module('notearkiv').controller('userController', function($rootScope, $s
 		
 	}
 	$scope.deleteUser = function() {
-//		$location.path("/users/new");
+		SimpleDlg.runSimpleConfirmDlg("Bekreft sletting", "Er du sikker på at du vil slette " + $scope.user.name)
+		.result.then(function (result) {
+			$scope.deletePromise = Users.deleteUser($scope.user);			
+			$scope.deletePromise.then(function successCallback(result) {
+				$rootScope.$emit('OkMessage', "Bruker ble slettet");
+				$location.path("/users");
+			});
+		}); 
 	}
 	$scope.getAccessLevelText = function(level) {
 		return Users.getAccessLevelText(level);

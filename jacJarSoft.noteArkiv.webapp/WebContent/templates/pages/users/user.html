@@ -1,6 +1,6 @@
 <h3 data-ng-show="isNew" class="pagetop">Registrer ny bruker</h3>
 <h3 data-ng-hide="isNew" class="pagetop">Endre data for: "{{user.name}}"</h3>
-<form data-cg-busy="{promise:getPromise,message:'Henter bruker'}" data-cg-busy="{promise:savePromise,message:'Lagrer note',minDuration:2000}" class="form-horizontal main">
+<form data-cg-busy="{promise:getPromise,message:'Henter bruker'}" data-cg-busy="{promise:savePromise,message:'Lagrer note',minDuration:2000}" data-cg-busy="{promise:deletePromise,message:'Sletter note',minDuration:2000}" class="form-horizontal main">
   <div class="form-group">
     <label for="userNo" class="col-sm-2 col-md-1 control-label">Bruker</label>
     <div class="col-sm-7 col-lg-5 col-md-6">
