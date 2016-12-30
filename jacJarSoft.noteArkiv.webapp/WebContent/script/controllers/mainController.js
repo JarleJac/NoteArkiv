@@ -1,7 +1,7 @@
 /**
  * 
  */
-angular.module('notearkiv').controller('mainController', function($rootScope, $scope, $timeout, $http, $location, Auth) {
+angular.module('notearkiv').controller('mainController', function($rootScope, $scope, $timeout, $http, $location, $window, Auth) {
 	var controller = this;
 	$scope.requestedPath = $location.path();
 	$scope.rquestedQuery = $location.search();
@@ -79,12 +79,15 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 		})
 		;
 	};
+	this.saveUserPw = function() {
+		localStorage.setItem("user", Auth.getLogonInfo().user);
+		localStorage.setItem("password", Auth.getLogonInfo().password);
+	};
 	this.setLogonOk = function() {
 		$scope.userName = Auth.getUser().name;
 		$scope.userId = Auth.getUser().no;
 		Auth.setLoggedOn(true);
-		localStorage.setItem("user", Auth.getLogonInfo().user);
-		localStorage.setItem("password", Auth.getLogonInfo().password);
+		this.saveUserPw();
 		$location.search("");
 		if ($scope.requestedPath === null) {
 			$location.path("/");
@@ -96,8 +99,13 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 		}
 		$location.replace();
 	};
-	$scope.changePwOk = function() {
-		controller.setLogonOk();
+	$scope.changePwOk = function(isMustChange) {
+		if (isMustChange)
+			controller.setLogonOk();
+		else {
+			controller.saveUserPw();
+			$window.history.back();			
+		}
 	}
 	//Called from logon page
 	$scope.logon = function(logonInfo) {

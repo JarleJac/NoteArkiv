@@ -2,7 +2,7 @@
  * 
  */
 
-angular.module('notearkiv').controller('userProfileController', function($scope, $location, $http,  $routeParams, Auth) {
+angular.module('notearkiv').controller('userProfileController', function($scope, $location, $http,  $routeParams, Auth, Users) {
 	if (Auth.getUser().no != $routeParams.userId) {
 		$location.path("/").replace();
 		$rootScope.$emit('ErrorMsg', "Du har ikke tilgang til den siden!");
@@ -17,6 +17,11 @@ angular.module('notearkiv').controller('userProfileController', function($scope,
 	});
 	$scope.userGravatarUrl = function(size) {
 		return GravatarUtil.getUrl(gravatarInfo,size);
+	}
+	$scope.getAcccessLevelText = function() {
+		if ($scope.user === undefined)
+			return "";
+		return Users.getAccessLevelText($scope.user.accessLevel);
 	}
 })
 ;

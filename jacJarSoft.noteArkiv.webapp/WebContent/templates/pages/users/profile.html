@@ -11,8 +11,11 @@
 	<div class="col-sm-8">
 	<div><span class="listLabel">Id: </span>{{user.no}}</div>
 	<div><span class="listLabel">E-Post: </span>{{user.eMail}}</div>
+	<div><span class="listLabel">Tilgangsnivå: </span>{{getAcccessLevelText()}}</div>
 	<div>
-		TODO skal kunne endre info  + muligens mere info
+		<br>
+		<a class="btn btn-sm btn-default" href="#/changepw"><span
+			aria-hidden="true"></span>Bytt passord</a>
 	</div>
 </div>
 
