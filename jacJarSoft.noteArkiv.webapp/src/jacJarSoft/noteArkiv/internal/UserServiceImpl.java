@@ -6,6 +6,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jacJarSoft.noteArkiv.dao.UserDao;
+import jacJarSoft.noteArkiv.model.AccessLevel;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.UserService;
 import jacJarSoft.noteArkiv.webapi.ChangePassword;
@@ -34,8 +35,17 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 	}
 	private Response internalChangePassword(EntityManager em, ChangePassword param) {
-		User userLogonInfo = getUserLogonInfo(param);
-		User user = userDao.logon(userLogonInfo);
+		User user = null;
+		if (getCurrentUser().equals(param.getUser())) {
+			User userLogonInfo = getUserLogonInfo(param);
+			user = userDao.logon(userLogonInfo);
+		}
+		else {
+			User userLogonInfo = getUserLogonInfo(new LogonInfo(getCurrentUser(), param.getPassword()));
+			User logonReturn = userDao.logon(userLogonInfo);
+			if (logonReturn != null)
+				user = userDao.getUser(param.getUser());
+		}
 		if (null == user)
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		
@@ -45,7 +55,11 @@ public class UserServiceImpl extends BaseService implements UserService {
 		}
 		else
 		{
-			//TODO check that user is admin
+			User loggedOnUser = getVerifiedUser(getCurrentUser());
+
+			if (loggedOnUser.getAccessLevel().getLevel() < AccessLevel.ADMIN.getLevel())
+				throw new ValidationErrorException("Din bruker har ikke lov til å endre passord for andre brukere.");
+				
 			user.setMustChangePassword(true);
 		}
 		

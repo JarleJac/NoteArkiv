@@ -83,6 +83,16 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
         }
 		
 	})
+	.when('/changepw/:userNo', {
+		templateUrl : 'templates/pages/logon/changepw.html',
+		controller : 'changepwController',
+		controllerAs : 'changepwCtrl',
+		access: {
+            requiresLogin: true,
+            accessLevel: "READER"
+        }
+		
+	})
 	.when('/users', {
 		templateUrl : 'templates/pages/users/users.html',
 		controller : 'usersController',
