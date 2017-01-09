@@ -172,6 +172,14 @@ form.main {
 	margin-bottom: 10px;
 }
 
+div.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    margin-left: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    border-color: #faebcc;
+}
 /* START
 copy bootstrap navbar color
 http://work.smarchal.com/twbscolor/
