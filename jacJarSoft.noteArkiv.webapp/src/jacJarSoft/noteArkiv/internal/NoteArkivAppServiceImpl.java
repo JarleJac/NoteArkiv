@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 import jacJarSoft.noteArkiv.dao.UserDao;
 import jacJarSoft.noteArkiv.model.AccessLevel;
-import jacJarSoft.noteArkiv.model.AppInfo;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.NoteArkivAppService;
 import jacJarSoft.noteArkiv.webapi.LogonInfo;
@@ -22,6 +21,7 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 	@Override
 	public Response getSystemInfo() {
 		AppInfo info = new AppInfo();
+		info.setAppSettings(getAppSettings());
 		return Response.ok(info).build();
 	}
 

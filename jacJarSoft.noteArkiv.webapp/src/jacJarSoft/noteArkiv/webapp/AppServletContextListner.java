@@ -3,6 +3,7 @@ package jacJarSoft.noteArkiv.webapp;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -11,22 +12,29 @@ import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import jacJarSoft.noteArkiv.db.NoteArkivDatabase;
 import jacJarSoft.noteArkiv.db.PersistenceFactory;
+import jacJarSoft.noteArkiv.internal.NoteArkivSettings;
 
 public class AppServletContextListner implements ServletContextListener {
 
 	public static final String ENTITY_MANAGER_FACTORY = "jacJarSoft.noteArkiv.webapp.EntityManagerFactory";
+	public static final String APP_SETTINGS = "jacJarSoft.noteArkiv.webapp.AppSettings";
 	NoteArkivDatabase db;
 	private ServletContext servletContext;
 	private Logger logger;
+	private NoteArkivSettings appSettings;
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		servletContext = sce.getServletContext();
 		initLogging(servletContext.getInitParameter("logging.props"));
+		initApplicationSettings();
+
 		initPeristenceFactory(servletContext.getInitParameter("persistence.props"));
-		
 		EntityManagerFactory entityManagerFactory = PersistenceFactory.getEntityManagerFactory();
 		servletContext.setAttribute(ENTITY_MANAGER_FACTORY, entityManagerFactory);		
 		EntityManager entityManager = null;
@@ -42,6 +50,30 @@ public class AppServletContextListner implements ServletContextListener {
 		
 	}
 
+	private void initApplicationSettings() {
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(NoteArkivSettings.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			try (InputStream settingsStream = servletContext.getResourceAsStream("/WEB-INF/NotearkivSettings.xml"); 
+					InputStream defaultStream = servletContext.getResourceAsStream("/WEB-INF/DefaultSettings.xml")) {
+				if (settingsStream != null)
+					appSettings = (NoteArkivSettings) jaxbUnmarshaller.unmarshal(settingsStream);
+				else if (defaultStream != null)
+					appSettings = (NoteArkivSettings) jaxbUnmarshaller.unmarshal(defaultStream);
+				else {
+					String msg = "Unable to find NotearkivSettings and DefaultSettings";
+					logger.severe(msg);
+					throw new RuntimeException(msg);
+				}
+			}
+			servletContext.setAttribute(APP_SETTINGS, appSettings);		
+		} catch (JAXBException | IOException e) {
+		    String msg = "Error loading application settings";
+			logger.log(Level.SEVERE, msg,e);
+		    throw new RuntimeException(msg,e);
+		}
+	}
+
 	private void initPeristenceFactory(String persistencePropsFile) {
 		Properties persistenceProps = new Properties();
 		try (InputStream inputStream = servletContext.getResourceAsStream(persistencePropsFile)) {
@@ -50,8 +82,6 @@ public class AppServletContextListner implements ServletContextListener {
 		} catch (IOException e) {
 			throw new RuntimeException("error loading persistence properties", e);
 		}
-		
-		
 	}
 
 	private void initLogging(String resourceName) {

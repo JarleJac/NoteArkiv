@@ -12,6 +12,7 @@ import org.apache.cxf.phase.PhaseInterceptorChain;
 import org.apache.cxf.transport.http.AbstractHTTPDestination;
 
 import jacJarSoft.noteArkiv.AppContextAware;
+import jacJarSoft.noteArkiv.webapp.AppServletContextListner;
 import jacJarSoft.util.DbUtil;
 
 public class BaseService extends AppContextAware {
@@ -42,6 +43,10 @@ public class BaseService extends AppContextAware {
 		R result = null;
 		result = DbUtil.runWithTransaction(getEntityManager(), function, param);
 		return result;
+	}
+	protected NoteArkivSettings getAppSettings() {
+		NoteArkivSettings appSettings = (NoteArkivSettings) servletContext.getAttribute(AppServletContextListner.APP_SETTINGS);
+		return appSettings;
 	}
 	
 }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-angular.module('notearkiv').controller('mainController', function($rootScope, $scope, $timeout, $http, $location, $window, Auth) {
+angular.module('notearkiv').controller('mainController', function($rootScope, $scope, $timeout, $http, $location, $window, Auth, $sce) {
 	var controller = this;
 	$scope.requestedPath = $location.path();
 	$scope.rquestedQuery = $location.search();
@@ -15,6 +15,11 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 		$http({method: 'GET', url : 'rest/appservice/getsystemInfo'})
 		.then(function successCallback(result) {
 			$scope.appInfo = result.data;
+			if ($scope.appInfo.appSettings.backgroundImageUrl != null) {
+				var url = "url(" + $scope.appInfo.appSettings.backgroundImageUrl + ")"
+				$('body').css('background-image', url);
+			}
+			$scope.applicationWelcomeHtml = $sce.trustAsHtml($scope.appInfo.appSettings.applicationWelcomeHtml);
 		});
 	}
 	this.loadAppInfo();

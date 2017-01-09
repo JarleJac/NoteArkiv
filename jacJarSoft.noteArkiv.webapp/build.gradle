@@ -12,8 +12,14 @@ dependencies {
 	compile libraries.jackson
 	providedCompile libraries.servlet
 }
-
+def providerName = 'JacJarSoft'
 
 war {
-	manifest.attributes provider: 'JacJarSoft'
+	manifest.attributes provider: providerName
+}
+
+task buildTest(type: War) {
+	manifest.attributes provider: providerName
+	webInf { from 'configurations/test' } 
+	archiveName = "notearkiv-test##${version}.war"
 }

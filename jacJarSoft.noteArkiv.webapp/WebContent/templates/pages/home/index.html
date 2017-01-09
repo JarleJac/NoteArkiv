@@ -1,10 +1,5 @@
-<h3 class="pagetop">Velkommen til notearkivet</h3>
-<div class="jumbotron">
-	<div>Dette er notearkivet til Tjølling sangforening</div>
-	<div>&nbsp;</div>
-	<div>Noter, stemmefiler og annen informasjon som finnes tilgjengelig i dette systemet eies av
-		Tjølling Sangforening. Det er kun ment for Tjølling Sangforening sine medlemmer og må ikke
-		distribueres videre.</div>
+<h3 class="pagetop">{{appInfo.appSettings.applicationWelcomeTitle}}</h3>
+<div class="jumbotron" ng-bind-html="applicationWelcomeHtml" >
 </div>
 <div data-ng-show="hasAccess('READER')">
 <h4 class="sub-heading">Snarveier</h4>

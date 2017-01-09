@@ -1,4 +1,4 @@
-package jacJarSoft.noteArkiv.model;
+package jacJarSoft.noteArkiv.internal;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -7,6 +7,7 @@ import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 @XmlRootElement(name="appInfo")
 public class AppInfo {
 	private String version;
+	private NoteArkivSettings appSettings;
 
 	public AppInfo()
 	{
@@ -18,5 +19,11 @@ public class AppInfo {
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+	public NoteArkivSettings getAppSettings() {
+		return appSettings;
+	}
+	public void setAppSettings(NoteArkivSettings appSettings) {
+		this.appSettings = appSettings;
 	}
 }
