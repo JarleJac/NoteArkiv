@@ -2,7 +2,6 @@ package jacJarSoft.noteArkiv.webapp;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -34,7 +33,7 @@ public class AppServletContextListner implements ServletContextListener {
 		initLogging(servletContext.getInitParameter("logging.props"));
 		initApplicationSettings();
 
-		initPeristenceFactory(servletContext.getInitParameter("persistence.props"));
+		PersistenceFactory.setOverrideProperties(appSettings.getPersistenceProperties().getAsProperties());
 		EntityManagerFactory entityManagerFactory = PersistenceFactory.getEntityManagerFactory();
 		servletContext.setAttribute(ENTITY_MANAGER_FACTORY, entityManagerFactory);		
 		EntityManager entityManager = null;
@@ -74,28 +73,27 @@ public class AppServletContextListner implements ServletContextListener {
 		}
 	}
 
-	private void initPeristenceFactory(String persistencePropsFile) {
-		Properties persistenceProps = new Properties();
-		try (InputStream inputStream = servletContext.getResourceAsStream(persistencePropsFile)) {
-			persistenceProps.load(inputStream);
-			PersistenceFactory.setOverrideProperties(persistenceProps);
-		} catch (IOException e) {
-			throw new RuntimeException("error loading persistence properties", e);
-		}
-	}
-
 	private void initLogging(String resourceName) {
 		try
 		{
-			final InputStream inputStream = servletContext.getResourceAsStream(resourceName);
-		    LogManager.getLogManager().readConfiguration(inputStream);
-		    logger = Logger.getLogger(AppServletContextListner.class.getName());
-		    logger.info("Application logging initiated");
+			try(InputStream loggingStream = servletContext.getResourceAsStream("/WEB-INF/logging.properties");
+					InputStream defaultStream = servletContext.getResourceAsStream("/WEB-INF/def_logging.properties")) {
+				if (loggingStream != null)
+				    LogManager.getLogManager().readConfiguration(loggingStream);
+				else if (defaultStream != null)
+				    LogManager.getLogManager().readConfiguration(defaultStream);
+				else {
+					String msg = "Unable to find logging propertis file";
+					throw new RuntimeException(msg);
+				}
+			    logger = Logger.getLogger(AppServletContextListner.class.getName());
+			    logger.info("Application logging initiated");
+			}
 		}
 		catch (final Exception e)
 		{
-		    Logger.getAnonymousLogger().severe("Could not load default logging.properties file");
-		    Logger.getAnonymousLogger().severe(e.getMessage());
+		    logger = Logger.getLogger(AppServletContextListner.class.getName());
+		    logger.log(Level.SEVERE, "Could not load logging properties file",e);
 		}	
 	}
 

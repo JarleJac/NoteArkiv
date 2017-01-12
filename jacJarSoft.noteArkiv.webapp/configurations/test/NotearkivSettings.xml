@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NoteArkivSettings>
+	<persistenceProperties>
+		<property key="javax.persistence.jdbc.driver">org.sqlite.JDBC</property>
+		<property key="javax.persistence.jdbc.url">jdbc:sqlite:C:\NoteArkiv\Test\Database\Notearkiv.db</property>
+		<property key="eclipselink.logging.logger">JavaLogger</property>
+		<property key="eclipselink.logging.level">FINE</property>
+	</persistenceProperties>
 	<backgroundImageUrl>./images/testbackground.png</backgroundImageUrl>
-	<applicationTitle>Tjølling sangforenings Notearkiv</applicationTitle>
+	<applicationTitle>TEST Tjølling sangforenings Notearkiv</applicationTitle>
 	<applicationWelcomeTitle>Velkommen til notearkivet</applicationWelcomeTitle>
 	<applicationWelcomeHtml>
 		<![CDATA[<div>Dette er notearkivet til Tjølling sangforening</div>
@@ -10,4 +16,5 @@
 			Tjølling Sangforening. Det er kun ment for Tjølling Sangforening sine medlemmer og må ikke
 			distribueres videre.</div>]]>
 	</applicationWelcomeHtml>
+	<applicationId>NoteArkiv.tjollingTest</applicationId>
 </NoteArkivSettings>

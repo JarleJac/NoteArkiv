@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NoteArkivSettings>
-<!-- 	<backgroundImageUrl>./images/testbackground.png</backgroundImageUrl>
- -->	<applicationTitle>NoteArkiv Utvikling</applicationTitle>
+	<persistenceProperties>
+		<property key="javax.persistence.jdbc.driver">org.sqlite.JDBC</property>
+		<property key="javax.persistence.jdbc.url">jdbc:sqlite:D:\Source\Java\NoteArkiv\Database\test.db</property>
+<!-- 		<property key="javax.persistence.jdbc.url">jdbc:sqlite:D:\Source\Java\NoteArkiv\Database\ProdKopi.db</property> -->
+		<property key="eclipselink.logging.logger">JavaLogger</property>
+		<property key="eclipselink.logging.level">FINE</property>
+	</persistenceProperties>
+<!-- 	<backgroundImageUrl>./images/testbackground.png</backgroundImageUrl> -->
+ 	<applicationTitle>NoteArkiv Utvikling</applicationTitle>
 	<applicationWelcomeTitle>Velkommen til notearkivet</applicationWelcomeTitle>
 	<applicationWelcomeHtml>
 		<![CDATA[<div>Dette er notearkiv utvikling</div>
@@ -9,4 +16,5 @@
 		<div>bla bla om arkivet tester æøåÆØÅ.<p><b>Fet asse</b></p> 
 			Noe mere tekst.</div>]]>
 	</applicationWelcomeHtml>
+	<applicationId>NoteArkiv.Develop</applicationId>
 </NoteArkivSettings>
