@@ -179,7 +179,8 @@ public class NoteArkivDatabase {
 		String sql =
                 "CREATE TABLE IF NOT EXISTS LIST_NOTES " + 
 					"(LIST_ID integer REFERENCES LISTS(LIST_ID) ON DELETE CASCADE, " +  
-					"NOTE_ID integer  REFERENCES NOTES(NOTE_ID) ON DELETE CASCADE" +
+					"NOTE_ID integer  REFERENCES NOTES(NOTE_ID) ON DELETE CASCADE," +
+					"PRIMARY KEY (LIST_ID, NOTE_ID)" +
 					");";
 		DbUtil.execUpdateSql(connection,sql);
 	}
