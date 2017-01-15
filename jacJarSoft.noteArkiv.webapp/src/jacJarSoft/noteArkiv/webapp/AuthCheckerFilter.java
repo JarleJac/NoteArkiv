@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -25,13 +23,9 @@ urlPatterns = {"/rest/*"}
 //initParams = {
 //    @WebInitParam(name = "mood", value = "awake")}
 )
-public class AuthCheckerFilter implements Filter 	 {
+public class AuthCheckerFilter  extends AbstractFilter {
 
 	private static Logger logger = Logger.getLogger(AuthCheckerFilter.class.getName());
-	@Override
-	public void destroy() {
-	}
-
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -85,9 +79,4 @@ public class AuthCheckerFilter implements Filter 	 {
 			httpRes.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 		}
 	}
-
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-	}
-
 }

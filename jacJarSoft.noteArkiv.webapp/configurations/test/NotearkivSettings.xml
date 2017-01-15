@@ -6,15 +6,18 @@
 		<property key="eclipselink.logging.logger">JavaLogger</property>
 		<property key="eclipselink.logging.level">FINE</property>
 	</persistenceProperties>
-	<backgroundImageUrl>./images/testbackground.png</backgroundImageUrl>
-	<applicationTitle>TEST Tjølling sangforenings Notearkiv</applicationTitle>
-	<applicationWelcomeTitle>Velkommen til notearkivet</applicationWelcomeTitle>
-	<applicationWelcomeHtml>
-		<![CDATA[<div>Dette er notearkivet til Tjølling sangforening</div>
-		<div>&nbsp;</div>
-		<div>Noter, stemmefiler og annen informasjon som finnes tilgjengelig i dette systemet eies av
-			Tjølling Sangforening. Det er kun ment for Tjølling Sangforening sine medlemmer og må ikke
-			distribueres videre.</div>]]>
-	</applicationWelcomeHtml>
-	<applicationId>NoteArkiv.tjollingTest</applicationId>
+	<jsAppSettings>
+		<backgroundImageUrl>./images/testbackground.png</backgroundImageUrl>
+		<applicationTitle>TEST Tjølling sangforenings Notearkiv</applicationTitle>
+		<applicationWelcomeTitle>Velkommen til notearkivet</applicationWelcomeTitle>
+		<applicationWelcomeHtml>
+			<![CDATA[<div>Dette er notearkivet til Tjølling sangforening</div>
+			<div>&nbsp;</div>
+			<div>Noter, stemmefiler og annen informasjon som finnes tilgjengelig i dette systemet eies av
+				Tjølling Sangforening. Det er kun ment for Tjølling Sangforening sine medlemmer og må ikke
+				distribueres videre.</div>]]>
+		</applicationWelcomeHtml>
+		<applicationId>NoteArkiv.tjollingTest</applicationId>
+	</jsAppSettings>
+	<chacheControlMaxAge>3600</chacheControlMaxAge>
 </NoteArkivSettings>

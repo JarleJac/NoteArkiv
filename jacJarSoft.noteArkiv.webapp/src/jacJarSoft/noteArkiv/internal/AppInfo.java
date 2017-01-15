@@ -7,7 +7,7 @@ import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 @XmlRootElement(name="appInfo")
 public class AppInfo {
 	private String version;
-	private NoteArkivSettings appSettings;
+	private JSAppSettings appSettings;
 
 	public AppInfo()
 	{
@@ -20,10 +20,10 @@ public class AppInfo {
 	public void setVersion(String version) {
 		this.version = version;
 	}
-	public NoteArkivSettings getAppSettings() {
+	public JSAppSettings getAppSettings() {
 		return appSettings;
 	}
-	public void setAppSettings(NoteArkivSettings appSettings) {
-		this.appSettings = appSettings;
+	public void setAppSettings(JSAppSettings jsAppSettings) {
+		this.appSettings = jsAppSettings;
 	}
 }

@@ -21,7 +21,7 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 	@Override
 	public Response getSystemInfo() {
 		AppInfo info = new AppInfo();
-		info.setAppSettings(getAppSettings());
+		info.setAppSettings(getAppSettings().getJsAppSettings());
 		return Response.ok(info).build();
 	}
 

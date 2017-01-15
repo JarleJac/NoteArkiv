@@ -8,14 +8,17 @@
 		<property key="eclipselink.logging.logger">JavaLogger</property>
 		<property key="eclipselink.logging.level">FINE</property>
 	</persistenceProperties>
-<!-- 	<backgroundImageUrl>./images/testbackground.png</backgroundImageUrl> -->
- 	<applicationTitle>NoteArkiv Utvikling</applicationTitle>
-	<applicationWelcomeTitle>Velkommen til notearkivet</applicationWelcomeTitle>
-	<applicationWelcomeHtml>
-		<![CDATA[<div>Dette er notearkiv utvikling</div>
-		<div>&nbsp;</div>
-		<div>bla bla om arkivet tester æøåÆØÅ.<p><b>Fet asse</b></p> 
-			Noe mere tekst.</div>]]>
-	</applicationWelcomeHtml>
-	<applicationId>NoteArkiv.Develop</applicationId>
+	<jsAppSettings>
+<!-- 		<backgroundImageUrl>./images/testbackground.png</backgroundImageUrl> -->
+	 	<applicationTitle>NoteArkiv Utvikling</applicationTitle>
+		<applicationWelcomeTitle>Velkommen til notearkivet</applicationWelcomeTitle>
+		<applicationWelcomeHtml>
+			<![CDATA[<div>Dette er notearkiv utvikling</div>
+			<div>&nbsp;</div>
+			<div>bla bla om arkivet tester æøåÆØÅ.<p><b>Fet asse</b></p> 
+				Noe mere tekst.</div>]]>
+		</applicationWelcomeHtml>
+		<applicationId>NoteArkiv.Develop</applicationId>
+	</jsAppSettings>
+	<chacheControlMaxAge>60</chacheControlMaxAge>
 </NoteArkivSettings>
