@@ -9,6 +9,7 @@ import jacJarSoft.util.Version;
 public class NoteArkivAppInfo {
 	private static Logger logger = Logger.getLogger(NoteArkivAppInfo.class.getName());
 	private static Version version;
+	public final static String COPYRIGHT = "Copyright 2016-2017 Jarle Jacobsen all rights reserved. E-mail: jarle.jacobsen@gmail.com";
 	public static final long MAX_FILE_SIZE = 104857600;
 	static {
 		Properties props = new Properties();

@@ -8,10 +8,12 @@ import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 public class AppInfo {
 	private String version;
 	private JSAppSettings appSettings;
-
+	private String copyrightMsg;
+	
 	public AppInfo()
 	{
 		version = NoteArkivAppInfo.getVersion().toString();
+		copyrightMsg = NoteArkivAppInfo.COPYRIGHT;
 	}
 	public String getVersion() {
 		return version;
@@ -25,5 +27,11 @@ public class AppInfo {
 	}
 	public void setAppSettings(JSAppSettings jsAppSettings) {
 		this.appSettings = jsAppSettings;
+	}
+	public String getCopyrightMsg() {
+		return copyrightMsg;
+	}
+	public void setCopyrightMsg(String copyrightMsg) {
+		this.copyrightMsg = copyrightMsg;
 	}
 }
