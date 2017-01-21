@@ -40,12 +40,17 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
     	$("body").scrollTop($('#mainContainer').offset().top);
 	}
 	this.addOkMessage = function(msg) {
-    	$("body").scrollTop($('#mainContainer').offset().top);
-    	$scope.okMessages.push(msg);
-    	$timeout(function(){
-    		var ix = $scope.okMessages.indexOf(msg);
-    		$scope.okMessages.splice(ix,1);
-    	}, 5000);
+    	//$("body").scrollTop($('#mainContainer').offset().top);
+        copyMsgArr = $scope.okMessages;
+        var pos  = 60;
+        if (copyMsgArr.length > 0)
+          pos = copyMsgArr[copyMsgArr.length-1].pos + 50;
+        var msgInfo = {text: msg, pos: pos};
+      	$scope.okMessages.push(msgInfo);
+      	$timeout(function(){
+      		var ix = $scope.okMessages.indexOf(msgInfo);
+      		$scope.okMessages.splice(ix,1);
+      	}, 5000);
 	}
     $rootScope.$on('OkMessage', function(ev, args){
     	controller.addOkMessage(args);

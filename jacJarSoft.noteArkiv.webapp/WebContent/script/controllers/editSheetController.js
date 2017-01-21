@@ -23,6 +23,10 @@ angular.module('notearkiv').controller('editSheetController',
 	$scope.uploader.onErrorItem = function(fileItem, response, status, headers) {
 		$rootScope.$emit('ErrorMsg', "Opplasting av fil " + fileItem.file.name + " feilet. Feilkode: " + status);
     };
+	$scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+		$rootScope.$emit('OkMessage', "Opplasting av fil " + fileItem.file.name + " gikk bra.");
+    };
+    
 	$scope.uploader.onCompleteAll = function() {
         getFiles($scope.sheet.noteId);
         $scope.uploader.clearQueue();

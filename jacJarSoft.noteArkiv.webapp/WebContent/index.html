@@ -73,8 +73,8 @@
 		<div id="errorMsg" data-ng-cloak data-ng-show="errorOccured" class="alert alert-danger" role="alert">
 			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{errorMsg}}
 		</div>
-		<div data-ng-repeat="msg in okMessages" data-ng-cloak class="alert alert-success" role="alert">
-			<span class="glyphicon glyphicon-ok" ></span> {{msg}}
+		<div data-ng-repeat="msg in okMessages" data-ng-cloak class="messageBox alert-success" style="top:{{msg.pos}}px">
+			<span class="glyphicon glyphicon-ok" ></span> {{msg.text}}
 		</div>
 		<div data-ng-view></div>
 	</div>
