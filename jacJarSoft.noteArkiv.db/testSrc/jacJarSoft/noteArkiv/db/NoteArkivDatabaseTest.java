@@ -32,7 +32,7 @@ public class NoteArkivDatabaseTest {
 			try {
 				entityManager = entityManagerFactory.createEntityManager();
 				NoteArkivDatabase db = new NoteArkivDatabase(entityManager);
-				db.verifyAndUpgradeDb();
+				db.verifyAndUpgradeDb(null, null);
 				assertTrue(dbFile.exists());
 			}
 			finally {

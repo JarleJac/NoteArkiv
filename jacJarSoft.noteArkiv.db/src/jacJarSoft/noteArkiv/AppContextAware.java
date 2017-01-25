@@ -10,4 +10,7 @@ public class AppContextAware {
 		return AppContext.get().getCurrentUser();
 	}
 
+	protected String getFilesDirectory() {
+		return AppContext.get().getFilesDirectory();
+	}
 }

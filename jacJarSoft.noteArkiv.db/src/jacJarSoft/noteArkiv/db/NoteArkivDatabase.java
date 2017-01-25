@@ -1,6 +1,8 @@
 package jacJarSoft.noteArkiv.db;
 
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -10,9 +12,11 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
+import jacJarSoft.noteArkiv.dao.SheetFileDao;
 import jacJarSoft.noteArkiv.model.AccessLevel;
 import jacJarSoft.noteArkiv.model.Note;
 import jacJarSoft.noteArkiv.model.NoteFile;
+import jacJarSoft.noteArkiv.model.NoteFileData;
 import jacJarSoft.noteArkiv.model.SheetList;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.model.Voice;
@@ -26,29 +30,53 @@ public class NoteArkivDatabase {
 	private static Logger logger = Logger.getLogger(NoteArkivDatabase.class.getName());
 	private Version appVersion;
 	private EntityManager entityManager;
+	private boolean runVacuume = false;;
 
 	public NoteArkivDatabase(EntityManager entityManager) {
 		this.entityManager = entityManager;
 		appVersion = NoteArkivAppInfo.getVersion();
 	}
 
-	public void verifyAndUpgradeDb() {
+	public void verifyAndUpgradeDb(String jdbcDriverClass, String jdbcUrl) {
 		DbUtil.runWithConnection(entityManager, this::upgradeDb);
+		if (runVacuume)
+			runDbVacuume(jdbcDriverClass, jdbcUrl);
 	}
+	private void runDbVacuume(String jdbcDriverClass, String jdbcUrl) {
+		if (jdbcDriverClass == null || jdbcUrl == null)
+			return;
+		try {
+			logger.info("Running vacuume...");
+			Class.forName(jdbcDriverClass);
+			Connection connection = DriverManager.getConnection(jdbcUrl);
+			String sql = "vacuum"; //Reclaim storage
+			DbUtil.execUpdateSql(connection,sql);
+			logger.info("Running vacuume...Done");
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.log(Level.SEVERE, "Excxeption trying to run vacuume!", e);
+		}
+		
+	}
+
 	private Void upgradeDb(Connection connection) {
 		try {
 			String versionStr = getDbVersion(connection);
 			Version version = new Version(versionStr);
 			if (version.isEarlier(appVersion))
 			{
+				logger.info("Upgrading database from " + version.toString() + " to " + appVersion.toString());
 				if (version.getMajor() == 0 && version.getMinor() == 0) {
 					createNewDatabase(connection);
+				} else {
+					if (version.getMajor() < 2) 
+						upgradeFromVersion1(connection);
+//					if (version.getMajor() == 2 & version.getMinor() < 1)
+//						upgrateFromVersion2_0(connection);
 				}
-				else if (version.getMajor() < 2) {
-					upgradeFromVersion1(connection);
-				}
-				
+
 				updateToCurrentVersion(connection);
+			} else {
+				doTemporatyrUpgrades(connection);
 			}
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error upgrading db", e);
@@ -56,6 +84,35 @@ public class NoteArkivDatabase {
 		}
 		
 		return null;
+	}
+
+	/**
+	 * This method is created to be able to execute updates to db 
+	 * where the version of the db is the same as the version of the app.
+	 * Used during development. Delete all code from this before deployment to test/production
+	 * @param connection
+	 * @throws SQLException 
+	 */
+	private void doTemporatyrUpgrades(Connection connection) throws SQLException {
+		extractFileDataIfNeeded(connection);
+	}
+
+	private void extractFileDataIfNeeded(Connection connection) throws SQLException {
+		Boolean needFileExtract = false;
+		try {
+			needFileExtract = DbUtil.execQuery(DbUtil.createStatement(connection, "Select count(*) from note_files_data"), (rs)-> {
+				if (rs.next()) {
+					return rs.getInt(1) > 0;
+				}
+				return false;
+			});
+		} catch (SQLException e) {
+			//We ignore this, the table probably doesn't exist
+		}
+		
+		if (needFileExtract) {
+			extractFileDataToDirectory(getAllSheetFiles(), connection);
+		}
 	}
 
 	private String getDbVersion(Connection connection) throws SQLException {
@@ -105,8 +162,7 @@ public class NoteArkivDatabase {
 		}
 
 	
-		@SuppressWarnings("unchecked")
-		List<NoteFile> sheetFiles = (List<NoteFile>) entityManager.createNativeQuery("select * from note_files", NoteFile.class).getResultList();
+		List<NoteFile> sheetFiles = getAllSheetFiles();
 		for(NoteFile sheetFile : sheetFiles) {
 			entityManager.detach(sheetFile);
 		}
@@ -117,6 +173,40 @@ public class NoteArkivDatabase {
 		for(NoteFile sheetFile : sheetFiles) {
 			entityManager.persist(sheetFile);
 		}
+		
+		extractFileDataToDirectory(sheetFiles, connection);
+	}
+
+	private List<NoteFile> getAllSheetFiles() {
+		@SuppressWarnings("unchecked")
+		List<NoteFile> sheetFiles = (List<NoteFile>) entityManager.createNativeQuery("select * from note_files", NoteFile.class).getResultList();
+		return sheetFiles;
+	}
+
+	private void extractFileDataToDirectory(List<NoteFile> sheetFiles, Connection connection) throws SQLException {
+		SheetFileDao sheetFileDao = new SheetFileDao();
+		int i= 0;
+		for (NoteFile sheetFile : sheetFiles) {
+			if (logger.isLoggable(Level.FINE)) {
+				i++;
+				logger.fine("Extracting data to file for fileid " + sheetFile.getFileId() + " " + i + "/" + sheetFiles.size());
+			}
+//			if (sheetFile.getFileId() == 1293) {
+//				logger.warning("Skipping file " + sheetFile.getName() + " for sheet " + sheetFile.getNoteId());
+//				continue;
+//			}
+			NoteFileData noteFileData = entityManager.find(NoteFileData.class, sheetFile.getFileId());
+			try {
+				sheetFileDao.insertSheetFileData(sheetFile, noteFileData.getData());
+			} catch (IOException e) {
+				String msg = "Error saving file " + sheetFile.getName();
+				logger.log(Level.SEVERE, msg, e);
+				throw new RuntimeException(msg,e);
+			}
+		}
+		String sql = "drop table note_files_data";
+		DbUtil.execUpdateSql(connection,sql);
+		runVacuume = true;
 	}
 
 	private void upgradeUsersFromVer1(Connection connection) throws SQLException {
@@ -235,11 +325,11 @@ public class NoteArkivDatabase {
 		DbUtil.execUpdateSql(connection,sql);
 		initAutoIncrementSequence(connection, "NOTE_FILES");
 
-        sql = "CREATE TABLE IF NOT EXISTS NOTE_FILES_DATA " + 
-				"(NOTE_FILE_ID integer primary key, " +  
-				"FILE_DATA blob "+
-				");";
-		DbUtil.execUpdateSql(connection,sql);
+//        sql = "CREATE TABLE IF NOT EXISTS NOTE_FILES_DATA " + 
+//				"(NOTE_FILE_ID integer primary key, " +  
+//				"FILE_DATA blob "+
+//				");";
+//		DbUtil.execUpdateSql(connection,sql);
 	}
 	private void createTags(Connection connection) throws SQLException {
 		String sql =

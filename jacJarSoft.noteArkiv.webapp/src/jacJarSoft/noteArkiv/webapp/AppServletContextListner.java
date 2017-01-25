@@ -1,7 +1,9 @@
 package jacJarSoft.noteArkiv.webapp;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -15,6 +17,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import jacJarSoft.noteArkiv.AppContext;
 import jacJarSoft.noteArkiv.db.NoteArkivDatabase;
 import jacJarSoft.noteArkiv.db.PersistenceFactory;
 import jacJarSoft.noteArkiv.internal.NoteArkivSettings;
@@ -27,26 +30,57 @@ public class AppServletContextListner implements ServletContextListener {
 	private ServletContext servletContext;
 	private Logger logger;
 	private NoteArkivSettings appSettings;
+	private EntityManagerFactory entityManagerFactory;
+	private Properties persistenProperties;
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		servletContext = sce.getServletContext();
 		initLogging(servletContext.getInitParameter("logging.props"));
 		initApplicationSettings();
+		initEntityManager();		
+		
+		AppContext appContext = AppContext.get();
+		appContext.setFilesDirectory(appSettings.getFilesDirectory());
+		
+		initFilesDirectory();
+		initDatabase();
+		
+		AppContext.remove();
+	}
 
-		PersistenceFactory.setOverrideProperties(appSettings.getPersistenceProperties().getAsProperties());
-		EntityManagerFactory entityManagerFactory = PersistenceFactory.getEntityManagerFactory();
-		servletContext.setAttribute(ENTITY_MANAGER_FACTORY, entityManagerFactory);		
+	private void initDatabase() {
 		EntityManager entityManager = null;
 		try {
 			entityManager = entityManagerFactory.createEntityManager();
 			NoteArkivDatabase db = new NoteArkivDatabase(entityManager);
-			db.verifyAndUpgradeDb();
+			String jdbcDriverClass = (String) persistenProperties.get("javax.persistence.jdbc.driver");
+			String jdbcUrl = (String) persistenProperties.get("javax.persistence.jdbc.url");
+			db.verifyAndUpgradeDb(jdbcDriverClass,jdbcUrl);
 		}
 		finally {
 			if (entityManager != null)
-			entityManager.close();
+				entityManager.close();
 		}
-		
+	}
+
+	private void initEntityManager() {
+		persistenProperties = appSettings.getPersistenceProperties().getAsProperties();
+		PersistenceFactory.setOverrideProperties(persistenProperties);
+		entityManagerFactory = PersistenceFactory.getEntityManagerFactory();
+		servletContext.setAttribute(ENTITY_MANAGER_FACTORY, entityManagerFactory);
+	}
+
+	private void initFilesDirectory() {
+		String filesDirectory = appSettings.getFilesDirectory();
+		if (filesDirectory == null)
+			throw new RuntimeException("Missing filesDirectory setting");
+		File directory = new File(filesDirectory);
+		if (!directory.exists()) {
+			if (!directory.mkdirs())
+				throw new RuntimeException("Unable to create directory " + filesDirectory);
+		}
+		if (!directory.isDirectory())
+			throw new RuntimeException("The path " + filesDirectory + " is not a directory");
 	}
 
 	private void initApplicationSettings() {

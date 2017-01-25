@@ -64,6 +64,7 @@ public class AuthCheckerFilter  extends AbstractFilter {
 			AppContext appContext = AppContext.get();
 			if (tokenInfo != null)
 				appContext.setCurrentUser(tokenInfo.getUser());
+			appContext.setFilesDirectory(getAppSettings().getFilesDirectory());
 
 			httpRes.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 			httpRes.setHeader("Pragma", "no-cache"); // HTTP 1.0.

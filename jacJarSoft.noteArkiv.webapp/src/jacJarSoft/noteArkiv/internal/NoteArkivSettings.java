@@ -9,6 +9,7 @@ public class NoteArkivSettings {
 	private JSAppSettings jsAppSettings = new JSAppSettings();
 	private PropertyList persistenceProperties;
 	private Integer chacheControlMaxAge = 3600;
+	private String filesDirectory;
 	
 	public PropertyList getPersistenceProperties() {
 		return persistenceProperties;
@@ -27,5 +28,11 @@ public class NoteArkivSettings {
 	}
 	public void setChacheControlMaxAge(Integer chacheControlMaxAge) {
 		this.chacheControlMaxAge = chacheControlMaxAge;
+	}
+	public String getFilesDirectory() {
+		return filesDirectory;
+	}
+	public void setFilesDirectory(String filesDirectory) {
+		this.filesDirectory = filesDirectory;
 	}
 }

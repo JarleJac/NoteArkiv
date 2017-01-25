@@ -3,6 +3,8 @@ package jacJarSoft.noteArkiv.internal;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.activation.DataHandler;
 import javax.activation.MimetypesFileTypeMap;
@@ -45,6 +47,8 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	@Autowired
 	private SheetListDao sheetListDao;
 
+	private static Logger logger = Logger.getLogger(NoteServiceImpl.class.getName());
+	
 	@Override
 	public Response getNote(long noteId) {
 		if (noteId <= 0) {
@@ -136,12 +140,13 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 			fileData.setFileId(insertedFile.getFileId());
 			DataHandler dataHandler = file.getDataHandler();
 			try {
-				fileData.setData(IOUtils.readBytesFromStream(dataHandler.getInputStream()));
+				sheetFileDao.insertSheetFileData(insertedFile,IOUtils.readBytesFromStream(dataHandler.getInputStream()));
+				//fileData.setData(IOUtils.readBytesFromStream(dataHandler.getInputStream()));
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 			
-			sheetFileDao.insertNoteFileData(fileData);
+			//sheetFileDao.insertNoteFileData(fileData);
 			return null;
 		}, null);
 		return Response.ok(sheetFile).build();
@@ -160,16 +165,22 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 		NoteFile noteFile = sheetFileDao.getNoteFile(fileId);
 		if (null == noteFile)
 			throw new ValidationErrorException("Finner ikke fil med id " + fileId);
-		NoteFileData fileData = sheetFileDao.getFileData(fileId);
-		if (null == fileData)
-			throw new ValidationErrorException("Finner ikke data for fil " + noteFile.getName());
-//        context.Response.ContentType = "application/octet-stream";
-//        context.Response.AddHeader("Content-Disposition", "attachment; filename=\"" + fileData.FileName+"\"");
+		byte[] bytes;
+		try {
+			bytes = sheetFileDao.getSheetFileData(noteFile);
+		} catch (IOException e) {
+			String msg = "Unable to read fileData for sheet: " + noteFile.getNoteId() + ", name: " +noteFile.getName();
+			logger.log(Level.SEVERE, msg, e);
+			throw new RuntimeException(msg, e);
+		}
+//		NoteFileData fileData = sheetFileDao.getFileData(fileId);
+//		if (null == fileData)
+//			throw new ValidationErrorException("Finner ikke data for fil " + noteFile.getName());
 	    String mediaType = getMimeType(noteFile);
 	    String contentDisposition = getContentDisposition(noteFile, download);
-	    return Response.ok(fileData.getData(), mediaType)
+	    return Response.ok(bytes, mediaType)
 	            .header("Content-Disposition", contentDisposition)
-	            .header("Content-Length", fileData.getData().length)
+	            .header("Content-Length", bytes.length)
 	            .build();
 	
 	}

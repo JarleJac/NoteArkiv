@@ -22,6 +22,7 @@ public class AppContext {
     private boolean closed = false;
 	private EntityManager entityManager;
 	private String currentUser;
+	private String filesDirectory;
 
 	private AppContext() {
     	entityManager = PersistenceFactory.getEntityManager();
@@ -46,5 +47,10 @@ public class AppContext {
 	public void setCurrentUser(String currentUser) {
 		this.currentUser = currentUser;
 	}
-
+	public void setFilesDirectory(String filesDirectory) {
+		this.filesDirectory = filesDirectory;
+	}
+	public String getFilesDirectory() {
+		return filesDirectory;
+	}
 }

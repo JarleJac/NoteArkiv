@@ -104,7 +104,6 @@ public class NoteDao extends AbstractDao {
 		if (StringUtils.hasValue(values))
 			valueSet.addAll(Arrays.asList(values.split(",")));
 
-		int size = valueSet.size();
 		valueSet.retainAll(paramSet);
 		return valueSet.size() == paramSet.size();
 	}
