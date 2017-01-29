@@ -1,5 +1,6 @@
 
 dependencies {
+	compile libraries.opencsv
 	compile project(':jacJarSoft.util')
 }
 

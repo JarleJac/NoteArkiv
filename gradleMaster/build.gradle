@@ -33,7 +33,10 @@ ext {
 		],
 		'jpa' :			[
 			'org.eclipse.persistence:javax.persistence:2.1.0'
-			]
+		],
+		'opencsv' :		[
+			'com.opencsv:opencsv:3.8'
+		]
 	]
 }
 apply plugin: 'eclipse-wtp'

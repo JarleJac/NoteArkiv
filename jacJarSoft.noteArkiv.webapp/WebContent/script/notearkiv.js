@@ -118,6 +118,14 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
         }
 		
 	})
+	.when('/sysadminutil', {
+		templateUrl : 'templates/pages/admin/sysadminutil.html',
+		controller : 'sysadminutilController',
+		access: {
+            requiresLogin: true,
+            accessLevel: "SYSADMIN"
+        }
+	})
 	;
  	$provide.factory('myHttpInterceptor', function($q, $rootScope, AuthToken) {
 		  return {
