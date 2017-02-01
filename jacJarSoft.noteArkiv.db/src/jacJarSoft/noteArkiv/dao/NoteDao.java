@@ -14,6 +14,7 @@ import jacJarSoft.noteArkiv.api.SheetParam;
 import jacJarSoft.noteArkiv.api.SheetSearchParam;
 import jacJarSoft.noteArkiv.db.SqliteDateTimeFormater;
 import jacJarSoft.noteArkiv.model.Note;
+import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.util.StringUtils;
 
 @Component
@@ -118,6 +119,10 @@ public class NoteDao extends AbstractDao {
 	public void deleteNote(Note note) {
 		getEntityManager().remove(note);
 		
+	}
+
+	public List<Note> getSheetsForExport() {
+		return getEntityManager().createQuery("select note from Note note order by note.noteId", Note.class).getResultList();		
 	}
 
 

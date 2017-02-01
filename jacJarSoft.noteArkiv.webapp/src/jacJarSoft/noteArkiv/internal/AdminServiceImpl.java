@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 
@@ -11,13 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opencsv.CSVReader;
 
+import jacJarSoft.noteArkiv.api.StatusResponce;
+import jacJarSoft.noteArkiv.dao.NoteDao;
 import jacJarSoft.noteArkiv.dao.UserDao;
+import jacJarSoft.noteArkiv.model.Note;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.AdminService;
 
 public class AdminServiceImpl extends BaseService implements AdminService {
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private NoteDao noteDao;
 
 	@Override
 	public Response importUserEMail() {
@@ -44,6 +51,14 @@ public class AdminServiceImpl extends BaseService implements AdminService {
 			throw new RuntimeException(e);
 		}
 		return Response.ok().build();
+	}
+
+	@Override
+	public Response createCsvExport() {
+
+		List<Note> sheets = noteDao.getSheetsForExport();
+		throw new ValidationErrorException("This is not yet implemented!");
+		//return Response.ok(new StatusResponce("sheetdata exported ok!")).build();
 	}
 
 }

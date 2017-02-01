@@ -15,4 +15,9 @@ public interface AdminService {
 	@Path("/importuseremail")
 	public Response importUserEMail();
 
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/createcsvexport")
+	public Response createCsvExport();
+
 }

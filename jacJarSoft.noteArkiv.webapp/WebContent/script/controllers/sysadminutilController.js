@@ -3,12 +3,22 @@
  */
 
 angular.module('notearkiv').controller('sysadminutilController', function($rootScope, $scope, Admin) {
-	$scope.mmm = "";
+	$scope.pagePromise = null;
 	$scope.importUsers = function() {
-		$scope.mmm = "Importerer epost adresser";
-		$scope.importPromise = Admin.importUsers();	
-		$scope.importPromise.then(function successCallback(result) {
+		$scope.promiseMsg = "Imorterer e-post adresser";
+		$scope.pagePromise = Admin.importUsers();	
+		$scope.pagePromise.then(function successCallback(result) {
 			$rootScope.$emit('OkMessage', "Epostadresser ble importert ok");
+			$scope.pagePromise = null;
+		});
+		
+	}
+	$scope.createCsvExport = function() {
+		$scope.promiseMsg = "Eksporterer note data";
+		$scope.pagePromise = Admin.createCsvExport();	
+		$scope.pagePromise.then(function successCallback(result) {
+			$rootScope.$emit('OkMessage', result.data.message);
+			$scope.pagePromise = null;
 		});
 		
 	}
