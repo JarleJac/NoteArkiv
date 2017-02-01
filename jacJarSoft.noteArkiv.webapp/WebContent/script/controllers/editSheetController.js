@@ -5,6 +5,7 @@
 angular.module('notearkiv').controller('editSheetController', 
 		function($rootScope, $scope, $q, $http,  $routeParams, $location, 
 				Sheets, Voices, Tags, AuthToken, FileUploader, SimpleDlg) {
+	$scope.sheetPromise = null;
 	$scope.connectedTags = [];
 	$scope.availableTags = [];
 	$scope.files = [];
@@ -91,13 +92,15 @@ angular.module('notearkiv').controller('editSheetController',
 		getTags(null);
 	}
 	else {
-		$scope.getPromise = $http({method: 'GET', url : 'rest/noteservice/note/' + $routeParams.sheetId });
-		$scope.getPromise.then(function successCallback(result) {
+		$scope.sheetMsg = "Henter note";
+		$scope.sheetPromise = $http({method: 'GET', url : 'rest/noteservice/note/' + $routeParams.sheetId });
+		$scope.sheetPromise.then(function successCallback(result) {
 			result.data.sheet.registeredDate = new Date(result.data.sheet.registeredDate);
 			$scope.sheet = result.data.sheet;
 			getVoices($scope.sheet.voices);
 			getTags($scope.sheet.tags);
 			getFiles($scope.sheet.noteId);
+			$scope.sheetPromise = null;
 		});
 	}
 	$scope.saveSheet = function() {
@@ -106,11 +109,13 @@ angular.module('notearkiv').controller('editSheetController',
 		sheet.tags = $scope.connectedTags.map(function(tag) {return tag.id}).join();
 		var sheetData = {sheet: sheet};
 		var httpMethod = $scope.isNew ? 'POST' : 'PUT';
-		$scope.savePromise = $http({method: httpMethod, url : 'rest/noteservice/note', data: sheetData });
-		$scope.savePromise.then(function successCallback(result) {
+		$scope.sheetMsg = "Lagrer note";
+		$scope.sheetPromise = $http({method: httpMethod, url : 'rest/noteservice/note', data: sheetData });
+		$scope.sheetPromise.then(function successCallback(result) {
 			if ($scope.isNew)
 				$location.path("/sheets/" + result.data.sheet.noteId).replace();
 			$rootScope.$emit('OkMessage', "Note ble lagret ok.");
+			$scope.sheetPromise = null;
 		});
 	}
 	$scope.deleteSheet = function() {
