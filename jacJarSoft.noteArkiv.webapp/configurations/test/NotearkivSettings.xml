@@ -6,6 +6,7 @@
 		<property key="eclipselink.logging.logger">JavaLogger</property>
 		<property key="eclipselink.logging.level">FINE</property>
 	</persistenceProperties>
+	<filesDirectory>C:\NoteArkiv\Test\Files</filesDirectory>
 	<jsAppSettings>
 		<backgroundImageUrl>./images/testbackground.png</backgroundImageUrl>
 		<applicationTitle>TEST Tjølling sangforenings Notearkiv</applicationTitle>
