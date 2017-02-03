@@ -11,7 +11,7 @@ public class TagsDao extends AbstractDao {
 
 	@SuppressWarnings("unchecked")
 	public List<Tag> getTags() {
-		return (List<Tag>) getEntityManager().createNativeQuery("select * from tags order by tag_name", Tag.class).getResultList();
+		return (List<Tag>) getEntityManager().createNativeQuery("select * from tags order by tag_name collate nocase", Tag.class).getResultList();
 	}
 	@SuppressWarnings("unchecked")
 	public boolean doesTagWithNameExist(String name) {
