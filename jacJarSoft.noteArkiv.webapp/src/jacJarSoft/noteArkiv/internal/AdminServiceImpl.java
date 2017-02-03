@@ -1,8 +1,12 @@
 package jacJarSoft.noteArkiv.internal;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -32,7 +36,7 @@ public class AdminServiceImpl extends BaseService implements AdminService {
 		if (!importFile.exists())
 			throw new ValidationErrorException("Finner ikke noe users.csv fil");
 		try {
-			try (CSVReader reader = new CSVReader(new FileReader(importFile))) {
+			try (CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(importFile), StandardCharsets.UTF_8))) {
 				String[] nextLine;
 				reader.readNext(); //Skip headers
 				while ((nextLine = reader.readNext()) != null) {
