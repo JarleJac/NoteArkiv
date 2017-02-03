@@ -8,7 +8,7 @@
 	</persistenceProperties>
 	<filesDirectory>C:\NoteArkiv\Test\Files</filesDirectory>
 	<jsAppSettings>
-		<backgroundImageUrl>./images/testbackground.png</backgroundImageUrl>
+		<backgroundImageUrl>./images/testbackground_small.png</backgroundImageUrl>
 		<applicationTitle>TEST Tjølling sangforenings Notearkiv</applicationTitle>
 		<applicationWelcomeTitle>Velkommen til notearkivet</applicationWelcomeTitle>
 		<applicationWelcomeHtml>

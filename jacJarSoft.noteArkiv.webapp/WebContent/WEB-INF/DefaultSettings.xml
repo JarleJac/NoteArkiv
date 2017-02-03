@@ -12,7 +12,7 @@
 <!-- 	<filesDirectory>D:\Source\Java\NoteArkiv\Files\test</filesDirectory> -->
 	<filesDirectory>D:\Source\Java\NoteArkiv\Files\prodkopi</filesDirectory>
 	<jsAppSettings>
-<!-- 		<backgroundImageUrl>./images/testbackground.png</backgroundImageUrl> -->
+<!-- 		<backgroundImageUrl>./images/testbackground_small.png</backgroundImageUrl> -->
 	 	<applicationTitle>NoteArkiv Utvikling</applicationTitle>
 		<applicationWelcomeTitle>Velkommen til notearkivet</applicationWelcomeTitle>
 		<applicationWelcomeHtml>
