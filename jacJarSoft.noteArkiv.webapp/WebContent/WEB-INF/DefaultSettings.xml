@@ -2,15 +2,17 @@
 <NoteArkivSettings>
 	<persistenceProperties>
 		<property key="javax.persistence.jdbc.driver">org.sqlite.JDBC</property>
-<!-- 		<property key="javax.persistence.jdbc.url">jdbc:sqlite:D:\Source\Java\NoteArkiv\Database\ny.db</property> -->
+		<property key="javax.persistence.jdbc.url">jdbc:sqlite:D:\Source\Java\NoteArkiv\Database\ny.db</property>
 <!-- 		<property key="javax.persistence.jdbc.url">jdbc:sqlite:D:\Source\Java\NoteArkiv\Database\test.db</property> -->
-		<property key="javax.persistence.jdbc.url">jdbc:sqlite:D:\Source\Java\NoteArkiv\Database\ProdKopi.db</property>
+<!-- 		<property key="javax.persistence.jdbc.url">jdbc:sqlite:D:\Source\Java\NoteArkiv\Database\ProdKopi.db</property> -->
 		<property key="eclipselink.logging.logger">JavaLogger</property>
-		<property key="eclipselink.logging.level">FINE</property>
+		<property key="eclipselink.logging.level">INFO</property>
+		<property key="eclipselink.logging.parameters">true</property>
+		<property key="eclipselink.logging.session">false</property>
 	</persistenceProperties>
-<!-- 	<filesDirectory>D:\Source\Java\NoteArkiv\Files\ny</filesDirectory> -->
+	<filesDirectory>D:\Source\Java\NoteArkiv\Files\ny</filesDirectory>
 <!-- 	<filesDirectory>D:\Source\Java\NoteArkiv\Files\test</filesDirectory> -->
-	<filesDirectory>D:\Source\Java\NoteArkiv\Files\prodkopi</filesDirectory>
+<!-- 	<filesDirectory>D:\Source\Java\NoteArkiv\Files\prodkopi</filesDirectory> -->
 	<jsAppSettings>
 <!-- 		<backgroundImageUrl>./images/testbackground_small.png</backgroundImageUrl> -->
 	 	<applicationTitle>NoteArkiv Utvikling</applicationTitle>

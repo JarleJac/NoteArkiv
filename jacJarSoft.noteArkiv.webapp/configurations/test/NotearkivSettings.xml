@@ -4,7 +4,9 @@
 		<property key="javax.persistence.jdbc.driver">org.sqlite.JDBC</property>
 		<property key="javax.persistence.jdbc.url">jdbc:sqlite:C:\NoteArkiv\Test\Database\Notearkiv.db</property>
 		<property key="eclipselink.logging.logger">JavaLogger</property>
-		<property key="eclipselink.logging.level">FINE</property>
+		<property key="eclipselink.logging.level">INFO</property>
+		<property key="eclipselink.logging.parameters">true</property>
+		<property key="eclipselink.logging.session">false</property>
 	</persistenceProperties>
 	<filesDirectory>C:\NoteArkiv\Test\Files</filesDirectory>
 	<jsAppSettings>
