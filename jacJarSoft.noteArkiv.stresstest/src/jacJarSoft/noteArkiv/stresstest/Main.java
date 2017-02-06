@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -46,17 +47,17 @@ public class Main {
 
 
 	private static String getJarPath() {
-		String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		logger.fine("path: " + path);
-		String decodedPath;
 		try {
-			decodedPath = URLDecoder.decode(path, "UTF-8");
+			String path = Paths.get(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI()).toString();
+			logger.fine("path: " + path);
+			String decodedPath = URLDecoder.decode(path, "UTF-8");
 			logger.fine("decodedPath: " + decodedPath);
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException("Unable to decode path: " + path,e);
+			String retPath = decodedPath.substring(0, decodedPath.lastIndexOf("\\"));
+			logger.fine("retPath: " + retPath);
+			return retPath;
+		} catch (UnsupportedEncodingException | URISyntaxException e) {
+			throw new RuntimeException("Unable to get jar path", e);
 		}
-		
-		return decodedPath;
 	}
 
 }

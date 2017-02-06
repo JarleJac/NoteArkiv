@@ -5,3 +5,12 @@ dependencies {
 	compile libraries.apachehttpclient
 	compile 'org.json:json:20160810'
 }
+
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Main-Class': 'jacJarSoft.noteArkiv.stresstest.Main'
+    }    
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
