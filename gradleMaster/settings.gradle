@@ -1,2 +1,2 @@
 
-includeFlat "jacJarSoft.noteArkiv.base", "jacJarSoft.noteArkiv.db", "jacJarSoft.util", "jacJarSoft.noteArkiv.webapp"
+includeFlat "jacJarSoft.noteArkiv.base", "jacJarSoft.noteArkiv.db", "jacJarSoft.util", "jacJarSoft.noteArkiv.webapp", "jacJarSoft.noteArkiv.stresstest"

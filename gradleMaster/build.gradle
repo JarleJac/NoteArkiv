@@ -36,7 +36,10 @@ ext {
 		],
 		'opencsv' :		[
 			'com.opencsv:opencsv:3.8'
-		]
+		],
+		'apachehttpclient' : [
+			'org.apache.httpcomponents:httpmime:4.5.2'
+		]		
 	]
 }
 apply plugin: 'eclipse-wtp'
