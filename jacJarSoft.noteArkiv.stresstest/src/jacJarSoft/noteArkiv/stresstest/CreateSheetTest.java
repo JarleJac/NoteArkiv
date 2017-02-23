@@ -1,17 +1,11 @@
 package jacJarSoft.noteArkiv.stresstest;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.json.JSONObject;
-
-import jacJarSoft.util.FileUtil;
 
 public class CreateSheetTest  extends AbstractTest{
 	private static Logger logger = Logger.getLogger(CreateSheetTest.class.getName());
