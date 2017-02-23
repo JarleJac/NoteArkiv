@@ -2,13 +2,12 @@ package jacJarSoft.noteArkiv.internal;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ws.rs.core.Response;
 
@@ -18,17 +17,23 @@ import com.opencsv.CSVReader;
 
 import jacJarSoft.noteArkiv.api.StatusResponce;
 import jacJarSoft.noteArkiv.dao.NoteDao;
+import jacJarSoft.noteArkiv.dao.TagsDao;
 import jacJarSoft.noteArkiv.dao.UserDao;
-import jacJarSoft.noteArkiv.model.Note;
+import jacJarSoft.noteArkiv.dao.VoiceDao;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.AdminService;
 
 public class AdminServiceImpl extends BaseService implements AdminService {
+	private static Logger logger = Logger.getLogger(AdminServiceImpl.class.getName());
+	
 	@Autowired
 	private UserDao userDao;
-
 	@Autowired
 	private NoteDao noteDao;
+	@Autowired
+	private VoiceDao voiceDao;
+	@Autowired
+	private TagsDao tagsDao;
 
 	@Override
 	public Response importUserEMail() {
@@ -60,9 +65,14 @@ public class AdminServiceImpl extends BaseService implements AdminService {
 	@Override
 	public Response createCsvExport() {
 
-		List<Note> sheets = noteDao.getSheetsForExport();
-		throw new ValidationErrorException("This is not yet implemented!");
-		//return Response.ok(new StatusResponce("sheetdata exported ok!")).build();
+		try {
+			CsvExportHandler handler = new CsvExportHandler(getFilesDirectory(), noteDao, voiceDao, tagsDao);
+			handler.runExport();
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Exception during export", e);
+			return Response.ok(new StatusResponce(100,"Error during export: " + e.getMessage())).build();
+		}
+		return Response.ok(new StatusResponce("sheetdata exported ok!")).build();
 	}
 
 }

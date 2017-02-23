@@ -17,7 +17,10 @@ angular.module('notearkiv').controller('sysadminutilController', function($rootS
 		$scope.promiseMsg = "Eksporterer note data";
 		$scope.pagePromise = Admin.createCsvExport();	
 		$scope.pagePromise.then(function successCallback(result) {
-			$rootScope.$emit('OkMessage', result.data.message);
+			if (result.data.code == 0)
+				$rootScope.$emit('OkMessage', result.data.message);
+			else
+				$rootScope.$emit('ErrorMsg', result.data.message);
 			$scope.pagePromise = null;
 		});
 		

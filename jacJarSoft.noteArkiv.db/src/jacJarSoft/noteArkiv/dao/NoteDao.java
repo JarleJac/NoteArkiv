@@ -10,11 +10,12 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
+import jacJarSoft.noteArkiv.api.ListSheet;
 import jacJarSoft.noteArkiv.api.SheetParam;
 import jacJarSoft.noteArkiv.api.SheetSearchParam;
 import jacJarSoft.noteArkiv.db.SqliteDateTimeFormater;
 import jacJarSoft.noteArkiv.model.Note;
-import jacJarSoft.noteArkiv.model.User;
+import jacJarSoft.noteArkiv.model.NoteFile;
 import jacJarSoft.util.StringUtils;
 
 @Component
@@ -123,6 +124,16 @@ public class NoteDao extends AbstractDao {
 
 	public List<Note> getSheetsForExport() {
 		return getEntityManager().createQuery("select note from Note note order by note.noteId", Note.class).getResultList();		
+	}
+
+	public List<NoteFile> getSheetFilesForExport() {
+		return getEntityManager().createQuery("select file from NoteFile file order by file.noteId, file.name", NoteFile.class).getResultList();		
+	}
+	public List<ListSheet> getListWithSheets() {
+		return getEntityManager().createQuery("select new jacJarSoft.noteArkiv.api.ListSheet(list, n) from SheetList list " +
+				"join SheetListNote sln on list.listId = sln.listId " +
+				"join Note n on n.noteId = sln.noteId " +
+					"order by list.listId, n.title", ListSheet.class).getResultList();		
 	}
 
 
