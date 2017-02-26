@@ -75,6 +75,7 @@ public class NoteArkivDatabase {
 				}
 
 				updateToCurrentVersion(connection);
+				logger.info("Done upgrading database to " + appVersion.toString());
 			} else {
 				doTemporatyrUpgrades(connection);
 			}
@@ -142,11 +143,13 @@ public class NoteArkivDatabase {
 		upgradeUsersFromVer1(connection);
 		upgradeNotesFromVersion1(connection);
 
+		logger.info("Creating new tables from version 1");
 		createLists(connection);
         createListNoteLink(connection);
 	}
 
 	private void upgradeNotesFromVersion1(Connection connection) throws SQLException {
+		logger.info("Upgrading notes from version 1");
 		@SuppressWarnings("unchecked")
 		List<Note> sheets = (List<Note>) entityManager.createNativeQuery("select * from notes", Note.class).getResultList();
 		for(Note sheet : sheets) {
@@ -162,6 +165,7 @@ public class NoteArkivDatabase {
 		}
 
 	
+		logger.info("Upgrading note-files from version 1");
 		List<NoteFile> sheetFiles = getAllSheetFiles();
 		for(NoteFile sheetFile : sheetFiles) {
 			entityManager.detach(sheetFile);
@@ -186,10 +190,14 @@ public class NoteArkivDatabase {
 	private void extractFileDataToDirectory(List<NoteFile> sheetFiles, Connection connection) throws SQLException {
 		SheetFileDao sheetFileDao = new SheetFileDao();
 		int i= 0;
+		logger.info("Extracting file data to directory");
 		for (NoteFile sheetFile : sheetFiles) {
+			i++;
 			if (logger.isLoggable(Level.FINE)) {
-				i++;
 				logger.fine("Extracting data to file for fileid " + sheetFile.getFileId() + " " + i + "/" + sheetFiles.size());
+			}
+			else if (i % 50 == 0.0) {
+				logger.info("Extracting data for file " + i + " of " + sheetFiles.size());
 			}
 //			if (sheetFile.getFileId() == 1293) {
 //				logger.warning("Skipping file " + sheetFile.getName() + " for sheet " + sheetFile.getNoteId());
@@ -206,10 +214,12 @@ public class NoteArkivDatabase {
 		}
 		String sql = "drop table note_files_data";
 		DbUtil.execUpdateSql(connection,sql);
+		logger.info("Done extracting file data to directory");
 		runVacuume = true;
 	}
 
 	private void upgradeUsersFromVer1(Connection connection) throws SQLException {
+		logger.info("Upgrading users from version 1");
 		String sql = "ALTER TABLE users RENAME TO users_old;";
 		DbUtil.execUpdateSql(connection,sql);
 		sql = "alter table users_old add ACCESS_LEVEL text";

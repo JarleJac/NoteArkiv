@@ -3,6 +3,7 @@ package jacJarSoft.noteArkiv.dao;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -12,6 +13,8 @@ import jacJarSoft.noteArkiv.model.SheetListNote;
 
 @Component
 public class SheetListDao extends AbstractDao {
+	private static Logger logger = Logger.getLogger(SheetListDao.class.getName());
+	
 	public SheetList getList(long listId) {
 		SheetList list = getEntityManager().find(SheetList.class, listId);
 		return list;
@@ -46,10 +49,12 @@ public class SheetListDao extends AbstractDao {
 		return link;
 	}
 	public SheetList updateList(SheetList list) {
+		logger.fine("Updating list: " + list.getName()+"/" + list.getListDateStr());
 		getEntityManager().merge(list);
 		return list;
 	}
 	public SheetList insertList(SheetList list) {
+		logger.fine("Insering list: " + list.getName()+"/" + list.getListDateStr());
 		list.setRegisteredDate(new Date());
 		list.setRegisteredBy(getCurrentUser());
 		getEntityManager().persist(list);

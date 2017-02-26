@@ -2,6 +2,7 @@ package jacJarSoft.noteArkiv.model;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Date;
 
@@ -13,18 +14,17 @@ import jacJarSoft.noteArkiv.db.SqliteDateTimeFormater;
 @MappedSuperclass
 public abstract class AbstractEntity {
 
-	protected String getDateStrFromDate(Date date) {
+	protected static String getDateStrFromDate(Date date) {
 		Instant instant = Instant.ofEpochMilli(date.getTime());
-	    LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+	    LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
 	    return ldt.format(SqliteDateTimeFormater.Formatter);
 	}
 
-	protected Date getDateFromDateStr(String dateStr) {
+	protected static Date getDateFromDateStr(String dateStr) {
 		if (dateStr == null)
 			return null;
 		LocalDateTime ldt = LocalDateTime.parse(dateStr, SqliteDateTimeFormater.Formatter);
-	    return Date.from(ldt.toInstant(ZoneOffset.UTC));
-		
+	    return Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
 	}
 	@PostLoad
 	protected void postLoad() {

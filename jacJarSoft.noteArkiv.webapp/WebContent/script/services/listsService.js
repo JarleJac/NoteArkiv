@@ -22,6 +22,7 @@ angular.module('notearkiv').factory('Lists', function ListsFactory($http) {
 				});
 		},
 		addList : function(list) {
+			delete list.listDateStr;
 			return $http({method: 'POST', url : 'rest/noteservice/list', data: list })
 				.then(function successCallback(result) {
 					return fixListAfterRead(result.data);
@@ -30,6 +31,7 @@ angular.module('notearkiv').factory('Lists', function ListsFactory($http) {
 				});
 		},
 		updateList : function(list) {
+			delete list.listDateStr;
 			return $http({method: 'PUT', url : 'rest/noteservice/list', data: list })
 				.then(function successCallback(result) {
 					return fixListAfterRead(result.data);

@@ -1,21 +1,26 @@
 package jacJarSoft.noteArkiv.webapp;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MediaType;
 
 import jacJarSoft.noteArkiv.AppContext;
 import jacJarSoft.util.Auth.AuthException;
 import jacJarSoft.util.Auth.AuthTokenInfo;
 import jacJarSoft.util.Auth.AuthTokenUtil;
+import jacJarSoft.util.web.MultiReadHttpServletRequest;
 
 @WebFilter(filterName = "AuthCheckerFilter",
 urlPatterns = {"/rest/*"}
@@ -61,6 +66,22 @@ public class AuthCheckerFilter  extends AbstractFilter {
 				logger.warning("Not Auth, no header");
 			}
 		}
+		if (logger.isLoggable(Level.FINE) && 
+				httpReq.getContentLength() > 0 && 
+				httpReq.getContentType().startsWith(MediaType.APPLICATION_JSON))
+		{
+			MultiReadHttpServletRequest multireadRq = new MultiReadHttpServletRequest(httpReq);
+			try (ByteArrayOutputStream os = new ByteArrayOutputStream())
+			{
+				int data;
+				ServletInputStream inputStream = multireadRq.getInputStream();
+				while ((data = inputStream.read()) != -1)
+					os.write(data);
+				String strData = new String(os.toByteArray());
+				logger.fine("Received the following data:\n" + strData);
+			}
+			httpReq = multireadRq;
+		}
 		if (authOk)
 		{
 			AppContext appContext = AppContext.get();
@@ -72,7 +93,7 @@ public class AuthCheckerFilter  extends AbstractFilter {
 			httpRes.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 			httpRes.setDateHeader("Expires", 0); // Proxies.
 			
-			chain.doFilter(request, response);
+			chain.doFilter(httpReq, response);
 
 
 			appContext.close();
