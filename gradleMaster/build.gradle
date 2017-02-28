@@ -64,7 +64,7 @@ subprojects {
 	}
 	dependencies { testCompile 'junit:junit:4.12' }
 
-	version='2.0.2.0'
+	version='2.0.3.0'
 
 	jar { manifest.attributes provider: 'JacJarSoft' }
 }
