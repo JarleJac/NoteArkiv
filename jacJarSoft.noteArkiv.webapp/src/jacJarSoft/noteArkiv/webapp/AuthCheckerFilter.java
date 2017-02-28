@@ -42,6 +42,7 @@ public class AuthCheckerFilter  extends AbstractFilter {
 		String pathInfo = httpReq.getPathInfo();
 		if (pathInfo.startsWith("/appservice") || 
 			pathInfo.startsWith("/services") || 
+			pathInfo.startsWith("/adminservice/createcsvexport") || 
 			(pathInfo.equals("/") && (httpReq.getParameterValues("_wadl") != null)))
 			authOk = true;
 		else {
