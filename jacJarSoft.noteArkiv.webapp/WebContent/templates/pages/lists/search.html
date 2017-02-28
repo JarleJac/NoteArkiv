@@ -1,7 +1,7 @@
 <h3 class="pagetop" data-cg-busy="{promise:getPromise,message:'Søker ...'}">Noter for liste: "{{list.name}}"</h3>
 <div ng-if="hasAccess('AUTHOR')"><button type="submit" class="btn btn-default" data-ng-click="toggleEditMode()">{{editMode? 'Avslutt':'Start'}} Redigeringsmodus</button></div>
 <div class="small-spacer"> </div>
-<div data-ng-if="editMode">
+<div data-ng-if="editMode" data-cg-busy="{promise:updatePromise,message:'Oppdaterer ...'}">
 	<ul class="nav nav-tabs">
 		<li role="presentation" data-ng-class="{ active: isTabSet('current') }"><a
 			data-ng-click="setTab('current')" href=>Noter på liste</a></li>
@@ -14,8 +14,8 @@
 		<div class="small-spacer"> </div>
 		<sheets-list data="currentListData" resultid="'currentResult'" selectable></sheets-list>
 	</div>
-	<div data-ng-show="isTabSet('search')">
-		<advanced-search data="searchListData" searchParam="advancedParam" filterdata="currentListData"></advanced-search>
+	<div data-ng-show="isTabSet('search')" data-cg-busy="{promise:prom.getPromise,message:'Søker ...'}">
+		<advanced-search data="searchListData" searchParam="advancedParam" filterdata="currentListData" prom='prom'></advanced-search>
 		<button type="submit" class="btn btn-default" data-ng-click="addSelected()">Legg til merkede</button>
 		<div class="small-spacer"> </div>
 		<sheets-list data="searchListData" resultid="'searchResult'" selectable></sheets-list>

@@ -3,6 +3,8 @@
  */
 angular.module('notearkiv').controller('searchController', function($scope, $http, $routeParams, SearchSheets, State) {
 	var controller = this;
+	$scope.prom = {};
+	$scope.prom.getPromise = null;
 	$scope.tab = $routeParams.tab;
 	$scope.listId = $routeParams.listId;
 	$scope.getStateName = function() { return "searchController" + $scope.tab;}
@@ -21,20 +23,20 @@ angular.module('notearkiv').controller('searchController', function($scope, $htt
 		return $scope.tab === tab;
 	};
 	$scope.searchSimple = function() {
-		$scope.getPromise = SearchSheets.searchSimple($scope.title);
-		$scope.getPromise.then(function successCallback(result) {
+		$scope.prom.getPromise = SearchSheets.searchSimple($scope.title);
+		$scope.prom.getPromise.then(function successCallback(result) {
 			$scope.searchListData.sheetList = result.sheetList;
 		})
 	};
 	$scope.searchNewest = function() {
-		$scope.getPromise = SearchSheets.searchNewest($scope.days);
-		$scope.getPromise.then(function successCallback(result) {
+		$scope.prom.getPromise = SearchSheets.searchNewest($scope.days);
+		$scope.prom.getPromise.then(function successCallback(result) {
 			$scope.searchListData.sheetList = result.sheetList;
 		})
 	};
 	$scope.searchCurrent = function() {
-		$scope.getPromise = SearchSheets.searchList(1);
-		$scope.getPromise.then(function successCallback(result) {
+		$scope.prom.getPromise = SearchSheets.searchList(1);
+		$scope.prom.getPromise.then(function successCallback(result) {
 			$scope.searchListData.sheetList = result.sheetList;
 		})
 	};

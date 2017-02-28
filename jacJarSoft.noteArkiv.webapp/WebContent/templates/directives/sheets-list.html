@@ -29,7 +29,8 @@
 			<div class="col-xs-4">{{sheetData.sheet.arrangedBy}}</div>
 		</div>
 		<div  data-ng-class="{in: sheetData.expanded}" class="row topBorder collapse"
-			id="{{ 'sheetInfo-' +resultId+ $index }}" data-sheet-id="{{sheetData.sheet.noteId}}">
+			id="{{ 'sheetInfo-' +resultId+ $index }}" data-sheet-id="{{sheetData.sheet.noteId}}"
+			data-cg-busy="{promise:sheetData.getFilesPromise,message:'Henter filer'}" >
 			<div class="col-xs-12">
 				<div>
 					<span class="listLabel">Beskrivelse: </span>{{sheetData.sheet.description}}

@@ -50,11 +50,11 @@ Viser de notene som det øves på for tiden.
 	</form>
 </div>
 <div data-ng-show="isTabSet('advanced')">
-<advanced-search data="searchListData" searchParam="advancedParam"></advanced-search>
+<advanced-search data="searchListData" searchParam="advancedParam" prom="prom"></advanced-search>
 </div>
 <div class="small-spacer"> </div>
 
-<div data-cg-busy="{promise:getPromise,message:'Søker ...'}">
+<div data-cg-busy="{promise:prom.getPromise,message:'Søker ...'}">
 	<h4 class="sub-heading">Søkeresultat</h4>
 	<sheets-list data="searchListData" resultid="'searchResult'"></sheets-list>
 </div>

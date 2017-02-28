@@ -4,6 +4,7 @@
 angular.module('notearkiv').controller('listSearchController', function($rootScope, $scope, $q, $http, $routeParams, SearchSheets, State, Lists) {
 	$scope.listId = $routeParams.listId;
 	$scope.getStateName = function() { return "listSearchController" + $scope.listId;}
+	$scope.prom = {};
 	State.getOrRegisterScopeVariables(
 			["searchListData", "currentListData", "editMode", "tab" ],
 			[{predicate: 'sheet.title', reverse: false, sheetList: undefined},
@@ -29,7 +30,8 @@ angular.module('notearkiv').controller('listSearchController', function($rootSco
 				promises.push(Lists.connectToList($scope.listId, sheetData.sheet.noteId))				
 			}
 		  });
-		$q.all(promises).then(function successCallback(result) {
+		$scope.updatePromise = $q.all(promises); 
+		$scope.updatePromise.then(function successCallback(result) {
 			$scope.searchCurrent();
 			$rootScope.$emit('OkMessage', "Valgte noter er lagt til i lista.");
 		});
@@ -42,7 +44,8 @@ angular.module('notearkiv').controller('listSearchController', function($rootSco
 				promises.push(Lists.disconnectFromList($scope.listId, sheetData.sheet.noteId))				
 			}
 		  });
-		$q.all(promises).then(function successCallback(result) {
+		$scope.updatePromise = $q.all(promises); 
+		$scope.updatePromise.then(function successCallback(result) {
 			$scope.searchCurrent();
 			$rootScope.$emit('OkMessage', "Valgte noter er fjernet fra lista.");
 		});

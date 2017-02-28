@@ -15,8 +15,8 @@ angular.module('notearkiv').directive('advancedSearch',
 	  scope.search = function() {
 		scope.searchParam.voices = Voices.getSelectedAsIdString(scope.selectedVoices);
 		scope.searchParam.tags = scope.selectedTags.map(function(tag) {return tag.id}).join();
-		scope.getPromise = SearchSheets.searchAdvanced(scope.searchParam);
-		scope.getPromise.then(function successCallback(result) {
+		scope.prom.getPromise = SearchSheets.searchAdvanced(scope.searchParam);
+		scope.prom.getPromise.then(function successCallback(result) {
 			if (scope.filterData !== undefined) {
 				scope.searchListData.sheetList = result.sheetList.filter(function(sheetData) {
 					for (i = 0; i < scope.filterData.sheetList.length; i++) { 
@@ -72,7 +72,8 @@ angular.module('notearkiv').directive('advancedSearch',
     scope: {
     	searchListData: '=data',
     	searchParam: '=searchParam',
-    	filterData: '=filterdata'
+    	filterData: '=filterdata',
+    	prom: '=prom'
       },
     templateUrl: 'templates/directives/advanced-search.html'
   };
