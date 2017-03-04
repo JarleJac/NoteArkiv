@@ -1,5 +1,7 @@
 package jacJarSoft.noteArkiv.dao;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,9 +15,11 @@ import org.springframework.stereotype.Component;
 import jacJarSoft.noteArkiv.api.ListSheet;
 import jacJarSoft.noteArkiv.api.SheetParam;
 import jacJarSoft.noteArkiv.api.SheetSearchParam;
+import jacJarSoft.noteArkiv.db.SQLLiteUtil;
 import jacJarSoft.noteArkiv.db.SqliteDateTimeFormater;
 import jacJarSoft.noteArkiv.model.Note;
 import jacJarSoft.noteArkiv.model.NoteFile;
+import jacJarSoft.util.DbUtil;
 import jacJarSoft.util.StringUtils;
 
 @Component
@@ -46,17 +50,23 @@ public class NoteDao extends AbstractDao {
 		return where;
 	}
 	public List<Note> sheetSearch(SheetSearchParam param) {
+		return DbUtil.runWithConnection(getEntityManager(), (con) -> {
+			return sheetSearchInternal(param, con);
+		});
+	}
+	@SuppressWarnings("unchecked")
+	private List<Note> sheetSearchInternal(SheetSearchParam param, Connection con) {
 		String from = "";
 		String where = "";
 		
 		if (StringUtils.hasValue(param.getTitle())) {
-			where = addWhere(where,"title like '%" + param.getTitle() + "%'");
+			where = addWhere(where,"Contains(title, '" + param.getTitle() + "')");
 		}
 		if (StringUtils.hasValue(param.getArrangedBy())) {
-			where = addWhere(where,"arranged_by like '%" + param.getArrangedBy() + "%'");
+			where = addWhere(where,"Contains(arranged_by, '" + param.getArrangedBy() + "')");
 		}
 		if (StringUtils.hasValue(param.getComposedBy())) {
-			where = addWhere(where,"composed_by like '%" + param.getComposedBy() + "%'");
+			where = addWhere(where,"Contains(composed_by, '" + param.getComposedBy() + "')");
 		}
 		if (param.getDays() > 0) {
 			LocalDateTime localDateFrom = LocalDateTime.now().minusDays(param.getDays());
@@ -70,9 +80,21 @@ public class NoteDao extends AbstractDao {
 					" AND LN.NOTE_ID = N.NOTE_ID ";
 		}
 		
-		String sql = "select * from NOTES N " + from + " " + where + " order by title";
-		@SuppressWarnings("unchecked")
-		List<Note> sheets = (List<Note>)getEntityManager().createNativeQuery(sql, Note.class).getResultList();
+		String sql = "select * from NOTES N " + from + " " + where + " order by title collate nocase";
+		List<Note> sheets = null;
+		try {
+			SQLLiteUtil.registerContainsFunc(con);
+			sheets = (List<Note>)getEntityManager().createNativeQuery(sql, Note.class).getResultList();
+		} catch (SQLException e) {
+			throw new RuntimeException("SQL error reading sheets", e);
+		}
+		finally {
+			try {
+				SQLLiteUtil.destroyContainsFunc(con);
+			} catch (SQLException e) {
+				//Ignore
+			}
+		}
 		
 		Set<String> paramTagsSet = new HashSet<>();
 		Set<String> paramVoicesSet = new HashSet<>();
