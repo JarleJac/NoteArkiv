@@ -9,7 +9,7 @@ import java.util.Date;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PostLoad;
 
-import jacJarSoft.noteArkiv.db.SqliteDateTimeFormater;
+import jacJarSoft.noteArkiv.db.util.SqliteDateTimeFormater;
 
 @MappedSuperclass
 public abstract class AbstractEntity {

@@ -8,8 +8,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
 
+import jacJarSoft.noteArkiv.db.util.SheetFileUtil;
 import jacJarSoft.noteArkiv.model.NoteFile;
 import jacJarSoft.util.FileUtil;
 
@@ -50,7 +52,7 @@ public class SheetFileDao extends AbstractDao {
 	private void deleteFileData(NoteFile sheetFile) {
 		Path filePath = getFilePath(sheetFile);
 		try {
-			FileUtil.deleteFile(filePath, getFileName(sheetFile));
+			FileUtil.deleteFile(filePath, SheetFileUtil.getFileName(sheetFile));
 		} catch (IOException e) { 
 			//ignore this, just log some info
 			logger.warning("Unable to delete file " + filePath.toString());
@@ -70,18 +72,14 @@ public class SheetFileDao extends AbstractDao {
 		return file;
 	}
 	public void insertSheetFileData(NoteFile sheetFile, byte[] bytes) throws FileNotFoundException, IOException {
-		FileUtil.writeBytesToFile(getFilePath(sheetFile), getFileName(sheetFile), bytes);
-	}
-	private String getFileName(NoteFile sheetFile) {
-		//maybe add file id to file name?
-		return sheetFile.getName();
+		FileUtil.writeBytesToFile(getFilePath(sheetFile), SheetFileUtil.getFileName(sheetFile), bytes);
 	}
 	private Path getFilePath(NoteFile sheetFile) {
 		String sheetIdPath = String.format("%1$05d", sheetFile.getNoteId());
 		return Paths.get(getFilesDirectory(), sheetIdPath);
 	}
 	public byte[] getSheetFileData(NoteFile sheetFile) throws IOException {
-		return FileUtil.readBytesFromFile(getFilePath(sheetFile), getFileName(sheetFile), (int)sheetFile.getFileSize());
+		return FileUtil.readBytesFromFile(getFilePath(sheetFile), SheetFileUtil.getFileName(sheetFile), (int)sheetFile.getFileSize());
 	}
 
 }

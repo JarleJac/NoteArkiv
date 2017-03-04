@@ -39,6 +39,9 @@ ext {
 		],
 		'apachehttpclient' : [
 			'org.apache.httpcomponents:httpmime:4.5.2'
+		],		
+		'apache_commons_io' : [
+			'commons-io:commons-io:2.5'
 		]		
 	]
 }

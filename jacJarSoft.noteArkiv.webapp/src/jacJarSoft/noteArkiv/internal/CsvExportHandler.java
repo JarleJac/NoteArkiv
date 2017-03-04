@@ -17,6 +17,7 @@ import jacJarSoft.noteArkiv.api.ListSheet;
 import jacJarSoft.noteArkiv.dao.NoteDao;
 import jacJarSoft.noteArkiv.dao.TagsDao;
 import jacJarSoft.noteArkiv.dao.VoiceDao;
+import jacJarSoft.noteArkiv.db.util.SheetFileUtil;
 import jacJarSoft.noteArkiv.model.Note;
 import jacJarSoft.noteArkiv.model.NoteFile;
 import jacJarSoft.util.StringUtils;
@@ -81,7 +82,7 @@ public class CsvExportHandler {
 			for (NoteFile sheetFile : sheetFiles) {
 				String[] row = new String[headers.length];
 				row[0] = String.valueOf(sheetFile.getNoteId());
-				row[1] = sheetFile.getName();
+				row[1] = SheetFileUtil.getFileName(sheetFile);
 				row[2] = sheetFile.getDescription();
 				row[3] = sheetFile.getRegisteredDateStr();
 				row[4] = sheetFile.getRegisteredBy();

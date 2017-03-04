@@ -196,13 +196,9 @@ public class NoteArkivDatabase {
 			if (logger.isLoggable(Level.FINE)) {
 				logger.fine("Extracting data to file for fileid " + sheetFile.getFileId() + " " + i + "/" + sheetFiles.size());
 			}
-			else if (i % 50 == 0.0) {
+			else if (i % 100 == 0.0) {
 				logger.info("Extracting data for file " + i + " of " + sheetFiles.size());
 			}
-//			if (sheetFile.getFileId() == 1293) {
-//				logger.warning("Skipping file " + sheetFile.getName() + " for sheet " + sheetFile.getNoteId());
-//				continue;
-//			}
 			NoteFileData noteFileData = entityManager.find(NoteFileData.class, sheetFile.getFileId());
 			try {
 				sheetFileDao.insertSheetFileData(sheetFile, noteFileData.getData());

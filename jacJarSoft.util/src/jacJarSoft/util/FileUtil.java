@@ -66,7 +66,7 @@ public class FileUtil {
 			int bytesRead = 0;
 			int lastRead = 0;
 			while (bytesRead < size && lastRead >= 0) {
-				lastRead = stream.read(bytes, bytesRead, size);
+				lastRead = stream.read(bytes, bytesRead, Math.max(size-bytesRead, 1000));
 				if (lastRead > 0)
 					bytesRead += lastRead;
 			}

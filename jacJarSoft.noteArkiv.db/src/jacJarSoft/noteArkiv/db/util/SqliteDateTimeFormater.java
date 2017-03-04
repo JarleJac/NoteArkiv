@@ -1,4 +1,4 @@
-package jacJarSoft.noteArkiv.db;
+package jacJarSoft.noteArkiv.db.util;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
