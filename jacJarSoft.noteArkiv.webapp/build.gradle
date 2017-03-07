@@ -23,3 +23,9 @@ task buildTest(type: War) {
 	webInf { from 'configurations/test' } 
 	archiveName = "notearkiv-test##${version}.war"
 }
+
+task buildProd(type: War) {
+	manifest.attributes provider: providerName
+	webInf { from 'configurations/prod' } 
+	archiveName = "notearkiv##${version}.war"
+}
