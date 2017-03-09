@@ -30,7 +30,7 @@ angular.module('notearkiv').controller('listController', function($rootScope, $s
 			$rootScope.$emit('OkMessage', "Liste ble lagret ok");
 			$scope.pagePromise = null;
 			if ($scope.isNew)
-				$location.path("/lists/" + result.listId);
+				$location.path("/search/list/" + result.listId);
 		});
 		
 	}
