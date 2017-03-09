@@ -40,6 +40,10 @@ angular.module('notearkiv').directive('advancedSearch',
 		  scope.searchParam.arrangedBy = "";
 		  scope.searchListData.sheetList = {};
 	  }
+	  scope.$on("currentChanged", function (event, args) {
+		  if (!angular.equals({}, scope.searchListData.sheetList))
+			  scope.search();
+ 	  });
 	  scope.getVoicesPromise = Voices.getSelectedVoices(null)
 	  scope.getVoicesPromise.then(function successCallback(voiceResult) {
 		scope.selectedVoices = voiceResult;

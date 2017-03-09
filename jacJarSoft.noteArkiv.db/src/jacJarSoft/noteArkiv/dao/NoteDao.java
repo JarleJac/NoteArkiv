@@ -58,14 +58,18 @@ public class NoteDao extends AbstractDao {
 	private List<Note> sheetSearchInternal(SheetSearchParam param, Connection con) {
 		String from = "";
 		String where = "";
+		boolean doContains = false;
 		
 		if (StringUtils.hasValue(param.getTitle())) {
+			doContains = true;
 			where = addWhere(where,"Contains(title, '" + param.getTitle() + "')");
 		}
 		if (StringUtils.hasValue(param.getArrangedBy())) {
+			doContains = true;
 			where = addWhere(where,"Contains(arranged_by, '" + param.getArrangedBy() + "')");
 		}
 		if (StringUtils.hasValue(param.getComposedBy())) {
+			doContains = true;
 			where = addWhere(where,"Contains(composed_by, '" + param.getComposedBy() + "')");
 		}
 		if (param.getDays() > 0) {
@@ -83,14 +87,16 @@ public class NoteDao extends AbstractDao {
 		String sql = "select * from NOTES N " + from + " " + where + " order by title collate nocase";
 		List<Note> sheets = null;
 		try {
-			SQLLiteUtil.registerContainsFunc(con);
+			if (doContains)
+				SQLLiteUtil.registerContainsFunc(con);
 			sheets = (List<Note>)getEntityManager().createNativeQuery(sql, Note.class).getResultList();
 		} catch (SQLException e) {
 			throw new RuntimeException("SQL error reading sheets", e);
 		}
 		finally {
 			try {
-				SQLLiteUtil.destroyContainsFunc(con);
+				if (doContains)
+					SQLLiteUtil.destroyContainsFunc(con);
 			} catch (SQLException e) {
 				//Ignore
 			}

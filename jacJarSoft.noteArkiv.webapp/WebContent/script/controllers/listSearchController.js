@@ -10,7 +10,7 @@ angular.module('notearkiv').controller('listSearchController', function($rootSco
 			[{predicate: 'sheet.title', reverse: false, sheetList: undefined},
 			 {predicate: 'sheet.title', reverse: false, sheetList: undefined},
 			 false, "current"]);
-
+	$scope.brodast = false;
 	$scope.getPromise = Lists.getList($routeParams.listId); 
 	$scope.getPromise.then(function successCallback(result) {
 		$scope.list = result;
@@ -32,6 +32,7 @@ angular.module('notearkiv').controller('listSearchController', function($rootSco
 		  });
 		$scope.updatePromise = $q.all(promises); 
 		$scope.updatePromise.then(function successCallback(result) {
+			$scope.brodast = true;
 			$scope.searchCurrent();
 			$rootScope.$emit('OkMessage', "Valgte noter er lagt til i lista.");
 		});
@@ -46,6 +47,7 @@ angular.module('notearkiv').controller('listSearchController', function($rootSco
 		  });
 		$scope.updatePromise = $q.all(promises); 
 		$scope.updatePromise.then(function successCallback(result) {
+			$scope.brodast = true;
 			$scope.searchCurrent();
 			$rootScope.$emit('OkMessage', "Valgte noter er fjernet fra lista.");
 		});
@@ -58,6 +60,10 @@ angular.module('notearkiv').controller('listSearchController', function($rootSco
 		$scope.getListPromise = SearchSheets.searchList($scope.listId);
 		$scope.getListPromise.then(function successCallback(result) {
 			$scope.currentListData.sheetList = result.sheetList;
+			if ($scope.brodast) {
+				$scope.$broadcast("currentChanged", $scope.currentListData);
+				$scope.brodast = false;
+			}
 		})
 	};
 	
