@@ -2,7 +2,7 @@
  * 
  */
 
-angular.module('notearkiv').directive('sheetsList', ['Sheets', '$timeout', 'Auth', 'Lists', 'AuthToken', function(Sheets, $timeout, Auth, Lists, AuthToken) {
+angular.module('notearkiv').directive('sheetsList', ['Sheets', '$timeout', 'Auth', 'Lists', 'AuthToken', '$window', function(Sheets, $timeout, Auth, Lists, AuthToken, $window) {
 
   function link(scope, element, attrs) {
 	scope.selectable = attrs.selectable === undefined ? false : true;
@@ -35,6 +35,12 @@ angular.module('notearkiv').directive('sheetsList', ['Sheets', '$timeout', 'Auth
 	scope.toggleSelect = function(event, sheetData) {
 		sheetData.selected = !sheetData.selected;
 		event.stopPropagation();
+	};
+
+	scope.openFile = function(file) {
+		var newWindow = $window.open("templates/pages/root/audio.html","_blank");
+		newWindow.file = file;
+		newWindow.authInfo = scope.authInfo;
 	};
 
 	var getFiles = function(sheetData) {

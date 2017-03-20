@@ -1,6 +1,9 @@
 package jacJarSoft.noteArkiv.internal;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -9,6 +12,7 @@ import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.activation.MimetypesFileTypeMap;
 import javax.persistence.EntityManager;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -48,6 +52,7 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	private SheetListDao sheetListDao;
 
 	private static Logger logger = Logger.getLogger(NoteServiceImpl.class.getName());
+	private int chunk_size = 1024 * 1024 * 3;;
 	
 	@Override
 	public Response getNote(long noteId) {
@@ -161,6 +166,52 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	public Response downLoadFile(long fileId) {
 		return getFileData(fileId, true);
 	}
+	@Override
+	public Response returnMediaHeader(String range, long fileId) {
+		NoteFile noteFile = sheetFileDao.getNoteFile(fileId);
+		return Response.ok().status(206).header(HttpHeaders.CONTENT_LENGTH, noteFile.getFileSize()).build();
+	}
+	@Override
+	public Response returnMedia(String range, long fileId) {
+		if (range == null)
+			return getFileData(fileId, false);
+		
+		NoteFile noteFile = sheetFileDao.getNoteFile(fileId);
+		
+		String[] ranges = range.split("=")[1].split("-");
+        final int from = Integer.parseInt(ranges[0]);
+        /**
+         * Chunk media if the range upper bound is unspecified. Chrome sends "bytes=0-"
+         */
+        int to = chunk_size + from;
+        if (to >= noteFile.getFileSize()) {
+            to = (int) (noteFile.getFileSize() - 1);
+        }
+        if (ranges.length == 2) {
+            to = Integer.parseInt(ranges[1]);
+        }
+
+        String responseRange;
+		File sheetFileDataAsFile;
+		RandomAccessFile raf;
+		try {
+			responseRange = String.format("bytes %d-%d/%d", from, to, noteFile.getFileSize());
+			sheetFileDataAsFile = sheetFileDao.getSheetFileDataAsFile(noteFile);
+			raf = new RandomAccessFile(sheetFileDataAsFile, "r");
+			raf.seek(from);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+        final int len = to - from + 1;
+        final MediaStreamer streamer = new MediaStreamer(len, raf);
+        Response.ResponseBuilder res = Response.ok(streamer).status(206)
+                .header("Accept-Ranges", "bytes")
+                .header("Content-Range", responseRange)
+                .header(HttpHeaders.CONTENT_LENGTH, streamer.getLenth())
+                .header(HttpHeaders.LAST_MODIFIED, new Date(sheetFileDataAsFile.lastModified()));
+        return res.build();		
+	}
 	private Response getFileData(long fileId, boolean download) {
 		NoteFile noteFile = sheetFileDao.getNoteFile(fileId);
 		if (null == noteFile)
@@ -173,9 +224,6 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 			logger.log(Level.SEVERE, msg, e);
 			throw new RuntimeException(msg, e);
 		}
-//		NoteFileData fileData = sheetFileDao.getFileData(fileId);
-//		if (null == fileData)
-//			throw new ValidationErrorException("Finner ikke data for fil " + noteFile.getName());
 	    String mediaType = getMimeType(noteFile);
 	    String contentDisposition = getContentDisposition(noteFile, download);
 	    return Response.ok(bytes, mediaType)

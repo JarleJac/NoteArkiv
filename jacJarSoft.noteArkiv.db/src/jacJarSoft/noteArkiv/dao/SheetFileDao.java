@@ -1,5 +1,6 @@
 package jacJarSoft.noteArkiv.dao;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -80,6 +81,9 @@ public class SheetFileDao extends AbstractDao {
 	}
 	public byte[] getSheetFileData(NoteFile sheetFile) throws IOException {
 		return FileUtil.readBytesFromFile(getFilePath(sheetFile), SheetFileUtil.getFileName(sheetFile), (int)sheetFile.getFileSize());
+	}
+	public File getSheetFileDataAsFile(NoteFile sheetFile) throws IOException {
+		return Paths.get(getFilePath(sheetFile).toString(), SheetFileUtil.getFileName(sheetFile)).toFile();
 	}
 
 }

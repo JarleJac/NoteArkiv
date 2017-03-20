@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html data-ng-app="notearkivAudio">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/notearkiv.css" />
+	<script type="text/javascript" src="../../../script/vendors/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../../script/vendors/angular.min.js"></script>
+	<title data-ng-bind="title">NoteArkiv</title>
+</head>
+<body data-ng-controller="audioController">
+	<div id="mainContainer" class="container">
+		<div class="text-center pagination-centered">
+			<div>Her er ting: {{ting}}</div>
+			<div>Spiller {{file.name}}</div>
+			<div style="font-size: 2em">
+			 <audio controls autoplay data-ng-bind-html="audioSource">
+			 	
+ 			 </audio>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../../../script/vendors/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../../script/modules/notearkivAudio.js"></script>
+<!-- 	<script type="text/javascript" src="script/services/stateService.js"></script>
+	<script type="text/javascript" src="script/services/authService.js"></script>
+	<script type="text/javascript" src="script/services/authTokenService.js"></script>
+	<script type="text/javascript" src="script/services/searchSheetsService.js"></script>
+	<script type="text/javascript" src="script/services/sheetsService.js"></script>
+	<script type="text/javascript" src="script/services/voicesService.js"></script>
+	<script type="text/javascript" src="script/services/tagsService.js"></script>
+	<script type="text/javascript" src="script/services/simpleDlgService.js"></script>
+	<script type="text/javascript" src="script/services/usersService.js"></script>
+	<script type="text/javascript" src="script/services/listsService.js"></script>
+	<script type="text/javascript" src="script/services/adminService.js"></script>
+	<script type="text/javascript" src="script/controllers/mainController.js"></script>
+	<script type="text/javascript" src="script/controllers/editSheetController.js"></script>
+	<script type="text/javascript" src="script/controllers/logonController.js"></script>
+	<script type="text/javascript" src="script/controllers/changepwController.js"></script>
+	<script type="text/javascript" src="script/controllers/searchController.js"></script>
+	<script type="text/javascript" src="script/controllers/userProfileController.js"></script>
+	<script type="text/javascript" src="script/controllers/usersController.js"></script>
+	<script type="text/javascript" src="script/controllers/userController.js"></script>
+	<script type="text/javascript" src="script/controllers/listsController.js"></script>
+	<script type="text/javascript" src="script/controllers/listController.js"></script>
+	<script type="text/javascript" src="script/controllers/listSearchController.js"></script>
+	<script type="text/javascript" src="script/controllers/sysadminutilController.js"></script>
+	<script type="text/javascript" src="script/directives/sheetsList.js"></script>
+	<script type="text/javascript" src="script/directives/advancedSearch.js"></script>
+	<script type="text/javascript" src="script/dialogs/simpleConfirmDlg.js"></script>
+ -->
+ </body>
+</html>
