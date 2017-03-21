@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.activation.DataHandler;
 import javax.activation.MimetypesFileTypeMap;
@@ -20,6 +21,7 @@ import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import jacJarSoft.noteArkiv.api.SheetFile;
 import jacJarSoft.noteArkiv.api.SheetParam;
 import jacJarSoft.noteArkiv.api.SheetSearchList;
 import jacJarSoft.noteArkiv.api.SheetSearchParam;
@@ -91,7 +93,15 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	@Override
 	public Response getSheetFiles(long sheetId) {
 		List<NoteFile> list = sheetFileDao.getSheetFiles(sheetId);
-		return Response.ok(list).build();
+		List<SheetFile> retList = list
+				.stream()
+				.map((file)-> {
+					SheetFile sheetFile = new SheetFile(file);
+					sheetFile.setMimeType(getMimeType(file));
+					return sheetFile;
+				})
+				.collect(Collectors.toList()); 
+		return Response.ok(retList).build();
 	}
 
 	@Override
