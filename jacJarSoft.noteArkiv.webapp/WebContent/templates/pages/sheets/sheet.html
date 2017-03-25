@@ -79,23 +79,25 @@
 		<div  data-ng-repeat="file in files">
 			<div data-ng-if="$first" class="row listHeading">
 				<div class="col-xs-4">Filnavn</div>
-				<div class="col-xs-4">Beskrivelse</div>
+				<div class="col-xs-3">Beskrivelse</div>
 				<div class="col-xs-1">KB</div>
-				<div class="col-xs-3">Aktivitet</div>
+				<div class="col-xs-4">Aktivitet</div>
 			</div>
 			<div data-ng-if="!file.isEditMode" data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row">
 				<div class="col-xs-4">{{file.name}}</div>
-				<div class="col-xs-4">{{file.description}}</div>
+				<div class="col-xs-3">{{file.description}}</div>
 				<div class="col-xs-1">{{file.fileSize/1024|number:2}}</div>
-				<div class="col-xs-3">
+				<div class="col-xs-4">
 					<button type="button" class="btn btn-primary btn-xs" data-ng-click="editFile(file.fileId)">
 						<span class="glyphicon glyphicon-edit"></span> Endre</button>
 					<button type="button" class="btn btn-danger btn-xs" data-ng-click="deleteFile(file.fileId,file.name)">
 						<span class="glyphicon glyphicon-trash"></span> Slett</button>
 					<a href="rest/noteservice/notefile/{{file.fileId}}/download?authInfo={{authInfo}}" class="btn btn-primary btn-xs" role="button">
 						<span class="glyphicon glyphicon-download"></span> Last ned</a>	
-					<a href="rest/noteservice/notefile/{{file.fileId}}?authInfo={{authInfo}}" target="_blank" class="btn btn-primary btn-xs" role="button">
+					<a data-ng-hide="file.html5Audio" href="rest/noteservice/notefile/{{file.fileId}}?authInfo={{authInfo}}" target="_blank" class="btn btn-primary btn-xs" role="button">
 						<span class="glyphicon glyphicon-open-file"></span> Åpne</a>	
+					<button data-ng-show="file.html5Audio" class="btn btn-primary btn-xs" data-ng-click="openFile(file)">
+						<span class="glyphicon glyphicon-play"></span> Spill av</button>
 				</div>
 			</div>
 			<div data-ng-if="file.isEditMode" data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'">

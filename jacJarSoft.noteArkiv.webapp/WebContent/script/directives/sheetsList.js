@@ -38,9 +38,7 @@ angular.module('notearkiv').directive('sheetsList', ['Sheets', '$timeout', 'Auth
 	};
 
 	scope.openFile = function(file) {
-		var newWindow = $window.open("templates/pages/root/audio.html","_blank");
-		newWindow.file = file;
-		newWindow.authInfo = scope.authInfo;
+		Sheets.openFile(file);
 	};
 
 	var getFiles = function(sheetData) {

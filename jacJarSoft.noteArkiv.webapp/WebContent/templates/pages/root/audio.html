@@ -11,7 +11,7 @@
 </head>
 <body data-ng-controller="audioController">
 	<div id="mainContainer" class="container">
-		<div class="text-center pagination-centered">
+		<div class="text-center">
 			<div>Her er ting: {{ting}}</div>
 			<div>Spiller {{file.name}}</div>
 			<div style="font-size: 2em">
@@ -19,6 +19,8 @@
 			 	
  			 </audio>
 			</div>
+			<div>Hvis du ønsker å spille av fila i et annet program, så kan du kopiere
+			<a data-ng-href="{{audioUrl}}"> denne linken</a></div>
 		</div>
 	</div>
 	<script type="text/javascript" src="../../../script/vendors/bootstrap.min.js"></script>
