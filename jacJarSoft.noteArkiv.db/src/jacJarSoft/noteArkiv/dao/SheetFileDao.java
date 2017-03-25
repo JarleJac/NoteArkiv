@@ -81,7 +81,7 @@ public class SheetFileDao extends AbstractDao {
 	public byte[] getSheetFileData(NoteFile sheetFile) throws IOException {
 		return FileUtil.readBytesFromFile(getFilePath(sheetFile), SheetFileUtil.getFileName(sheetFile), (int)sheetFile.getFileSize());
 	}
-	public File getSheetFileDataAsFile(NoteFile sheetFile) throws IOException {
+	public File getSheetFileDataAsFile(NoteFile sheetFile) {
 		return Paths.get(getFilePath(sheetFile).toString(), SheetFileUtil.getFileName(sheetFile)).toFile();
 	}
 

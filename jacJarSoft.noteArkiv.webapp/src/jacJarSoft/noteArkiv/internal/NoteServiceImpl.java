@@ -54,7 +54,6 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	private SheetListDao sheetListDao;
 
 	private static Logger logger = Logger.getLogger(NoteServiceImpl.class.getName());
-	private int chunk_size = 1024 * 1024 * 3;;
 	
 	@Override
 	public Response getNote(long noteId) {
@@ -181,47 +180,41 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 		NoteFile noteFile = sheetFileDao.getNoteFile(fileId);
 		return Response.ok().status(206).header(HttpHeaders.CONTENT_LENGTH, noteFile.getFileSize()).build();
 	}
+
 	@Override
 	public Response returnMedia(String range, long fileId) {
-		if (range == null)
-			return getFileData(fileId, false);
-		
 		NoteFile noteFile = sheetFileDao.getNoteFile(fileId);
-		
-		String[] ranges = range.split("=")[1].split("-");
-        final int from = Integer.parseInt(ranges[0]);
-        /**
-         * Chunk media if the range upper bound is unspecified. Chrome sends "bytes=0-"
-         */
-        int to = chunk_size + from;
-        if (to >= noteFile.getFileSize()) {
-            to = (int) (noteFile.getFileSize() - 1);
-        }
-        if (ranges.length == 2) {
-            to = Integer.parseInt(ranges[1]);
-        }
+		File sheetFileDataAsFile = sheetFileDao.getSheetFileDataAsFile(noteFile);
 
-        String responseRange;
-		File sheetFileDataAsFile;
-		RandomAccessFile raf;
-		try {
-			responseRange = String.format("bytes %d-%d/%d", from, to, noteFile.getFileSize());
-			sheetFileDataAsFile = sheetFileDao.getSheetFileDataAsFile(noteFile);
-			raf = new RandomAccessFile(sheetFileDataAsFile, "r");
-			raf.seek(from);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		if (range == null)
+			return streamMedia(noteFile, sheetFileDataAsFile);
+		else
+			return streamRangeBasedMedia(range, noteFile, sheetFileDataAsFile);
+	}
 
-        final int len = to - from + 1;
-        final MediaStreamer streamer = new MediaStreamer(len, raf);
-        Response.ResponseBuilder res = Response.ok(streamer).status(206)
+	private Response streamRangeBasedMedia(String range, NoteFile noteFile, File sheetFileDataAsFile) {
+		RangeBasedSheetFileStreamer streamer = new RangeBasedSheetFileStreamer(range, noteFile, sheetFileDataAsFile);
+        Response.ResponseBuilder res = Response.ok(streamer)
+        		.status(206)
+        		.type(getMimeType(noteFile))
                 .header("Accept-Ranges", "bytes")
-                .header("Content-Range", responseRange)
+                .header("Content-Range", streamer.getResponseRange())
                 .header(HttpHeaders.CONTENT_LENGTH, streamer.getLenth())
+	            .header(HttpHeaders.CONTENT_DISPOSITION, getContentDisposition(noteFile, false))
                 .header(HttpHeaders.LAST_MODIFIED, new Date(sheetFileDataAsFile.lastModified()));
         return res.build();		
 	}
+
+	private Response streamMedia(NoteFile noteFile, File sheetFileDataAsFile) {
+		SheetFileStreamer streamer = new SheetFileStreamer(noteFile, sheetFileDataAsFile);
+        Response.ResponseBuilder res = Response.ok(streamer)
+        		.type(getMimeType(noteFile))
+                .header(HttpHeaders.CONTENT_LENGTH, streamer.getLenth())
+	            .header(HttpHeaders.CONTENT_DISPOSITION, getContentDisposition(noteFile, false))
+                .header(HttpHeaders.LAST_MODIFIED, new Date(sheetFileDataAsFile.lastModified()));
+        return res.build();		
+	}
+
 	private Response getFileData(long fileId, boolean download) {
 		NoteFile noteFile = sheetFileDao.getNoteFile(fileId);
 		if (null == noteFile)
@@ -235,9 +228,8 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 			throw new RuntimeException(msg, e);
 		}
 	    String mediaType = getMimeType(noteFile);
-	    String contentDisposition = getContentDisposition(noteFile, download);
 	    return Response.ok(bytes, mediaType)
-	            .header("Content-Disposition", contentDisposition)
+	            .header("Content-Disposition", getContentDisposition(noteFile, download))
 	            .header("Content-Length", bytes.length)
 	            .build();
 	

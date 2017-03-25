@@ -13,14 +13,19 @@
 	<div id="mainContainer" class="container">
 		<div class="text-center">
 			<div>Her er ting: {{ting}}</div>
-			<div>Spiller {{file.name}}</div>
-			<div style="font-size: 2em">
-			 <audio controls autoplay data-ng-bind-html="audioSource">
-			 	
- 			 </audio>
+			<div data-ng-show="file">
+				<div>Spiller {{file.name}}</div>
+				<div >
+				 <audio controls autoplay data-ng-bind-html="audioSource">
+				 	
+	 			 </audio>
+				</div>
+				<div>Hvis du ønsker å spille av fila i et annet program, så kan du kopiere
+				<a data-ng-href="{{audioUrl}}"> denne linken</a></div>
 			</div>
-			<div>Hvis du ønsker å spille av fila i et annet program, så kan du kopiere
-			<a data-ng-href="{{audioUrl}}"> denne linken</a></div>
+			<div data-ng-hide="file">
+				<div>Ingen fil angitt. denne siden kan ikke bokmerkes, eller sendes som url.</div>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="../../../script/vendors/bootstrap.min.js"></script>
