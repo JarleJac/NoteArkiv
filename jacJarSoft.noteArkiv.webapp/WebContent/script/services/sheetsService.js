@@ -34,8 +34,8 @@ angular.module('notearkiv').factory('Sheets', function SheetsFactory($http, $win
 		},
 		openFile : function(file) {
 			var newWindow = $window.open("templates/pages/root/audio.html","_blank");
-			newWindow.file = file;
 			newWindow.authInfo = encodeURIComponent(AuthToken.getAuthToken());;
+			newWindow.file = file;
 		}
 	}
 }

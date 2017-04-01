@@ -12,50 +12,30 @@
 <body data-ng-controller="audioController">
 	<div id="mainContainer" class="container">
 		<div class="text-center">
-			<div>Her er ting: {{ting}}</div>
+<!-- 			<div>Her er ting: {{ting}}</div> -->
 			<div data-ng-show="file">
-				<div>Spiller {{file.name}}</div>
-				<div >
-				 <audio controls autoplay data-ng-bind-html="audioSource">
-				 	
-	 			 </audio>
+				<div class="col-lg-4 col-md-3 col-sm-2 hidden-xs">&nbsp;</div>
+				<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+					<div class="audio-label">Spiller {{file.name}}</div>
+					<div class=audio>
+					 <audio controls autoplay data-ng-bind-html="audioSource">
+					 	
+		 			 </audio>
+					</div>
+					<div>Hvis du ønsker å spille av fila i et annet program, så kan du kopiere
+					<a data-ng-href="{{audioUrl}}"> denne linken</a></div>
 				</div>
-				<div>Hvis du ønsker å spille av fila i et annet program, så kan du kopiere
-				<a data-ng-href="{{audioUrl}}"> denne linken</a></div>
+				<div class="col-lg-4 col-md-3 col-sm-2 hidden-xs">&nbsp;</div>
 			</div>
-			<div data-ng-hide="file">
+			<div data-ng-show="noFile">
 				<div>Ingen fil angitt. denne siden kan ikke bokmerkes, eller sendes som url.</div>
+			</div>
+			<div data-ng-show="msg">
+				<div>{{msg}}</div>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="../../../script/vendors/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../../../script/modules/notearkivAudio.js"></script>
-<!-- 	<script type="text/javascript" src="script/services/stateService.js"></script>
-	<script type="text/javascript" src="script/services/authService.js"></script>
-	<script type="text/javascript" src="script/services/authTokenService.js"></script>
-	<script type="text/javascript" src="script/services/searchSheetsService.js"></script>
-	<script type="text/javascript" src="script/services/sheetsService.js"></script>
-	<script type="text/javascript" src="script/services/voicesService.js"></script>
-	<script type="text/javascript" src="script/services/tagsService.js"></script>
-	<script type="text/javascript" src="script/services/simpleDlgService.js"></script>
-	<script type="text/javascript" src="script/services/usersService.js"></script>
-	<script type="text/javascript" src="script/services/listsService.js"></script>
-	<script type="text/javascript" src="script/services/adminService.js"></script>
-	<script type="text/javascript" src="script/controllers/mainController.js"></script>
-	<script type="text/javascript" src="script/controllers/editSheetController.js"></script>
-	<script type="text/javascript" src="script/controllers/logonController.js"></script>
-	<script type="text/javascript" src="script/controllers/changepwController.js"></script>
-	<script type="text/javascript" src="script/controllers/searchController.js"></script>
-	<script type="text/javascript" src="script/controllers/userProfileController.js"></script>
-	<script type="text/javascript" src="script/controllers/usersController.js"></script>
-	<script type="text/javascript" src="script/controllers/userController.js"></script>
-	<script type="text/javascript" src="script/controllers/listsController.js"></script>
-	<script type="text/javascript" src="script/controllers/listController.js"></script>
-	<script type="text/javascript" src="script/controllers/listSearchController.js"></script>
-	<script type="text/javascript" src="script/controllers/sysadminutilController.js"></script>
-	<script type="text/javascript" src="script/directives/sheetsList.js"></script>
-	<script type="text/javascript" src="script/directives/advancedSearch.js"></script>
-	<script type="text/javascript" src="script/dialogs/simpleConfirmDlg.js"></script>
- -->
  </body>
 </html>

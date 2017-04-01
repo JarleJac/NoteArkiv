@@ -175,6 +175,17 @@ div.messageBox {
     padding: 10px;
     box-shadow: 10px 10px 5px #888888;
 }
+div.audio-label {
+	color: #46ba4e;
+	font-weight: bold;
+}
+div.audio {
+	background-color: #e6eeff;
+}
+audio {
+ 	margin-bottom: 10px;
+ 	margin-top: 10px;
+}
 form.main {
 	background-color: #e6eeff;
 	border-style: solid;
