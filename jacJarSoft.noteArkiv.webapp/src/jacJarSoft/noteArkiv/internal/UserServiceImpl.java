@@ -28,7 +28,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 	@Override
 	public Response changePassword(String userNo, ChangePassword param) {
-		if (!param.getUser().equals(userNo))
+		if (!param.getUser().equalsIgnoreCase(userNo))
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 
 		return runWithTransaction(this::internalChangePassword, param);
@@ -36,7 +36,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 	}
 	private Response internalChangePassword(EntityManager em, ChangePassword param) {
 		User user = null;
-		if (getCurrentUser().equals(param.getUser())) {
+		if (getCurrentUser().equalsIgnoreCase(param.getUser())) {
 			User userLogonInfo = getUserLogonInfo(param);
 			user = userDao.logon(userLogonInfo);
 		}

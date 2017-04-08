@@ -30,7 +30,7 @@ public class User extends AbstractEntity{
 		return no;
 	}
 	public void setNo(String no) {
-		this.no = no;
+		this.no = no.toLowerCase();
 	}
 	public String getName() {
 		return name;

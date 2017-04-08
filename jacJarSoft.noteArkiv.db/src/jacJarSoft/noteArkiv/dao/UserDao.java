@@ -27,7 +27,7 @@ public class UserDao extends AbstractDao {
 	}
 	public User getUser(String userNo) {
 		
-		User user = getEntityManager().find(User.class, userNo);
+		User user = getEntityManager().find(User.class, userNo.toLowerCase());
 		return user;
 	}
 	public List<User> getUsers() {
