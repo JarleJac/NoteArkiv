@@ -20,7 +20,7 @@ public class RangeBasedSheetFileStreamer implements StreamingOutput {
 	private int to;
 
 	private RandomAccessFile raf;
-	private final static int chunk_size = 1024 * 1024 * 3;
+	private final static int chunk_size = 1024 * 1024 * 20;
     final byte[] buf = new byte[chunk_size];
 
 	private String responseRange;
