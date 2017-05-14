@@ -13,8 +13,15 @@ public class SQLLiteUtil {
 	        if (args() != 2) {
 	            throw new SQLException("Contains(t1,t2): Invalid argument count. Requires 2, but found " + args());
 	        }
-            String testValue = value_text(0).toLowerCase();
-            String isLike = value_text(1).toLowerCase();
+            String testValue = value_text(0);
+            String isLike = value_text(1);
+            if (testValue == null || isLike == null)
+            {
+            	result(0);
+            	return;
+            }
+			testValue = testValue.toLowerCase();
+			isLike = isLike.toLowerCase();
             
             if (testValue.contains(isLike)) {
                 result(1);
