@@ -45,3 +45,12 @@ CREATE TABLE IF NOT EXISTS note_files
              );
 insert into note_files select note_file_id, note_id, file_name, description, file_size, datetime(registered_date /1000, 'unixepoch' ), registered_by  from note_files_old
 
+
+select 	substr(substr(file_name, length(file_name)-5), instr(substr(file_name, length(file_name)-5), '.')) as ext, count(*) 
+	from note_files
+	group by ext;
+
+select 	substr(substr(file_name, length(file_name)-5), instr(substr(file_name, length(file_name)-5), '.')) as ext, * 
+	from note_files
+	where  ext in ('.mid', '.wma')
+	
