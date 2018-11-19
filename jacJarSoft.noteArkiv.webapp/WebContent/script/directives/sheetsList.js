@@ -37,8 +37,8 @@ angular.module('notearkiv').directive('sheetsList', ['Sheets', '$timeout', 'Auth
 		event.stopPropagation();
 	};
 
-	scope.openFile = function(file) {
-		Sheets.openFile(file);
+	scope.openFile = function(file, sheet) {
+		Sheets.openFile(file, sheet);
 	};
 
 	var getFiles = function(sheetData) {

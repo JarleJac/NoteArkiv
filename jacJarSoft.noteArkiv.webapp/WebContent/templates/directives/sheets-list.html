@@ -82,7 +82,7 @@
 								<span class="glyphicon glyphicon-download"></span> Last ned</a>	
 							<a data-ng-hide="file.html5Audio" href="rest/noteservice/notefile/{{file.fileId}}?authInfo={{authInfo}}" target="_blank" class="btn btn-primary btn-xs" role="button">
 								<span class="glyphicon glyphicon-open-file"></span> Åpne</a>	
-							<button data-ng-show="file.html5Audio" class="btn btn-primary btn-xs" data-ng-click="openFile(file)">
+							<button data-ng-show="file.html5Audio" class="btn btn-primary btn-xs" data-ng-click="openFile(file,sheetData.sheet)">
 								<span class="glyphicon glyphicon-play"></span> Spill av
 							</button>
 						</div>

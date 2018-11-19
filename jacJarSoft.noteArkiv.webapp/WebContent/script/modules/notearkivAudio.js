@@ -3,42 +3,26 @@
  */
 angular.module('notearkivAudio', [ ])
 .controller('audioController', function($rootScope, $scope, $window, $sce, $timeout) {
-	$scope.ting = "Ting fra controller12";
-	$scope.retries=0;
 	$scope.noFile=false;
 	var initFile = function() {
-  		$scope.file = $window.file;
+		var transferObject = $window.opener == null ? undefined : $window.opener.transferObject;
 
-  		if ($scope.file !== undefined ) {
+  		if (transferObject !== undefined ) {
+  	  		$scope.file = transferObject.file;
+  	  		$scope.sheet = transferObject.sheet;
   			$rootScope.title = $scope.file.name;
-  			$scope.authInfo = $window.authInfo;
+  			$scope.authInfo = transferObject.auth;
   			$scope.audioUrl= '../../../rest/noteservice/notefile/' + $scope.file.fileId + '/media?authInfo=' + $scope.authInfo;
+  			//Mime type audio/m4a did not work
+  			//var src = '<source src="' + $scope.audioUrl + '" type="' + $scope.file.mimeType + '">'; 
   			var src = '<source src="' + $scope.audioUrl + '" type="audio/mpeg">';
   			$scope.audioSource = $sce.trustAsHtml(src);
+  		} else {
+			$scope.noFile=true;
   		}
 	}
-	var retryInitFile = function() {
-		$scope.retries += 1;
-		$scope.msg = "Vent litt " + $scope.retries;
-		initFile();
-		if ($scope.file === undefined) {
-			if ($scope.retries < 6) {
-				$timeout(function(){ 
-					retryInitFile();
-			  	}, 1000);
-			} else {
-				$scope.noFile=true;
-				$scope.msg = undefined;
-			}
-		} else {
-			$scope.msg = undefined;
-		}
-		
-	}
+
 	initFile();
-	if ($scope.file === undefined) {
-		retryInitFile(); //Internet explorer need some time to get the data to/from $window
-	}
 		
 })
 ;
