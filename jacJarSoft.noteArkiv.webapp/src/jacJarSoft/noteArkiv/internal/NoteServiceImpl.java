@@ -1,14 +1,18 @@
 package jacJarSoft.noteArkiv.internal;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.activation.DataHandler;
 import javax.activation.MimetypesFileTypeMap;
 import javax.persistence.EntityManager;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -16,6 +20,7 @@ import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import jacJarSoft.noteArkiv.api.SheetFile;
 import jacJarSoft.noteArkiv.api.SheetParam;
 import jacJarSoft.noteArkiv.api.SheetSearchList;
 import jacJarSoft.noteArkiv.api.SheetSearchParam;
@@ -86,7 +91,15 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	@Override
 	public Response getSheetFiles(long sheetId) {
 		List<NoteFile> list = sheetFileDao.getSheetFiles(sheetId);
-		return Response.ok(list).build();
+		List<SheetFile> retList = list
+				.stream()
+				.map((file)-> {
+					SheetFile sheetFile = new SheetFile(file);
+					sheetFile.setMimeType(getMimeType(file));
+					return sheetFile;
+				})
+				.collect(Collectors.toList()); 
+		return Response.ok(retList).build();
 	}
 
 	@Override
@@ -161,6 +174,46 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	public Response downLoadFile(long fileId) {
 		return getFileData(fileId, true);
 	}
+	@Override
+	public Response returnMediaHeader(String range, long fileId) {
+		NoteFile noteFile = sheetFileDao.getNoteFile(fileId);
+		return Response.ok().status(206).header(HttpHeaders.CONTENT_LENGTH, noteFile.getFileSize()).build();
+	}
+
+	@Override
+	public Response returnMedia(String range, long fileId) {
+		NoteFile noteFile = sheetFileDao.getNoteFile(fileId);
+		File sheetFileDataAsFile = sheetFileDao.getSheetFileDataAsFile(noteFile);
+
+		if (range == null)
+			return streamMedia(noteFile, sheetFileDataAsFile);
+		else
+			return streamRangeBasedMedia(range, noteFile, sheetFileDataAsFile);
+	}
+
+	private Response streamRangeBasedMedia(String range, NoteFile noteFile, File sheetFileDataAsFile) {
+		RangeBasedSheetFileStreamer streamer = new RangeBasedSheetFileStreamer(range, noteFile, sheetFileDataAsFile);
+        Response.ResponseBuilder res = Response.ok(streamer)
+        		.status(206)
+        		.type(getMimeType(noteFile))
+                .header("Accept-Ranges", "bytes")
+                .header("Content-Range", streamer.getResponseRange())
+                .header(HttpHeaders.CONTENT_LENGTH, streamer.getLenth())
+	            .header(HttpHeaders.CONTENT_DISPOSITION, getContentDisposition(noteFile, false))
+                .header(HttpHeaders.LAST_MODIFIED, new Date(sheetFileDataAsFile.lastModified()));
+        return res.build();		
+	}
+
+	private Response streamMedia(NoteFile noteFile, File sheetFileDataAsFile) {
+		SheetFileStreamer streamer = new SheetFileStreamer(noteFile, sheetFileDataAsFile);
+        Response.ResponseBuilder res = Response.ok(streamer)
+        		.type(getMimeType(noteFile))
+                .header(HttpHeaders.CONTENT_LENGTH, streamer.getLenth())
+	            .header(HttpHeaders.CONTENT_DISPOSITION, getContentDisposition(noteFile, false))
+                .header(HttpHeaders.LAST_MODIFIED, new Date(sheetFileDataAsFile.lastModified()));
+        return res.build();		
+	}
+
 	private Response getFileData(long fileId, boolean download) {
 		NoteFile noteFile = sheetFileDao.getNoteFile(fileId);
 		if (null == noteFile)
@@ -173,13 +226,9 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 			logger.log(Level.SEVERE, msg, e);
 			throw new RuntimeException(msg, e);
 		}
-//		NoteFileData fileData = sheetFileDao.getFileData(fileId);
-//		if (null == fileData)
-//			throw new ValidationErrorException("Finner ikke data for fil " + noteFile.getName());
 	    String mediaType = getMimeType(noteFile);
-	    String contentDisposition = getContentDisposition(noteFile, download);
 	    return Response.ok(bytes, mediaType)
-	            .header("Content-Disposition", contentDisposition)
+	            .header("Content-Disposition", getContentDisposition(noteFile, download))
 	            .header("Content-Length", bytes.length)
 	            .build();
 	

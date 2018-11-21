@@ -80,8 +80,11 @@
 						<div class="col-sm-3 col-xs-6">
 							<a href="rest/noteservice/notefile/{{file.fileId}}/download?authInfo={{authInfo}}" class="btn btn-primary btn-xs" role="button">
 								<span class="glyphicon glyphicon-download"></span> Last ned</a>	
-							<a href="rest/noteservice/notefile/{{file.fileId}}?authInfo={{authInfo}}" target="_blank" class="btn btn-primary btn-xs" role="button">
+							<a data-ng-hide="file.html5Audio" href="rest/noteservice/notefile/{{file.fileId}}?authInfo={{authInfo}}" target="_blank" class="btn btn-primary btn-xs" role="button">
 								<span class="glyphicon glyphicon-open-file"></span> Åpne</a>	
+							<button data-ng-show="file.html5Audio" class="btn btn-primary btn-xs" data-ng-click="openFile(file,sheetData.sheet)">
+								<span class="glyphicon glyphicon-play"></span> Spill av
+							</button>
 						</div>
 					</div>
 				</div>

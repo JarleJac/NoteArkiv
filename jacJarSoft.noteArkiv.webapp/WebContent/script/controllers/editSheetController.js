@@ -233,5 +233,8 @@ angular.module('notearkiv').controller('editSheetController',
 	}
 	$scope.newFile = function() {
 	}
+	$scope.openFile = function(file) {
+		Sheets.openFile(file, $scope.sheet);
+	}
 })
 ;

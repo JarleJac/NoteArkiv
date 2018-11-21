@@ -3,7 +3,6 @@ package jacJarSoft.noteArkiv.model;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.Date;
 
 import javax.persistence.MappedSuperclass;

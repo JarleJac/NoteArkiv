@@ -4,6 +4,8 @@ import javax.jws.WebService;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HEAD;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -54,6 +56,17 @@ public interface NoteService {
 	@Produces({MediaType.APPLICATION_OCTET_STREAM})
 	@Path("/notefile/{fileId}/download")
 	public Response downLoadFile(@PathParam("fileId") long fileId);
+    
+	@HEAD
+	@Produces({MediaType.APPLICATION_OCTET_STREAM})
+	@Path("/notefile/{fileId}/media")
+	public Response returnMediaHeader(@HeaderParam("Range") String range, @PathParam("fileId") long fileId);
+    
+	@GET
+	@Produces({MediaType.APPLICATION_OCTET_STREAM})
+	@Path("/notefile/{fileId}/media")
+	public Response returnMedia(@HeaderParam("Range") String range, @PathParam("fileId") long fileId);
+
 	@GET
 	@Produces({MediaType.APPLICATION_OCTET_STREAM})
 	@Path("/notefile/{fileId}")

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html data-ng-app="notearkivAudio">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/notearkiv.css" />
+	<script type="text/javascript" src="../../../script/vendors/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../../../script/vendors/angular.min.js"></script>
+	<title data-ng-bind="title">NoteArkiv</title>
+</head>
+<body data-ng-controller="audioController">
+	<div id="mainContainer" class="container">
+		<div class="text-center">
+<!-- 			<div>Her er ting: {{ttt}}</div> -->
+			<div data-ng-show="file">
+				<div class="col-lg-3 col-md-3 col-sm-2 hidden-xs">&nbsp;</div>
+				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+					<div class="listHeading">{{sheet.title}}</div>
+					<div class="audio-label">Spiller {{file.name}}</div>
+					<div class=audio>
+					 <audio controls autoplay data-ng-bind-html="audioSource">
+					 	
+		 			 </audio>
+					</div>
+					<div>Hvis netleseren din ikke klarer å spille lydfilen, kan du laste den ned og prøve å spille den i et annet program.
+					Bruk Last ned knappen på forrige side. Eventuellt så kan du strømme fila i en annet program ved å kopiere
+					<a data-ng-href="{{audioUrl}}"> denne linken</a></div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-2 hidden-xs">&nbsp;</div>
+			</div>
+			<div data-ng-show="noFile">
+				<div>Ingen fil angitt. denne siden kan ikke bokmerkes, eller sendes som url.</div>
+			</div>
+			<div data-ng-show="msg">
+				<div>{{msg}}</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../../../script/vendors/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../../script/modules/notearkivAudio.js"></script>
+ </body>
+</html>

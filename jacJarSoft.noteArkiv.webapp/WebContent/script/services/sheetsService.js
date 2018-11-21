@@ -1,7 +1,7 @@
 /**
  * 
  */
-angular.module('notearkiv').factory('Sheets', function SheetsFactory($http) {
+angular.module('notearkiv').factory('Sheets', function SheetsFactory($http, $window, AuthToken) {
 	return {
 		getFiles : function(sheetId) {
 			return $http({method: 'GET', url : 'rest/noteservice/note/' + sheetId +'/file' })
@@ -31,6 +31,10 @@ angular.module('notearkiv').factory('Sheets', function SheetsFactory($http) {
 					registeredBy: file.registeredBy,
 			}
 			return $http({method: 'PUT', url : 'rest/noteservice/notefile/' + file.fileId, data: fileToSave});
+		},
+		openFile : function(file, sheet) {
+			$window.transferObject = { auth: encodeURIComponent(AuthToken.getAuthToken()), file: file, sheet: sheet}
+			var newWindow = $window.open("templates/pages/root/audio.html","_blank");
 		}
 	}
 }

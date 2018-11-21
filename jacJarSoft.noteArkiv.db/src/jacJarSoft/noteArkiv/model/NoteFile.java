@@ -28,6 +28,15 @@ public class NoteFile extends RegisteredAwareEntity {
     private String description;
 	@Column(name="FILE_SIZE")
 	private long fileSize;
+	public NoteFile() {
+	}
+	protected NoteFile(NoteFile other) {
+		this.description = other.description;
+		this.fileId = other.fileId;
+		this.fileSize = other.fileSize;
+		this.name = other.name;
+		this.noteId = other.noteId;
+	}
 	public long getFileId() {
 		return fileId;
 	}
