@@ -8,7 +8,12 @@ angular.module('notearkivAudio', [ ])
 		var transferObject = $window.opener == null ? undefined : $window.opener.transferObject;
 
   		if (transferObject !== undefined ) {
-  	  		$scope.file = transferObject.file;
+  			if (transferObject.appSettings.backgroundImageUrl != null) {
+  				var url = "url(../../../" + transferObject.appSettings.backgroundImageUrl + ")"
+  				$('body').css('background-image', url);
+  			}
+
+  			$scope.file = transferObject.file;
   	  		$scope.sheet = transferObject.sheet;
   			$rootScope.title = $scope.file.name;
   			$scope.authInfo = transferObject.auth;

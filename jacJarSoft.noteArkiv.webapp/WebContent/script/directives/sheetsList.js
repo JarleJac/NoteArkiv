@@ -7,7 +7,7 @@ angular.module('notearkiv').directive('sheetsList', ['Sheets', '$timeout', 'Auth
   function link(scope, element, attrs) {
 	scope.selectable = attrs.selectable === undefined ? false : true;
 	scope.authInfo = encodeURIComponent(AuthToken.getAuthToken());
-	  
+	scope.appSettings = scope.$root.appSettings;
 	scope.hasResult = function() {
 		return scope.searchListData.sheetList !== undefined;
 	}
@@ -38,7 +38,7 @@ angular.module('notearkiv').directive('sheetsList', ['Sheets', '$timeout', 'Auth
 	};
 
 	scope.openFile = function(file, sheet) {
-		Sheets.openFile(file, sheet);
+		Sheets.openFile(file, sheet, scope.appSettings);
 	};
 
 	var getFiles = function(sheetData) {

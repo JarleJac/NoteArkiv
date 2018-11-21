@@ -32,8 +32,12 @@ angular.module('notearkiv').factory('Sheets', function SheetsFactory($http, $win
 			}
 			return $http({method: 'PUT', url : 'rest/noteservice/notefile/' + file.fileId, data: fileToSave});
 		},
-		openFile : function(file, sheet) {
-			$window.transferObject = { auth: encodeURIComponent(AuthToken.getAuthToken()), file: file, sheet: sheet}
+		openFile : function(file, sheet, appSettings) {
+			$window.transferObject = { 
+					auth: encodeURIComponent(AuthToken.getAuthToken()),
+					file: file, 
+					sheet: sheet, 
+					appSettings: appSettings}
 			var newWindow = $window.open("templates/pages/root/audio.html","_blank");
 		}
 	}

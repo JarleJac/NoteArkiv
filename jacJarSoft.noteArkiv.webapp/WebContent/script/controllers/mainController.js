@@ -18,6 +18,7 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 		$http({method: 'GET', url : 'rest/appservice/getsystemInfo'})
 		.then(function successCallback(result) {
 			$scope.appInfo = result.data;
+			$rootScope.appSettings = $scope.appInfo.appSettings;
 			if ($scope.appInfo.appSettings.backgroundImageUrl != null) {
 				var url = "url(" + $scope.appInfo.appSettings.backgroundImageUrl + ")"
 				$('body').css('background-image', url);
