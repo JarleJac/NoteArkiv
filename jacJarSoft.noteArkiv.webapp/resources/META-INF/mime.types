@@ -1210,10 +1210,9 @@ audio/basic					au snd
 # audio/l24
 # audio/l8
 # audio/lpc
-audio/m4a                   m4a
 audio/midi					mid midi kar rmi
 # audio/mobile-xmf
-audio/mp4					mp4a
+audio/mp4					mp4a m4a
 # audio/mp4a-latm
 # audio/mpa
 # audio/mpa-robust

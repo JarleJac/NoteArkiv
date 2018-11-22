@@ -25,7 +25,7 @@ public class SheetFile extends NoteFile {
 	private void calcIsHtml5Audio() {
 		isHtml5Audio = (mimeType.equals("audio/mpeg") ||
 						mimeType.equals("audio/ogg") ||
-						mimeType.equals("audio/m4a") ||
+						mimeType.equals("audio/mp4") ||
 						mimeType.equals("audio/wav"));
 	}
 	public boolean isHtml5Audio() {

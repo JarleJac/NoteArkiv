@@ -18,9 +18,7 @@ angular.module('notearkivAudio', [ ])
   			$rootScope.title = $scope.file.name;
   			$scope.authInfo = transferObject.auth;
   			$scope.audioUrl= '../../../rest/noteservice/notefile/' + $scope.file.fileId + '/media?authInfo=' + $scope.authInfo;
-  			//Mime type audio/m4a did not work
-  			//var src = '<source src="' + $scope.audioUrl + '" type="' + $scope.file.mimeType + '">'; 
-  			var src = '<source src="' + $scope.audioUrl + '" type="audio/mpeg">';
+  			var src = '<source src="' + $scope.audioUrl + '" type="' + $scope.file.mimeType + '">'; 
   			$scope.audioSource = $sce.trustAsHtml(src);
   		} else {
 			$scope.noFile=true;
