@@ -5,6 +5,14 @@
 	version="2.1">
 	<persistence-unit name="noteArkivDb" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>jacJarSoft.noteArkiv.model.Note</class>	
+		<class>jacJarSoft.noteArkiv.model.NoteFile</class>	
+		<class>jacJarSoft.noteArkiv.model.NoteFileData</class>	
+		<class>jacJarSoft.noteArkiv.model.SheetList</class>	
+		<class>jacJarSoft.noteArkiv.model.SheetListNote</class>	
+		<class>jacJarSoft.noteArkiv.model.Tag</class>	
+		<class>jacJarSoft.noteArkiv.model.User</class>	
+		<class>jacJarSoft.noteArkiv.model.Voice</class>	
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 	</persistence-unit>
 </persistence>
