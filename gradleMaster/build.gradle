@@ -6,6 +6,14 @@ ext {
 		'servlet':		[
 			'javax.servlet:javax.servlet-api:3.1.0'
 		],
+		'jaxb':		[
+			'javax.xml.bind:jaxb-api:2.3.1',
+			'com.sun.xml.bind:jaxb-core:2.3.1',
+			'com.sun.xml.bind:jaxb-impl:2.3.1'
+		],
+		'jaxws':		[
+			'com.sun.xml.ws:jaxws-ri:2.3.1'
+		],
 		'mail':		[
 			'javax.mail:mail:1.4.7'
 		],
@@ -51,6 +59,9 @@ subprojects {
 	apply plugin: 'java'
 	apply plugin: 'eclipse'
 	apply plugin: 'eclipse-wtp'
+
+	sourceCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_11
 
 	eclipse.classpath.downloadJavadoc = true;
 	
