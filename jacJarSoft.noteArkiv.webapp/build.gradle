@@ -3,7 +3,7 @@ apply plugin: 'war'
 project.webAppDirName = 'WebContent'
 
 dependencies {
-	compile project(':jacJarSoft.util')
+//	compile project(':jacJarSoft.util')
 	compile project(':jacJarSoft.noteArkiv.base')
 	compile project(':jacJarSoft.noteArkiv.db')
 	compile libraries.cxf
@@ -22,6 +22,12 @@ task buildTest(type: War) {
 	manifest.attributes provider: providerName
 	webInf { from 'configurations/test' } 
 	archiveName = "notearkiv-test##${version}.war"
+}
+task buildTestUnix(type: War) {
+	manifest.attributes provider: providerName
+	webInf { from 'configurations/unix-test' } 
+	archiveName = "notearkiv-test##${version}.war"
+	destinationDir = file("$destinationDir/unix")
 }
 
 task buildProd(type: War) {
