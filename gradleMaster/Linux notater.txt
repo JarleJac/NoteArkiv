@@ -1,0 +1,65 @@
+sudo apt update
+
+sudo apt-get install openssh-server -y
+//Hvis du skal endre port
+sudo nano /etc/ssh/sshd_config
+sudo service ssh restart
+
+//Hvis du har firewall aktiv
+sudo ufw allow OpenSSH
+
+sudo apt install openjdk-8-jdk
+
+
+From https://www.digitalocean.com/community/tutorials/install-tomcat-9-ubuntu-1804
+//Create group and user for tomcat
+sudo groupadd tomcat
+sudo useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
+
+//Install curl (if needed)
+sudo apt install curl
+
+//Download tomcat
+curl -O http://apache.uib.no/tomcat/tomcat-9/v9.0.13/bin/apache-tomcat-9.0.13.tar.gz
+
+//unpack Tomcat
+sudo mkdir /opt/tomcat
+sudo tar xzvf apache-tomcat-9*tar.gz -C /opt/tomcat --strip-components=1
+
+//Permissions
+cd /opt/tomcat
+sudo chgrp -R tomcat /opt/tomcat
+sudo chmod -R g+r conf
+sudo chmod g+x conf
+sudo chown -R tomcat webapps/ work/ temp/ logs/
+
+sudo update-java-alternatives -l
+
+//Editer service config og legg inn ting (se url)
+sudo nano /etc/systemd/system/tomcat.service
+
+sudo systemctl daemon-reload
+sudo systemctl start tomcat
+//Sjekk at den kjører
+sudo systemctl status tomcat
+//Enable start at boot
+sudo systemctl enable tomcat
+
+//Husk å legge inn admin bruker for manager-gui og enable manager gui fra andre maskiner
+sudo nano /opt/tomcat/conf/tomcat-users.xml
+sudo nano /opt/tomcat/webapps/manager/META-INF/context.xml (allow="^.*$")
+
+
+
+sudo chown -R jarle test
+sudo chmod -R g+rwx test
+
+pscp -P 8022 D:\Git\NoteArkiv\jacJarSoft.noteArkiv.webapp\build\libs\unix\notearkiv-test##2.2.0.0.war jarle@192.168.0.133:/notearkiv/test
+pscp -P 8022 \\jarle-7\E\RemoteBackup\NoteArkiv2\Database\Notearkiv.db jarle@192.168.0.133:/notearkiv/test/database
+pscp -P 8022 \\jarle-7\E\files.zip jarle@192.168.0.133:/notearkiv/test/
+pscp -P 8022 \\jarle-7\E\RemoteBackup\NoteArkiv2\Files\00845\* jarle@192.168.0.133:/notearkiv/test/files/00845
+
+psftp -P 8022 jarle@192.168.0.133
+
+Overfør med winSCP
+ - Advanced->Environment. UTF-8 enconing for filenames: ON
