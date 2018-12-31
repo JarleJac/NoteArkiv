@@ -23,10 +23,25 @@ task buildTest(type: War) {
 	webInf { from 'configurations/test' } 
 	archiveName = "notearkiv-test##${version}.war"
 }
+
 task buildTestUnix(type: War) {
 	manifest.attributes provider: providerName
 	webInf { from 'configurations/unix-test' } 
 	archiveName = "notearkiv-test##${version}.war"
+	destinationDir = file("$destinationDir/unix")
+}
+
+task buildTjollingTestUnix(type: War) {
+	manifest.attributes provider: providerName
+	webInf { from 'configurations/unix-tjolling-test' } 
+	archiveName = "tjolling-notearkiv-test##${version}.war"
+	destinationDir = file("$destinationDir/unix")
+}
+
+task buildTjollingProdUnix(type: War) {
+	manifest.attributes provider: providerName
+	webInf { from 'configurations/unix-tjolling-prod' } 
+	archiveName = "tjolling-notearkiv##${version}.war"
 	destinationDir = file("$destinationDir/unix")
 }
 

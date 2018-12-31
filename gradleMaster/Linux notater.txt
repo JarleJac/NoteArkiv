@@ -20,7 +20,7 @@ sudo useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
 sudo apt install curl
 
 //Download tomcat
-curl -O http://apache.uib.no/tomcat/tomcat-9/v9.0.13/bin/apache-tomcat-9.0.13.tar.gz
+curl -O http://apache.uib.no/tomcat/tomcat-9/v9.0.14/bin/apache-tomcat-9.0.14.tar.gz
 
 //unpack Tomcat
 sudo mkdir /opt/tomcat
@@ -63,3 +63,23 @@ psftp -P 8022 jarle@192.168.0.133
 
 Overfør med winSCP
  - Advanced->Environment. UTF-8 enconing for filenames: ON
+ 
+ 
+ **********************************************************************
+ sudo systemctl stop nginx
+ sudo nano /etc/nginx/nginx.conf
+ sudo nano /etc/nginx/sites-available/default
+ sudo nano /var/www/html/index.nginx-debian.html
+ 
+ 
+ sudo chown -R ubuntu /notearkiv
+ sudo chgrp -R tomcat /notearkiv
+ sudo chmod -R g+rwx /notearkiv
+ 
+ mkdir -p -v notearkiv/tjolling/test/database
+ mkdir -p -v notearkiv/tjolling/test/files
+ mkdir -p -v notearkiv/tjolling/test/log
+ mkdir -p -v notearkiv/tjolling/prod/database
+ mkdir -p -v notearkiv/tjolling/prod/files
+ mkdir -p -v notearkiv/tjolling/prod/log
+ 
