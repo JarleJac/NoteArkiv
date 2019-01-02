@@ -85,4 +85,5 @@ Overfør med winSCP
  
  
  sudo chown -R ubuntu /backup
+ sudo crontab -e
  
