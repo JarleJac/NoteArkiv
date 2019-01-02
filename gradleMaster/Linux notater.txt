@@ -83,3 +83,6 @@ Overfør med winSCP
  mkdir -p -v notearkiv/tjolling/prod/files
  mkdir -p -v notearkiv/tjolling/prod/log
  
+ 
+ sudo chown -R ubuntu /backup
+ 
