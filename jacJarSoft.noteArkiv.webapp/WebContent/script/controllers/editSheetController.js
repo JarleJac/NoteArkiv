@@ -4,7 +4,7 @@
 
 angular.module('notearkiv').controller('editSheetController', 
 		function($rootScope, $scope, $q, $http,  $routeParams, $location, 
-				Sheets, Voices, Tags, AuthToken, FileUploader, SimpleDlg) {
+				Sheets, Lists, Voices, Tags, AuthToken, FileUploader, SimpleDlg) {
 	$scope.sheetPromise = null;
 	$scope.connectedTags = [];
 	$scope.availableTags = [];
@@ -97,6 +97,7 @@ angular.module('notearkiv').controller('editSheetController',
 		$scope.sheetPromise.then(function successCallback(result) {
 			result.data.sheet.registeredDate = new Date(result.data.sheet.registeredDate);
 			$scope.sheet = result.data.sheet;
+			$scope.inCurrent = result.data.inCurrent
 			getVoices($scope.sheet.voices);
 			getTags($scope.sheet.tags);
 			getFiles($scope.sheet.noteId);
@@ -236,5 +237,19 @@ angular.module('notearkiv').controller('editSheetController',
 	$scope.openFile = function(file) {
 		Sheets.openFile(file, $scope.sheet, $rootScope.appSettings);
 	}
+	$scope.toggleCurrent = function() {
+		if ($scope.inCurrent) {
+			Lists.disconnectFromList(1, $scope.sheet.noteId)
+			.then(function successCallback(result) {
+				$scope.inCurrent = false;
+			})
+		} else {
+			Lists.connectToList(1, $scope.sheet.noteId)
+			.then(function successCallback(result) {
+				$scope.inCurrent = true;
+			})
+		}
+	};
+	
 })
 ;
