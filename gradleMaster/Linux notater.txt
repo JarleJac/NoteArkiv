@@ -40,12 +40,12 @@ sudo nano /etc/systemd/system/tomcat.service
 
 sudo systemctl daemon-reload
 sudo systemctl start tomcat
-//Sjekk at den kjører
+//Sjekk at den kjï¿½rer
 sudo systemctl status tomcat
 //Enable start at boot
 sudo systemctl enable tomcat
 
-//Husk å legge inn admin bruker for manager-gui og enable manager gui fra andre maskiner
+//Husk ï¿½ legge inn admin bruker for manager-gui og enable manager gui fra andre maskiner
 sudo nano /opt/tomcat/conf/tomcat-users.xml
 sudo nano /opt/tomcat/webapps/manager/META-INF/context.xml (allow="^.*$")
 
@@ -61,7 +61,7 @@ pscp -P 8022 \\jarle-7\E\RemoteBackup\NoteArkiv2\Files\00845\* jarle@192.168.0.1
 
 psftp -P 8022 jarle@192.168.0.133
 
-Overfør med winSCP
+OverfÃ¸r med winSCP
  - Advanced->Environment. UTF-8 enconing for filenames: ON
  
  
