@@ -81,4 +81,9 @@ public class FileUtil {
 		Path filePath = Paths.get(path.toString(), fileName);
 		Files.delete(filePath);
 	}
+	public static void renameFile(Path path, String fileName, String newFileName) throws IOException {
+		Path filePath = Paths.get(path.toString(), fileName);
+		Path newFilePath = Paths.get(path.toString(), newFileName);
+		Files.move(filePath, newFilePath);
+	}
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import jacJarSoft.noteArkiv.db.util.SheetFileUtil;
 import jacJarSoft.noteArkiv.model.NoteFile;
+import jacJarSoft.util.ExceptionUtil;
 import jacJarSoft.util.FileUtil;
 
 @Component
@@ -68,8 +69,19 @@ public class SheetFileDao extends AbstractDao {
 //		});
 //	}
 	public NoteFile updateFile(NoteFile file) {
+		NoteFile oldFile = getNoteFile(file.getFileId());
+		if (!oldFile.getName().equals(file.getName()))
+			renameFileOnDisk(oldFile, file);
 		getEntityManager().merge(file);
 		return file;
+	}
+	private void renameFileOnDisk(NoteFile oldFile, NoteFile file) {
+		try {
+			FileUtil.renameFile(getFilePath(file), SheetFileUtil.getFileName(oldFile),SheetFileUtil.getFileName(file));
+		} catch (IOException e) {
+			throw ExceptionUtil.getRuntimeException(e);
+		}
+		
 	}
 	public void insertSheetFileData(NoteFile sheetFile, byte[] bytes) throws FileNotFoundException, IOException {
 		FileUtil.writeBytesToFile(getFilePath(sheetFile), SheetFileUtil.getFileName(sheetFile), bytes);
