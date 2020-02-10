@@ -87,3 +87,9 @@ Overfør med winSCP
  sudo chown -R ubuntu /backup
  sudo crontab -e
  
+ memory etc:
+ htop eller top
+ 
+ Disk bruk:
+ df
+ 
