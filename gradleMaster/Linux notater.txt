@@ -136,4 +136,15 @@ Overfør med winSCP
  /etc/nginx/sites-available/default
  
  Nginx site jacjarsoft.gotdns.org
+ ********************************************************
  /etc/nginx/sites-available/jacjarsoft.gotdns.org
+ 
+ Kopiere over ny versjon
+ ***************************
+ Winscp til /notearkiv/tjolling/test(prod)
+ 
+ i putty:
+ sudo -s
+ cp /notearkiv/tjolling/test/tjolling-notearkiv-test##2.2.2.0.war /opt/tomcat9031/webapps/
+ exit
+ 
