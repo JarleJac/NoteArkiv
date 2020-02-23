@@ -1,5 +1,9 @@
+Upgrading ubuntu
+*****************
 sudo apt update
+sudo apt upgrade
 
+*************************
 sudo apt-get install openssh-server -y
 //Hvis du skal endre port
 sudo nano /etc/ssh/sshd_config
@@ -66,12 +70,16 @@ Overfør med winSCP
  
  
  **********************************************************************
+ https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04
  sudo systemctl stop nginx
  sudo nano /etc/nginx/nginx.conf
  sudo nano /etc/nginx/sites-available/default
  sudo nano /var/www/html/index.nginx-debian.html
  
+ Lage link fra sites-available til sites-enabled
+ sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
  
+ ********************************************************************************
  sudo chown -R ubuntu /notearkiv
  sudo chgrp -R tomcat /notearkiv
  sudo chmod -R g+rwx /notearkiv
@@ -93,3 +101,39 @@ Overfør med winSCP
  Disk bruk:
  df
  
+ Når man skal inn i kataloger man ikke har tilgang til
+ sudo -s
+ "gjøre ting"
+ exit
+ 
+ **********************************************************************
+ Konfig på TjoellingSangNotearkiv på Amazone lightsail
+ **********************************************************************
+ Tomcat installasjon 1
+ **********************
+ katalog /opt/tomcat
+ Versjon 9.0.14
+ Porter 8005,8080,8443 (./conf/server.xml)
+ Service config: /etc/systemd/system/tomcat.service
+ Default config: /etc/default/tomcat (brukt i service config)
+ Java: /usr/lib/jvm/java-1.8.0-openjdk-amd64
+ 
+ Tomcat installasjon 2
+ **********************
+ Katalog: /opt/tomcat9031
+ Versjon: 9.0.31 
+ Porter 9005,9080,9443 (./conf/server.xml)
+ Service config: /etc/systemd/system/tomcat9031.service
+ Default config: /etc/default/tomcat9031 (brukt i service config)
+ Java: /usr/lib/jvm/java-1.11.0-openjdk-amd64
+ 
+ nginx installasjon
+ *********************
+ /etc/nginx/nginx.conf
+ 
+ Nginx site default (Notearkiv test/prod for tjølling SF)
+ ********************************************************
+ /etc/nginx/sites-available/default
+ 
+ Nginx site jacjarsoft.gotdns.org
+ /etc/nginx/sites-available/jacjarsoft.gotdns.org
