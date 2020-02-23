@@ -7,15 +7,18 @@ ext {
 			'javax.servlet:javax.servlet-api:4.0.1'
 		],
 		'jaxb':		[
-			'javax.xml.bind:jaxb-api:2.3.1',
-			'org.glassfish.jaxb:jaxb-core:2.3.0.1',
-			'org.glassfish.jaxb:jaxb-runtime:2.3.0.1'
+			'jakarta.xml.bind:jakarta.xml.bind-api:2.3.2',
+			'org.glassfish.jaxb:jaxb-runtime:2.3.2'
 		],
 		'json':		[
 			'javax.json:javax.json-api:1.1.4'
 		],
 		'jaxws':		[
-			'com.sun.xml.ws:jaxws-rt:2.3.1'
+			'jakarta.xml.ws:jakarta.xml.ws-api:2.3.2',
+			'com.sun.xml.ws:jaxws-rt:2.3.2'
+		],
+		'jaf':		[
+			'com.sun.activation:javax.activation:1.2.0'
 		],
 		'mail':		[
 			'javax.mail:mail:1.4.7'
