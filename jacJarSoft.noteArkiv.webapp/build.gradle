@@ -3,7 +3,7 @@ apply plugin: 'war'
 project.webAppDirName = 'WebContent'
 
 dependencies {
-	compile project(':jacJarSoft.util')
+	//compile project(':jacJarSoft.util')
 	compile project(':jacJarSoft.noteArkiv.base')
 	compile project(':jacJarSoft.noteArkiv.db')
 	compile libraries.cxf
