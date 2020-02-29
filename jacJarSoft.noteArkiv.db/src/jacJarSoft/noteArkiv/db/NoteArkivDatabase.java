@@ -70,6 +70,8 @@ public class NoteArkivDatabase {
 				} else {
 					if (version.getMajor() < 2) 
 						upgradeFromVersion1(connection);
+					if (version.getMajor() == 2 & version.getMinor() < 3)
+						upgradeFromVersion2_2(connection);
 //					if (version.getMajor() == 2 & version.getMinor() < 1)
 //						upgrateFromVersion2_0(connection);
 				}
@@ -87,6 +89,7 @@ public class NoteArkivDatabase {
 		return null;
 	}
 
+
 	/**
 	 * This method is created to be able to execute updates to db 
 	 * where the version of the db is the same as the version of the app.
@@ -95,7 +98,7 @@ public class NoteArkivDatabase {
 	 * @throws SQLException 
 	 */
 	private void doTemporatyrUpgrades(Connection connection) throws SQLException {
-		extractFileDataIfNeeded(connection);
+		//extractFileDataIfNeeded(connection);
 	}
 
 	private void extractFileDataIfNeeded(Connection connection) throws SQLException {
@@ -180,6 +183,9 @@ public class NoteArkivDatabase {
 		
 		extractFileDataToDirectory(sheetFiles, connection);
 	}
+	private void upgradeFromVersion2_2(Connection connection) throws SQLException {
+		createMessages(connection);
+	}
 
 	private List<NoteFile> getAllSheetFiles() {
 		@SuppressWarnings("unchecked")
@@ -246,8 +252,24 @@ public class NoteArkivDatabase {
         createUsers(connection);
         createLists(connection);
         createListNoteLink(connection);
+        createMessages(connection);
 	}
 
+
+	private void createMessages(Connection connection) throws SQLException {
+		logger.info("Creating messages table");
+		String sql =
+                "CREATE TABLE IF NOT EXISTS MESSAGES " + 
+					"(MESSAGE_ID integer primary key autoincrement, " +  
+					"HEADING text, " +
+					"MESSAGE text, " +
+					"MESSAGE_TYPE text not null, " +
+            		"AUTO_EXPIRE_DATE text, " +
+            		"EXPIRED boolean not null" +
+					");";
+		DbUtil.execUpdateSql(connection,sql);
+		initAutoIncrementSequence(connection, "MESSAGES");
+	}
 
 	private void createLists(Connection connection) throws SQLException {
 		String sql =

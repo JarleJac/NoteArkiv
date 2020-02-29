@@ -13,6 +13,7 @@
 		<class>jacJarSoft.noteArkiv.model.Tag</class>	
 		<class>jacJarSoft.noteArkiv.model.User</class>	
 		<class>jacJarSoft.noteArkiv.model.Voice</class>	
+		<class>jacJarSoft.noteArkiv.model.Messages</class>	
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 	</persistence-unit>
 </persistence>
