@@ -10,7 +10,7 @@
 			<div class="col-xs-3"><a class="listHeading" data-ng-click="setSort('message.id')">Id</a> <span data-ng-show="predicate === 'message.id'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
 			<div class="col-xs-3"><a class="listHeading" data-ng-click="setSort('message.heading')">Overskrift</a> <span data-ng-show="predicate === 'message.heading'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
 			<div class="col-xs-3"><a class="listHeading" data-ng-click="setSort('messageTypeText')">Type</a> <span data-ng-show="predicate === 'messageTypeText'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
-			<div class="col-xs-3"><a class="listHeading" data-ng-click="setSort('messageExpiredText')">Utgått</a> <span data-ng-show="predicate === 'messageExpiredText'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
+			<div class="col-xs-3"><a class="listHeading" data-ng-click="setSort('expiredText')">Utløpt</a> <span data-ng-show="predicate === 'expiredText'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
 		</div>
 		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row listRow">
 <!-- 			data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false"
@@ -19,7 +19,7 @@
 			<div class="col-xs-3"><a href="#/messages/{{messageData.message.id}}">{{messageData.message.id}}</a></div>
 			<div class="col-xs-3">{{messageData.message.heading}}</div>
 			<div class="col-xs-3">{{messageData.messageTypeText}}</div>
-			<div class="col-xs-3 wrap">{{messageData.message.expired}}</div>
+			<div class="col-xs-3 wrap">{{messageData.expiredText}}</div>
 		</div>
 	</div>
 </div>	

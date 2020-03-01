@@ -19,4 +19,18 @@ public class MessageDao extends AbstractDao {
 		return messages;
 	}
 
+	public Message getMessage(long messageId) {
+		Message message = getEntityManager().find(Message.class, messageId);
+		return message;
+	}
+
+	public void deleteMessage(Message message) {
+		getEntityManager().remove(message);
+	}
+
+	public Message updateMessage(Message message) {
+		Message mergeMessage = getEntityManager().merge(message);
+		return mergeMessage;
+	}
+
 }

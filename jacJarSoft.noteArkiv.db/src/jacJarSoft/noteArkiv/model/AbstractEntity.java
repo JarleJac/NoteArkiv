@@ -14,6 +14,8 @@ import jacJarSoft.noteArkiv.db.util.SqliteDateTimeFormater;
 public abstract class AbstractEntity {
 
 	protected static String getDateStrFromDate(Date date) {
+		if (date == null)
+			return null;
 		Instant instant = Instant.ofEpochMilli(date.getTime());
 	    LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
 	    return ldt.format(SqliteDateTimeFormater.Formatter);

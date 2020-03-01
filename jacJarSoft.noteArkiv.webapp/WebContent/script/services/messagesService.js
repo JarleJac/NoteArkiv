@@ -14,7 +14,7 @@ angular.module('notearkiv').factory('Messages', function MessagesFactory($q, $ht
 			return $http({method: 'GET', url : 'rest/messages/message'})
 			.then(function successCallback(result) {
 				var messages = result.data.map(function(message) {
-					var messageData = {message : message, messageTypeText : MessagteTypeTextMap[message.messageType]};
+					var messageData = {message : message, messageTypeText : MessagteTypeTextMap[message.messageType], expiredText : message.expired ? "Ja" : "Nei"};
 					return messageData;
 				});
 				return messages;
@@ -31,8 +31,8 @@ angular.module('notearkiv').factory('Messages', function MessagesFactory($q, $ht
 		updateMessage : function(message) {
 			return $http({method: 'PUT', url : 'rest/messages/message', data: message});
 		},
-		deleteUser : function(user) {
-			return $http({method: 'DELETE', url : 'rest/userservice/user/' + user.no});
+		deleteMessage : function(message) {
+			return $http({method: 'DELETE', url : 'rest/messages/message/' + message.id});
 		},
 		getMessageTypeText : function(messageType) {
 			return MessagteTypeTextMap[messageType];

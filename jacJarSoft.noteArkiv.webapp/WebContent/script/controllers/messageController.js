@@ -13,11 +13,12 @@ angular.module('notearkiv').controller('messageController', function($rootScope,
 		$scope.pagePromise = Messages.getMessage($routeParams.messageNo); 
 		$scope.pagePromise.then(function successCallback(result) {
 			//result.data.sheet.registeredDate = new Date(result.data.sheet.registeredDate);
-			$scope.message = result.data.message;
+			$scope.message = result.data;
 		});
 	}
 	$scope.newUser = function() {
-		$location.path("/mesagess/new");
+		$scope.message = {messageType: "Normal"}
+		$location.path("/messages/new");
 	}
 	$scope.saveMessage = function() {
 		$scope.promiseMsg = "Lagrer melding";
@@ -29,21 +30,21 @@ angular.module('notearkiv').controller('messageController', function($rootScope,
 		$scope.pagePromise.then(function successCallback(result) {
 			$rootScope.$emit('OkMessage', "Meldingen ble lagret ok");
 			if ($scope.isNew)
-				$location.path("/users/" + result.data.id);
+				$location.path("/messages/" + result.data.id);
 		});
 		
 	}
-//	$scope.deleteUser = function() {
-//		SimpleDlg.runSimpleConfirmDlg("Bekreft sletting", "Er du sikker på at du vil slette " + $scope.user.name)
-//		.result.then(function (result) {
-//			$scope.promiseMsg = "Sletter bruker";
-//			$scope.pagePromise = Users.deleteUser($scope.user);			
-//			$scope.pagePromise.then(function successCallback(result) {
-//				$rootScope.$emit('OkMessage', "Bruker ble slettet");
-//				$location.path("/users");
-//			});
-//		}); 
-//	}
+	$scope.deleteMessage = function() {
+		SimpleDlg.runSimpleConfirmDlg("Bekreft sletting", "Er du sikker på at du vil slette melding " + $scope.message.id)
+		.result.then(function (result) {
+			$scope.promiseMsg = "Sletter melding";
+			$scope.pagePromise = Messages.deleteMessage($scope.message);			
+			$scope.pagePromise.then(function successCallback(result) {
+				$rootScope.$emit('OkMessage', "Meldingen ble slettet");
+				$location.path("/messages");
+			});
+		}); 
+	}
 	$scope.getMessageTypeText = function(type) {
 		return Messages.getMessageTypeText(type);
 	} 
