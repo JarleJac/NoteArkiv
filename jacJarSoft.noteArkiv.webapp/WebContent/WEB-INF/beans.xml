@@ -32,6 +32,7 @@
 			<ref bean="noteArkivAppService" />
 			<ref bean="userService" />
 			<ref bean="adminService" />
+			<ref bean="messageService" />
 		</jaxrs:serviceBeans>
 <!-- 		<jaxrs:extensionMappings> -->
 <!-- 			<entry key="xml" value="application/xml" /> -->
@@ -43,5 +44,6 @@
     <bean id="noteArkivAppService" class="jacJarSoft.noteArkiv.internal.NoteArkivAppServiceImpl"/>
     <bean id="userService" class="jacJarSoft.noteArkiv.internal.UserServiceImpl"/>
     <bean id="adminService" class="jacJarSoft.noteArkiv.internal.AdminServiceImpl"/>
+    <bean id="messageService" class="jacJarSoft.noteArkiv.internal.MessageServiceImpl"/>
 <!--     <bean id="noteDao" class="jacJarSoft.noteArkiv.dao.NoteDao"/> -->
 </beans>

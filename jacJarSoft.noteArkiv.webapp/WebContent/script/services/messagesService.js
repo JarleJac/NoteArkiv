@@ -10,32 +10,32 @@ angular.module('notearkiv').factory('Messages', function MessagesFactory($q, $ht
 	
 	
 	return {
-		getUsers : function() {
-			return $http({method: 'GET', url : 'rest/userservice/user'})
+		getMessages : function() {
+			return $http({method: 'GET', url : 'rest/messages/message'})
 			.then(function successCallback(result) {
-				var users = result.data.map(function(user) {
-					var userData = {user : user, accessLevelText : '???'};
-					return userData;
+				var messages = result.data.map(function(message) {
+					var messageData = {message : message, messageTypeText : MessagteTypeTextMap[message.messageType]};
+					return messageData;
 				});
-				return users;
+				return messages;
 			}, function errorCallback(result) {
 				throw result;
 			});
 		},
-		getUser : function(userNo) {
-			return $http({method: 'GET', url : 'rest/userservice/user/' + userNo });
+		getMessage : function(id) {
+			return $http({method: 'GET', url : 'rest/messages/message/' + id });
 		},
-		addUser : function(user) {
-			return $http({method: 'POST', url : 'rest/userservice/user', data: user});
+		addMessage : function(message) {
+			return $http({method: 'POST', url : 'rest/messages/message', data: message});
 		},
-		updateUser : function(user) {
-			return $http({method: 'PUT', url : 'rest/userservice/user', data: user});
+		updateMessage : function(message) {
+			return $http({method: 'PUT', url : 'rest/messages/message', data: message});
 		},
 		deleteUser : function(user) {
 			return $http({method: 'DELETE', url : 'rest/userservice/user/' + user.no});
 		},
-		getMessageTypeText : function(level) {
-			return MessagteTypeTextMap[level];
+		getMessageTypeText : function(messageType) {
+			return MessagteTypeTextMap[messageType];
 		}
 	}
 }

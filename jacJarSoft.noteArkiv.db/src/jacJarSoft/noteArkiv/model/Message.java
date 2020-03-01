@@ -15,13 +15,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "MESSAGES")
 @XmlRootElement(name = "Messages")
-public class Messages extends AbstractEntity {
+public class Message extends AbstractEntity {
 	@Id
 	@GeneratedValue(generator = "sqlite_messages")
 	@TableGenerator(name = "sqlite_messages", table = "sqlite_sequence", pkColumnName = "name", 
 					valueColumnName = "seq", pkColumnValue = "MESSAGES", initialValue = 1, allocationSize = 1)
 	@Column(name = "MESSAGE_ID")
-	private int id;
+	private long id;
 	@Column(name = "HEADING")
 	private String heading;
 	@Column(name = "MESSAGE")
@@ -75,11 +75,11 @@ public class Messages extends AbstractEntity {
 		this.expiredInt = expired ? 1 : 0;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

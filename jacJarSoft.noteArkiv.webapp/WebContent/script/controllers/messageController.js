@@ -19,25 +19,20 @@ angular.module('notearkiv').controller('messageController', function($rootScope,
 	$scope.newUser = function() {
 		$location.path("/mesagess/new");
 	}
-//	$scope.saveUser = function() {
-//		$scope.promiseMsg = "Lagrer bruker";
-//		if ($scope.isNew) {
-//			if($scope.user.password !== $scope.repeatPassword) {
-//				$rootScope.$emit('ErrorMsg', "Du må angi samme passord i begge passord feltene");
-//				return;
-//			} else {
-//				$scope.pagePromise = Users.addUser($scope.user);			
-//			}
-//		} else {
-//			$scope.pagePromise = Users.updateUser($scope.user);			
-//		}
-//		$scope.pagePromise.then(function successCallback(result) {
-//			$rootScope.$emit('OkMessage', "Bruker ble lagret ok");
-//			if ($scope.isNew)
-//				$location.path("/users/" + result.data.no);
-//		});
-//		
-//	}
+	$scope.saveMessage = function() {
+		$scope.promiseMsg = "Lagrer melding";
+		if ($scope.isNew) {
+			$scope.pagePromise = Messages.addMessage($scope.message);			
+		} else {
+			$scope.pagePromise = Messages.updateMessage($scope.message);			
+		}
+		$scope.pagePromise.then(function successCallback(result) {
+			$rootScope.$emit('OkMessage', "Meldingen ble lagret ok");
+			if ($scope.isNew)
+				$location.path("/users/" + result.data.id);
+		});
+		
+	}
 //	$scope.deleteUser = function() {
 //		SimpleDlg.runSimpleConfirmDlg("Bekreft sletting", "Er du sikker på at du vil slette " + $scope.user.name)
 //		.result.then(function (result) {
