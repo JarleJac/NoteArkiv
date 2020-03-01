@@ -54,3 +54,6 @@ select 	substr(substr(file_name, length(file_name)-5), instr(substr(file_name, l
 	from note_files
 	where  ext in ('.mid', '.wma')
 	
+	
+select * from messages	
+	

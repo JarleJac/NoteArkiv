@@ -118,6 +118,22 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
         }
 		
 	})
+	.when('/messages', {
+		templateUrl : 'templates/pages/messages/messages.html',
+		controller : 'messagesController',
+		access: {
+            requiresLogin: true,
+            accessLevel: "ADMIN"
+        }
+	})
+	.when('/messages/:messageNo', {
+		templateUrl : 'templates/pages/messages/message.html',
+		controller : 'messageController',
+		access: {
+            requiresLogin: true,
+            accessLevel: "ADMIN"
+        }
+	})
 	.when('/sysadminutil', {
 		templateUrl : 'templates/pages/admin/sysadminutil.html',
 		controller : 'sysadminutilController',

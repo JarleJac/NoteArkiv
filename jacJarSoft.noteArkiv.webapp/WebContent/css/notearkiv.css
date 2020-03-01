@@ -157,7 +157,10 @@ fieldset.voices-border {
      margin-bottom: 10px;
      border-bottom:none;
  }
-
+input.form-checkbox {
+	margin-left: 13px;
+	margin-top: 10px;
+}
 select.tagsSelect {
 	width: 10em
 }
