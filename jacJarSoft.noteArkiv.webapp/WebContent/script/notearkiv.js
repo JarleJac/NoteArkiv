@@ -16,7 +16,8 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 .config(function($routeProvider, $provide, $httpProvider) {
 	$routeProvider
 	.when('/', {
-		templateUrl : 'templates/pages/home/index.html'
+		templateUrl : 'templates/pages/home/index.html',
+		controller : 'homeController'
 	})
 	.when('/help', {
 		templateUrl : 'templates/pages/help/index.html'
