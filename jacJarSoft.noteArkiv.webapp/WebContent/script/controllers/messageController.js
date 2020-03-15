@@ -16,7 +16,7 @@ angular.module('notearkiv').controller('messageController', function($rootScope,
 			$scope.message = result.data;
 		});
 	}
-	$scope.newUser = function() {
+	$scope.newMessage = function() {
 		$scope.message = {messageType: "Normal"}
 		$location.path("/messages/new");
 	}
