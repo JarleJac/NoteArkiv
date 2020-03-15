@@ -5,9 +5,16 @@
 angular.module('notearkiv').controller('homeController', function($rootScope, $scope, $location, $timeout, $routeParams, Messages, Auth) {
 	
 	$scope.init = function() {
-      	$timeout(function(){
-      		$scope.refresh()
-      	}, 200);
+  		if (Auth.isLoggedOn()) {
+  			$scope.refresh();
+  		}
+  		else {
+  	      	$timeout(function(){
+  	      		if (Auth.isLoggedOn()) {
+  	      			$scope.refresh();
+  	      		}
+  	      	}, 500);
+  		}
 		
 	}
 	$scope.refresh = function() {
@@ -20,8 +27,5 @@ angular.module('notearkiv').controller('homeController', function($rootScope, $s
 	}	
 
 	$scope.pagePromise = null;
-	if (Auth.isLoggedOn()) {
-		$scope.refresh();
-	}
 })
 ;
