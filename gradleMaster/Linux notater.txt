@@ -146,5 +146,6 @@ Overfør med winSCP
  i putty:
  sudo -s
  cp /notearkiv/tjolling/test/tjolling-notearkiv-test##2.2.2.0.war /opt/tomcat9031/webapps/
+ rm /opt/tomcat9031/webapps/tjolling-notearkiv-test##2.2.2.0.war
  exit
  
