@@ -20,5 +20,8 @@ angular.module('notearkiv').controller('usersController', function($scope, $loca
 	$scope.newUser = function() {
 		$location.path("/users/new");
 	}
+	$scope.openUser = function(id) {
+		$location.path("/users/" + id);
+	}
 })
 ;

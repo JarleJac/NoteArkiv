@@ -20,5 +20,8 @@ angular.module('notearkiv').controller('messagesController', function($scope, $l
 	$scope.newMessage = function() {
 		$location.path("/messages/new");
 	}
+	$scope.openMessage = function(id) {
+		$location.path("/messages/" + id);
+	}
 })
 ;

@@ -5,18 +5,18 @@
 </div>
 <div >
 	<h4 class="sub-heading">Registrerte meldinger</h4>
-	<div data-ng-repeat="messageData in messages | orderBy:predicate:reverse">
+	<div data-ng-repeat="messageData in messages | orderBy:predicate:reverse" >
 		<div data-ng-if="$first" class="row listHeading">
 			<div class="col-xs-1"><a class="listHeading" data-ng-click="setSort('message.id')">Id</a> <span data-ng-show="predicate === 'message.id'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
 			<div class="col-xs-7"><a class="listHeading" data-ng-click="setSort('message.heading')">Overskrift</a> <span data-ng-show="predicate === 'message.heading'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
 			<div class="col-xs-2"><a class="listHeading" data-ng-click="setSort('messageTypeText')">Type</a> <span data-ng-show="predicate === 'messageTypeText'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
 			<div class="col-xs-2"><a class="listHeading" data-ng-click="setSort('expiredText')">Utløpt</a> <span data-ng-show="predicate === 'expiredText'" class="glyphicon" data-ng-class="reverse ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-top'" aria-hidden="true"></span></div>
 		</div>
-		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row listRow">
+		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row listRow clickable" data-ng-click="openMessage(messageData.message.id)">
 <!-- 			data-toggle="collapse" data-target="{{ '#sheetInfo-' + $index }}" aria-expanded="false"
 			aria-controls="{{ 'sheetInfo-' + $index }}"
  -->			
-			<div class="col-xs-1"><a href="#/messages/{{messageData.message.id}}">{{messageData.message.id}}</a></div>
+			<div class="col-xs-1">{{messageData.message.id}}</div>
 			<div class="col-xs-7">{{messageData.message.heading}}</div>
 			<div class="col-xs-2">{{messageData.messageTypeText}}</div>
 			<div class="col-xs-2 wrap">{{messageData.expiredText}}</div>

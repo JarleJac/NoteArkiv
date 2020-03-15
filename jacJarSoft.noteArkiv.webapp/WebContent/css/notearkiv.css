@@ -129,6 +129,9 @@ div.expanded {
 	cursor: pointer;
 	font-size: 1.2em;
 }
+.clickable {
+	cursor: pointer;
+}
 .listRow {
 	font-size: 1.2em;
 }
