@@ -16,7 +16,8 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 .config(function($routeProvider, $provide, $httpProvider) {
 	$routeProvider
 	.when('/', {
-		templateUrl : 'templates/pages/home/index.html'
+		templateUrl : 'templates/pages/home/index.html',
+		controller : 'homeController'
 	})
 	.when('/help', {
 		templateUrl : 'templates/pages/help/index.html'
@@ -117,6 +118,22 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
             accessLevel: "READER"
         }
 		
+	})
+	.when('/messages', {
+		templateUrl : 'templates/pages/messages/messages.html',
+		controller : 'messagesController',
+		access: {
+            requiresLogin: true,
+            accessLevel: "ADMIN"
+        }
+	})
+	.when('/messages/:messageNo', {
+		templateUrl : 'templates/pages/messages/message.html',
+		controller : 'messageController',
+		access: {
+            requiresLogin: true,
+            accessLevel: "ADMIN"
+        }
 	})
 	.when('/sysadminutil', {
 		templateUrl : 'templates/pages/admin/sysadminutil.html',

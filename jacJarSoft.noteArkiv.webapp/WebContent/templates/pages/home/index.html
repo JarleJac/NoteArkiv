@@ -1,10 +1,17 @@
 <h3 class="pagetop">{{appInfo.appSettings.applicationWelcomeTitle}}</h3>
-<div class="jumbotron" ng-bind-html="applicationWelcomeHtml" >
-</div>
-<div data-ng-show="hasAccess('READER')">
-<h4 class="sub-heading">Snarveier</h4>
-<a class="btn btn-primary btn-lg " href="#/search/current">Gjeldende noter</a>
-<a class="btn btn-primary btn-lg " href="#/search/newest">Nyeste noter</a>
-<a class="btn btn-primary btn-lg " href="#/lists">Lister</a>
-<a data-ng-show="hasAccess('AUTHOR')" class="btn btn-primary btn-lg " href="#/sheets/new"><span class="glyphicon glyphicon-edit"></span> Ny note</a>
+<div data-cg-busy="{promise:pagePromise,message:promiseMsg}" data-ng-init="init()">
+	<div class="jumbotron" ng-bind-html="applicationWelcomeHtml" >
+	</div>
+	<div data-ng-repeat="messageData in messages" data-ng-cloak class="alert " data-ng-class="messageData.message.messageType == 'Important' ? 'alert-admin-message-important' : 'alert-admin-message-normal'">
+		<div class="admin-message-heading"><span class="glyphicon" data-ng-class="messageData.message.messageType == 'Important' ? 'glyphicon-exclamation-sign' : 'glyphicon-info-sign'"></span> {{messageData.message.heading}}</div>
+		<div class="admin-message" ng-bind-html="messageData.htmlMessage"></div>
+	</div>
+	
+	<div data-ng-show="hasAccess('READER')">
+	<h4 class="sub-heading">Snarveier</h4>
+	<a class="btn btn-primary btn-lg " href="#/search/current">Gjeldende noter</a>
+	<a class="btn btn-primary btn-lg " href="#/search/newest">Nyeste noter</a>
+	<a class="btn btn-primary btn-lg " href="#/lists">Lister</a>
+	<a data-ng-show="hasAccess('AUTHOR')" class="btn btn-primary btn-lg " href="#/sheets/new"><span class="glyphicon glyphicon-edit"></span> Ny note</a>
+	</div>
 </div>

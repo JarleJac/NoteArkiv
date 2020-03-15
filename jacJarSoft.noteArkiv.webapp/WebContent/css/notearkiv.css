@@ -157,7 +157,10 @@ fieldset.voices-border {
      margin-bottom: 10px;
      border-bottom:none;
  }
-
+input.form-checkbox {
+	margin-left: 13px;
+	margin-top: 10px;
+}
 select.tagsSelect {
 	width: 10em
 }
@@ -175,6 +178,20 @@ div.messageBox {
     padding: 10px;
     box-shadow: 10px 10px 5px #888888;
 }
+.alert-admin-message-normal {
+/*   color: #ff9900; */
+  background-color: #ecf8ed;
+  border-color: #46ba4e;
+}
+.alert-admin-message-important {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+div.admin-message-heading {
+	font-weight: bold;
+}
+
 div.audio-label {
 	color: #46ba4e;
 	font-weight: bold;
@@ -289,3 +306,46 @@ http://work.smarchal.com/twbscolor/
 /* END
 copy bootstrap navbar color
 */
+.jumbotron {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  color: inherit;
+  background-color: #eeeeee;
+}
+.jumbotron h1,
+.jumbotron .h1 {
+  color: inherit;
+}
+.jumbotron p {
+  margin-bottom: 15px;
+  font-size: 21px;
+  font-weight: 200;
+}
+.jumbotron > hr {
+  border-top-color: #d5d5d5;
+}
+.container .jumbotron,
+.container-fluid .jumbotron {
+  padding-right: 15px;
+  padding-left: 15px;
+  border-radius: 6px;
+}
+.jumbotron .container {
+  max-width: 100%;
+}
+@media screen and (min-width: 768px) {
+  .jumbotron {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .container .jumbotron,
+  .container-fluid .jumbotron {
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+  .jumbotron h1,
+  .jumbotron .h1 {
+    font-size: 63px;
+  }
+}

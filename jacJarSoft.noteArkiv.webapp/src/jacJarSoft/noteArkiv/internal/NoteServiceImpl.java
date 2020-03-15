@@ -115,7 +115,7 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	private SheetParam internalAddOrUpdateNote(EntityManager em, SheetParam param)
 	{
 		if (param == null || param.getSheet() == null || StringUtils.isEmpty(param.getSheet().getTitle())) {
-			throw new ValidationErrorException("Tittel kan ikke være blank.");
+			throw new ValidationErrorException("Tittel kan ikke vÃ¦re blank.");
 		}
 		if (param.getSheet().getTitle().equals("FUCK"))
 			throw new RuntimeException("Bad language!");
@@ -351,10 +351,10 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	private SheetList internalAddOrUpdateNote(EntityManager em, SheetList list)
 	{
 		if (list == null || StringUtils.isEmpty(list.getName())) {
-			throw new ValidationErrorException("Navn kan ikke være blank.");
+			throw new ValidationErrorException("Navn kan ikke vï¿½re blank.");
 		}
 		if (list == null || list.getListDate() == null) {
-			throw new ValidationErrorException("Dato må angis.");
+			throw new ValidationErrorException("Dato mï¿½ angis.");
 		}
 		SheetList result;
 		if (list.getListId() != 0) {

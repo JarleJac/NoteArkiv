@@ -58,7 +58,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 			User loggedOnUser = getVerifiedUser(getCurrentUser());
 
 			if (loggedOnUser.getAccessLevel().getLevel() < AccessLevel.ADMIN.getLevel())
-				throw new ValidationErrorException("Din bruker har ikke lov til å endre passord for andre brukere.");
+				throw new ValidationErrorException("Din bruker har ikke lov til Ã¥ endre passord for andre brukere.");
 				
 			user.setMustChangePassword(true);
 		}
@@ -88,7 +88,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		validateUser(user, true);
 		User readUser = userDao.getUser(user.getNo());
 		if (readUser != null)
-			throw new ValidationErrorException("Bruker id "+ user.getNo() +" finnes fra før!");
+			throw new ValidationErrorException("Bruker id "+ user.getNo() +" finnes fra fÃ¸r!");
 
 		user.setPassword(PasswordUtil.getPasswordMd5Hash(user.getPassword()));
 		user.setMustChangePassword(true);
@@ -98,11 +98,11 @@ public class UserServiceImpl extends BaseService implements UserService {
 	}
 	private void validateUser(User user, boolean isNew) {
 		if (StringUtils.isEmpty(user.getNo()))
-			throw new ValidationErrorException("Bruker id kan ikke være blank");
+			throw new ValidationErrorException("Bruker id kan ikke vÃ¦re blank");
 		if (StringUtils.isEmpty(user.getName()))
-			throw new ValidationErrorException("Bruker navn kan ikke være blank");
+			throw new ValidationErrorException("Bruker navn kan ikke vÃ¦re blank");
 		if (isNew && StringUtils.isEmpty(user.getPassword()))
-			throw new ValidationErrorException("passord kan ikke være blank");
+			throw new ValidationErrorException("passord kan ikke vÃ¦re blank");
 	}
 
 	@Override
