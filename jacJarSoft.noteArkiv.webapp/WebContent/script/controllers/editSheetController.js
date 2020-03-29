@@ -71,7 +71,7 @@ angular.module('notearkiv').controller('editSheetController',
 		});
 	};
 	var getSplitFileName = function(fName) {
-		var ext = fName.slice((Math.max(0, fName.lastIndexOf(".")) || Infinity) + 1);
+		var ext = fName.slice((Math.max(0, fName.lastIndexOf(".")) || Infinity) + 1).toLowerCase();
 		var name = fName.substr(0,fName.length - (ext.length+1));
 		return {name: name, ext : ext};
 	}

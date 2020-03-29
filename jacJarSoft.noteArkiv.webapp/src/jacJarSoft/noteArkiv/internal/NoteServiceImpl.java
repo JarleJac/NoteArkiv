@@ -240,7 +240,7 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 //		map.addMimeTypes("application/pdf					pdf");
 //		String mediaTypeFromExtension = map.getContentType(noteFile.getName());
 		String mediaTypeFromExtension = MimetypesFileTypeMap.getDefaultFileTypeMap()
-				.getContentType(noteFile.getName());
+				.getContentType(noteFile.getName().toLowerCase());
 		if (mediaTypeFromExtension != null) {
 			mediaType = mediaTypeFromExtension;
 		}
