@@ -44,10 +44,12 @@ sudo nano /etc/systemd/system/tomcat.service
 
 sudo systemctl daemon-reload
 sudo systemctl start tomcat
+sudo systemctl stop tomcat
 //Sjekk at den kj�rer
 sudo systemctl status tomcat
 //Enable start at boot
 sudo systemctl enable tomcat
+sudo systemctl disable tomcat
 
 //Husk � legge inn admin bruker for manager-gui og enable manager gui fra andre maskiner
 sudo nano /opt/tomcat/conf/tomcat-users.xml
@@ -72,6 +74,8 @@ Overfør med winSCP
  **********************************************************************
  https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04
  sudo systemctl stop nginx
+ sudo systemctl restart nginx
+ 
  sudo nano /etc/nginx/nginx.conf
  sudo nano /etc/nginx/sites-available/default
  sudo nano /var/www/html/index.nginx-debian.html
@@ -109,7 +113,7 @@ Overfør med winSCP
  **********************************************************************
  Konfig på TjoellingSangNotearkiv på Amazone lightsail
  **********************************************************************
- Tomcat installasjon 1
+ Tomcat installasjon 1 (Disabled)
  **********************
  katalog /opt/tomcat
  Versjon 9.0.14
