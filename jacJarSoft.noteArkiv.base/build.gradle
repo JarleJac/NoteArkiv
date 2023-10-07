@@ -1,7 +1,7 @@
 
 dependencies {
-	compile libraries.opencsv
-	compile project(':jacJarSoft.util')
+	api libraries.opencsv
+	api project(':jacJarSoft.util')
 }
 
 //Thank you. For anybody who encounter the same problem - 

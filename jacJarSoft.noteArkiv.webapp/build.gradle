@@ -4,16 +4,16 @@ project.webAppDirName = 'WebContent'
 
 dependencies {
 	//compile project(':jacJarSoft.util')
-	compile project(':jacJarSoft.noteArkiv.base')
-	compile project(':jacJarSoft.noteArkiv.db')
-	compile libraries.cxf
-	compile libraries.spring
-	compile libraries.jaxb
-	compile libraries.json
-	compile libraries.jaxws
-	compile libraries.jaf
+	implementation project(':jacJarSoft.noteArkiv.base')
+	implementation project(':jacJarSoft.noteArkiv.db')
+	implementation libraries.cxf
+	implementation libraries.spring
+	implementation libraries.jaxb
+	implementation libraries.json
+	implementation libraries.jaxws
+	implementation libraries.jaf
 	//compile libraries.mail
-	compile libraries.jackson
+	implementation libraries.jackson
 	providedCompile libraries.servlet
 }
 def providerName = 'JacJarSoft'
@@ -25,32 +25,32 @@ war {
 task buildTest(type: War) {
 	manifest.attributes provider: providerName
 	webInf { from 'configurations/test' } 
-	archiveName = "notearkiv-test##${version}.war"
+	archiveFileName = "notearkiv-test##${project.version}.war"
 }
 
 task buildTestUnix(type: War) {
 	manifest.attributes provider: providerName
 	webInf { from 'configurations/unix-test' } 
-	archiveName = "notearkiv-test##${version}.war"
-	destinationDir = file("$destinationDir/unix")
+	archiveFileName = "notearkiv-test##${project.version}.war"
+	destinationDirectory = file "$buildDir/libs/unix"
 }
 
 task buildTjollingTestUnix(type: War) {
 	manifest.attributes provider: providerName
 	webInf { from 'configurations/unix-tjolling-test' } 
-	archiveName = "tjolling-notearkiv-test##${version}.war"
-	destinationDir = file("$destinationDir/unix")
+	archiveFileName = "tjolling-notearkiv-test##${project.version}.war"
+	destinationDirectory = file "$buildDir/libs/unix"
 }
 
 task buildTjollingProdUnix(type: War) {
 	manifest.attributes provider: providerName
 	webInf { from 'configurations/unix-tjolling-prod' } 
-	archiveName = "tjolling-notearkiv##${version}.war"
-	destinationDir = file("$destinationDir/unix")
+	archiveFileName = "tjolling-notearkiv##${project.version}.war"
+	destinationDirectory = file "$buildDir/libs/unix"
 }
 
 task buildProd(type: War) {
 	manifest.attributes provider: providerName
 	webInf { from 'configurations/prod' } 
-	archiveName = "notearkiv##${version}.war"
+	archiveFileName = "notearkiv##${project.version}.war"
 }

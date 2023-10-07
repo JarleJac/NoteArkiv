@@ -1,10 +1,10 @@
 
 
 dependencies {
-	compile project(':jacJarSoft.util')
-	compile project(':jacJarSoft.noteArkiv.base')
-	compile libraries.eclipselink
-	compile libraries.spring
-	compile libraries.apache_commons_io
-	compile libraries.sqlite
+	implementation project(':jacJarSoft.util')
+	implementation project(':jacJarSoft.noteArkiv.base')
+	implementation libraries.eclipselink
+	implementation libraries.spring
+	implementation libraries.apache_commons_io
+	implementation libraries.sqlite
 }
