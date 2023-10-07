@@ -20,7 +20,7 @@ dependencies {
 }
 
 tasks.withType(War.class).configureEach( warTask -> {
-	warTask.webAppDirectory  = file('WebContent')
+	//warTask.webAppDirectory  = file('WebContent')
 	warTask.manifest.attributes provider: 'JacJarSoft'
 })
 

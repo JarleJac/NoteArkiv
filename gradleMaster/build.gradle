@@ -79,16 +79,7 @@ subprojects {
 	eclipse.classpath.downloadJavadoc = true;
 	
 	repositories { mavenCentral() }
-	sourceSets {
-		main {
-			java { srcDir 'src' }
-			resources { srcDir 'resources' }
-		}
-		test {
-			java { srcDir 'testSrc' }
-			resources { srcDir 'testResources' }
-		}
-	}
+
 	dependencies { testImplementation 'junit:junit:4.12' }
 
 	version='2.3.1.0'
