@@ -1,6 +1,8 @@
-apply plugin: 'war'
 
-project.webAppDirName = 'WebContent'
+plugins {
+	id 'war'
+}
+
 
 dependencies {
 	//compile project(':jacJarSoft.util')
@@ -16,41 +18,36 @@ dependencies {
 	implementation libraries.jackson
 	providedCompile libraries.servlet
 }
-def providerName = 'JacJarSoft'
 
-war {
-	manifest.attributes provider: providerName
-}
+tasks.withType(War.class).configureEach( warTask -> {
+	warTask.webAppDirectory  = file('WebContent')
+	warTask.manifest.attributes provider: 'JacJarSoft'
+})
 
 task buildTest(type: War) {
-	manifest.attributes provider: providerName
 	webInf { from 'configurations/test' } 
 	archiveFileName = "notearkiv-test##${project.version}.war"
 }
 
 task buildTestUnix(type: War) {
-	manifest.attributes provider: providerName
 	webInf { from 'configurations/unix-test' } 
 	archiveFileName = "notearkiv-test##${project.version}.war"
 	destinationDirectory = file "$buildDir/libs/unix"
 }
 
 task buildTjollingTestUnix(type: War) {
-	manifest.attributes provider: providerName
 	webInf { from 'configurations/unix-tjolling-test' } 
 	archiveFileName = "tjolling-notearkiv-test##${project.version}.war"
 	destinationDirectory = file "$buildDir/libs/unix"
 }
 
 task buildTjollingProdUnix(type: War) {
-	manifest.attributes provider: providerName
 	webInf { from 'configurations/unix-tjolling-prod' } 
 	archiveFileName = "tjolling-notearkiv##${project.version}.war"
 	destinationDirectory = file "$buildDir/libs/unix"
 }
 
 task buildProd(type: War) {
-	manifest.attributes provider: providerName
 	webInf { from 'configurations/prod' } 
 	archiveFileName = "notearkiv##${project.version}.war"
 }
