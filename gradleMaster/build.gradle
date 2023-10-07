@@ -7,8 +7,8 @@ ext {
 			'javax.servlet:javax.servlet-api:4.0.1'
 		],
 		'jaxb':		[
-			'jakarta.xml.bind:jakarta.xml.bind-api:2.3.2',
-			'org.glassfish.jaxb:jaxb-runtime:2.3.2'
+			"jakarta.xml.bind:jakarta.xml.bind-api:2.3.2",
+			"org.glassfish.jaxb:jaxb-runtime:2.3.2"
 		],
 		'json':		[
 			'jakarta.json:jakarta.json-api:1.1.6',
@@ -64,27 +64,23 @@ ext {
 apply plugin: 'eclipse-wtp'
 
 subprojects {
-	apply plugin: 'java'
+	if (name != 'jacJarSoft.noteArkiv.webapp')
+		apply plugin: 'java-library'
+	else
+		apply plugin: 'java'
 	apply plugin: 'eclipse'
 	apply plugin: 'eclipse-wtp'
 
-	sourceCompatibility = JavaVersion.VERSION_11
-	targetCompatibility = JavaVersion.VERSION_11
+	java {
+		sourceCompatibility = JavaVersion.VERSION_11
+		targetCompatibility = JavaVersion.VERSION_11
+	}
 
 	eclipse.classpath.downloadJavadoc = true;
 	
 	repositories { mavenCentral() }
-	sourceSets {
-		main {
-			java { srcDir 'src' }
-			resources { srcDir 'resources' }
-		}
-		test {
-			java { srcDir 'testSrc' }
-			resources { srcDir 'testResources' }
-		}
-	}
-	dependencies { testCompile 'junit:junit:4.12' }
+
+	dependencies { testImplementation 'junit:junit:4.12' }
 
 	version='2.3.1.0'
 

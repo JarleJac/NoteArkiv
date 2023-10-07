@@ -1,4 +1,4 @@
 dependencies {
-	compile libraries.jpa
-	compile libraries.jaxb
+	api libraries.jpa
+	api libraries.jaxb
 }
