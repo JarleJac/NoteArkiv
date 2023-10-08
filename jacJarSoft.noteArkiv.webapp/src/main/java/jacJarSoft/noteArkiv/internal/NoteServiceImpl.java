@@ -130,8 +130,9 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	}
 
 	@Override
-	public Response addSheetFile(long sheetId, String name, String description, long size, Attachment file) {
-		
+	public Response addSheetFile(long sheetId, String name, String description, String sizeStr, Attachment file) {
+		long size = Long.valueOf(sizeStr);
+			
 		if (size > NoteArkivAppInfo.MAX_FILE_SIZE)
 			throw new ValidationErrorException("Filen " + name + " er for stor. 100MB er maks.");
 		

@@ -38,7 +38,7 @@ angular.module('notearkiv').controller('editSheetController',
     $scope.uploader.onBeforeUploadItem = function(fileItem) {
     	fileItem.formData.push({description: fileItem.myData.description});
     	fileItem.formData.push({name: fileItem.myData.splitName.name + "." + fileItem.myData.splitName.ext});
-    	fileItem.formData.push({size: fileItem.file.size});
+    	fileItem.formData.push({sizeStr: fileItem.file.size.toString()});
     };
 
 	var getVoices = function(selectedVoices) {

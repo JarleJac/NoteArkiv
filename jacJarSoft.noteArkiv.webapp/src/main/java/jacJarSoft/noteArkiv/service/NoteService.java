@@ -1,5 +1,6 @@
 package jacJarSoft.noteArkiv.service;
 
+
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
@@ -88,7 +89,7 @@ public interface NoteService {
 	public Response addSheetFile(@PathParam("sheetId") long sheetId,
 			@Multipart("name") String name,
 			@Multipart("description") String description,
-			@Multipart("size") long size,
+			@Multipart("sizeStr") String sizeStr,
 			@Multipart("file") Attachment file);
 
 	@POST
