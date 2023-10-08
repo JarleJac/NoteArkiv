@@ -1,9 +1,9 @@
 package jacJarSoft.noteArkiv.db.util;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import jacJarSoft.noteArkiv.db.util.SheetFileUtil;
+import org.junit.Test;
+
 import jacJarSoft.noteArkiv.model.NoteFile;
 
 public class SheetFileUtilTest {

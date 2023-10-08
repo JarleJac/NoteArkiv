@@ -293,7 +293,7 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 		return Response.ok(result).build();
 	}
 	private SheetParam getSheetData(Set<Long> currentSheets, Note sheet) {
-		return noteDao.getSheetData(sheet, currentSheets.contains(new Long(sheet.getNoteId())));
+		return noteDao.getSheetData(sheet, currentSheets.contains(Long.valueOf(sheet.getNoteId())));
 	}
 	private Set<Long> getSheetsInCurrentList() {
 		Set<Long> currentSheets = sheetListDao.getLinkedSheets(1);

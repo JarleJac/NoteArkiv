@@ -101,6 +101,7 @@ public class NoteArkivDatabase {
 		//extractFileDataIfNeeded(connection);
 	}
 
+	@SuppressWarnings("unused")
 	private void extractFileDataIfNeeded(Connection connection) throws SQLException {
 		Boolean needFileExtract = false;
 		try {
