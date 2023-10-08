@@ -45,7 +45,7 @@ ext {
 		],
 
 		'eclipselink':	[
-			'org.eclipse.persistence:org.eclipse.persistence.jpa:2.7.4'
+			'org.eclipse.persistence:org.eclipse.persistence.jpa:4.0.2'
 		],
 		'jpa' :			[
 			'org.eclipse.persistence:javax.persistence:2.2.1'
