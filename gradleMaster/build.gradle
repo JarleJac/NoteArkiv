@@ -41,7 +41,7 @@ ext {
 		],
 
 		'jackson':		[
-			'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.9.9'
+			'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.15.2'
 		],
 
 		'eclipselink':	[
