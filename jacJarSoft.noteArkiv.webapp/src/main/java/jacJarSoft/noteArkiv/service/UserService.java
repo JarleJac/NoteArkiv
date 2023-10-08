@@ -1,6 +1,5 @@
 package jacJarSoft.noteArkiv.service;
 
-import javax.jws.WebService;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.webapi.ChangePassword;
+import jakarta.jws.WebService;
 
 @Path("/userservice")
 @WebService(name="userService", targetNamespace="http://jacJarSoft/noteArkiv/userService")

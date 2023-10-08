@@ -15,8 +15,8 @@ ext {
 			'org.glassfish:jakarta.json:2.0.1'
 		],
 		'jaxws':		[
-			'jakarta.xml.ws:jakarta.xml.ws-api:2.3.2',
-			'com.sun.xml.ws:jaxws-rt:2.3.2'
+			'jakarta.xml.ws:jakarta.xml.ws-api:4.0.0',
+			'com.sun.xml.ws:jaxws-rt:4.0.1'
 		],
 		'jaf':		[
 			'com.sun.activation:javax.activation:1.2.0'

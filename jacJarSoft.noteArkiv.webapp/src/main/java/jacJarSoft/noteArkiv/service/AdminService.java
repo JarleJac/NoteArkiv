@@ -1,11 +1,12 @@
 package jacJarSoft.noteArkiv.service;
 
-import javax.jws.WebService;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import jakarta.jws.WebService;
 
 @Path("/adminservice")
 @WebService(name="noteService", targetNamespace="http://jacJarSoft/noteArkiv/adminService")

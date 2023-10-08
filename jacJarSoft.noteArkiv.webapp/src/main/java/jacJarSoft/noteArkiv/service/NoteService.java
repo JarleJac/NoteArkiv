@@ -1,6 +1,5 @@
 package jacJarSoft.noteArkiv.service;
 
-import javax.jws.WebService;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,6 +21,7 @@ import jacJarSoft.noteArkiv.api.SheetSearchParam;
 import jacJarSoft.noteArkiv.model.NoteFile;
 import jacJarSoft.noteArkiv.model.SheetList;
 import jacJarSoft.noteArkiv.model.Tag;
+import jakarta.jws.WebService;
 
 @Path("/noteservice")
 @WebService(name="noteService", targetNamespace="http://jacJarSoft/noteArkiv/noteService")

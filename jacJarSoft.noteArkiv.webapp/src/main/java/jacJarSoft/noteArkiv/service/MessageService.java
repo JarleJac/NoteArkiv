@@ -1,6 +1,5 @@
 package jacJarSoft.noteArkiv.service;
 
-import javax.jws.WebService;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import jacJarSoft.noteArkiv.model.Message;
+import jakarta.jws.WebService;
 
 @Path("/messages")
 @WebService(name="messageService", targetNamespace="http://jacJarSoft/noteArkiv/messageService")
