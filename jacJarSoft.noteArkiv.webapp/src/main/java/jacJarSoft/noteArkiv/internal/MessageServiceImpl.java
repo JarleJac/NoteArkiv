@@ -1,12 +1,11 @@
 package jacJarSoft.noteArkiv.internal;
 
-import javax.ws.rs.core.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jacJarSoft.noteArkiv.dao.MessageDao;
 import jacJarSoft.noteArkiv.model.Message;
 import jacJarSoft.util.StringUtils;
+import jakarta.ws.rs.core.Response;
 
 public class MessageServiceImpl extends BaseService implements jacJarSoft.noteArkiv.service.MessageService {
 	@Autowired

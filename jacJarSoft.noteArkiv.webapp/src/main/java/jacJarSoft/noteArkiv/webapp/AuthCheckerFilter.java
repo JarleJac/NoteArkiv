@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.core.MediaType;
-
 import jacJarSoft.noteArkiv.AppContext;
 import jacJarSoft.util.Auth.AuthException;
 import jacJarSoft.util.Auth.AuthTokenInfo;
@@ -20,6 +18,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.core.MediaType;
 
 @WebFilter(filterName = "AuthCheckerFilter",
 urlPatterns = {"/rest/*"}

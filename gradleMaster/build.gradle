@@ -27,9 +27,9 @@ ext {
 		//],
 
 		'cxf': 			[
-			'org.apache.cxf:cxf-rt-frontend-jaxws:3.3.2',
-			'org.apache.cxf:cxf-rt-frontend-jaxrs:3.3.2',
-			'org.apache.cxf:cxf-rt-rs-service-description:3.3.2'
+			'org.apache.cxf:cxf-rt-frontend-jaxws:4.0.3',
+			'org.apache.cxf:cxf-rt-frontend-jaxrs:4.0.3',
+			'org.apache.cxf:cxf-rt-rs-service-description:4.0.3'
 		],
 
 

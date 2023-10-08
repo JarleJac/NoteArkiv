@@ -6,10 +6,9 @@ import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.util.logging.Logger;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.StreamingOutput;
-
 import jacJarSoft.noteArkiv.model.NoteFile;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.StreamingOutput;
 
 public class RangeBasedSheetFileStreamer implements StreamingOutput {
 

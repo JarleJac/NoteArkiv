@@ -3,7 +3,6 @@ package jacJarSoft.noteArkiv.internal;
 import java.util.function.BiFunction;
 
 import javax.persistence.EntityManager;
-import javax.ws.rs.core.Context;
 
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.PhaseInterceptorChain;
@@ -14,6 +13,7 @@ import jacJarSoft.noteArkiv.webapp.AppServletContextListner;
 import jacJarSoft.util.DbUtil;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.core.Context;
 
 public class BaseService extends AppContextAware {
     private ServletContext servletContext;

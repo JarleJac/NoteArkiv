@@ -1,7 +1,6 @@
 package jacJarSoft.noteArkiv.internal;
 
 import javax.persistence.EntityManager;
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +13,7 @@ import jacJarSoft.noteArkiv.webapi.LogonInfo;
 import jacJarSoft.noteArkiv.webapi.UserInfoReturn;
 import jacJarSoft.util.PasswordUtil;
 import jacJarSoft.util.StringUtils;
+import jakarta.ws.rs.core.Response;
 
 public class UserServiceImpl extends BaseService implements UserService {
 	@Autowired
