@@ -4,15 +4,15 @@ ext {
 			'org.xerial:sqlite-jdbc:3.8.11.1'
 		],
 		'servlet':		[
-			'javax.servlet:javax.servlet-api:4.0.1'
+			'jakarta.servlet:jakarta.servlet-api:6.0.0'
 		],
 		'jaxb':		[
-			"jakarta.xml.bind:jakarta.xml.bind-api:2.3.2",
-			"org.glassfish.jaxb:jaxb-runtime:2.3.2"
+			"jakarta.xml.bind:jakarta.xml.bind-api:4.0.1",
+			"org.glassfish.jaxb:jaxb-runtime:4.0.3"
 		],
 		'json':		[
-			'jakarta.json:jakarta.json-api:1.1.6',
-			'org.glassfish:jakarta.json:1.1.6'
+			'jakarta.json:jakarta.json-api:2.1.2',
+			'org.glassfish:jakarta.json:2.0.1'
 		],
 		'jaxws':		[
 			'jakarta.xml.ws:jakarta.xml.ws-api:2.3.2',
@@ -72,8 +72,8 @@ subprojects {
 	apply plugin: 'eclipse-wtp'
 
 	java {
-		sourceCompatibility = JavaVersion.VERSION_11
-		targetCompatibility = JavaVersion.VERSION_11
+		sourceCompatibility = JavaVersion.VERSION_17
+		targetCompatibility = JavaVersion.VERSION_17
 	}
 
 	eclipse.classpath.downloadJavadoc = true;

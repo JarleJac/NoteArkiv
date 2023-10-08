@@ -1,8 +1,7 @@
 package jacJarSoft.noteArkiv.internal;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="appInfo")
 public class AppInfo {

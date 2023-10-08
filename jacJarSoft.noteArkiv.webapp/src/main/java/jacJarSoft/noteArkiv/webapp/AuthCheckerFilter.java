@@ -5,14 +5,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 
 import jacJarSoft.noteArkiv.AppContext;
@@ -20,6 +12,14 @@ import jacJarSoft.util.Auth.AuthException;
 import jacJarSoft.util.Auth.AuthTokenInfo;
 import jacJarSoft.util.Auth.AuthTokenUtil;
 import jacJarSoft.util.web.MultiReadHttpServletRequest;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @WebFilter(filterName = "AuthCheckerFilter",
 urlPatterns = {"/rest/*"}

@@ -2,7 +2,7 @@ package jacJarSoft.util;
 
 import java.util.Properties;
 
-import javax.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.XmlTransient;
 
 public class PropertyList {
 	private Property property[];
