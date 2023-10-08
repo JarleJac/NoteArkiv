@@ -3,7 +3,7 @@
 dependencies {
 	implementation project(':jacJarSoft.noteArkiv.base')
 	implementation libraries.apachehttpclient
-	implementation 'org.json:json:20160810'
+	implementation 'org.json:json:20230618'
 }
 
 task fatJar(type: Jar) {
