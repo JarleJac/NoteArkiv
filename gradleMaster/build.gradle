@@ -51,7 +51,7 @@ ext {
 			'org.eclipse.persistence:javax.persistence:2.2.1'
 		],
 		'opencsv' :		[
-			'com.opencsv:opencsv:4.6'
+			'com.opencsv:opencsv:5.8'
 		],
 		'apachehttpclient' : [
 			'org.apache.httpcomponents:httpmime:4.5.9'

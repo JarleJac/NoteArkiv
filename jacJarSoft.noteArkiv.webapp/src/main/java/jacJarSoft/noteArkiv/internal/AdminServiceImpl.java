@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 
 import jacJarSoft.noteArkiv.api.StatusResponce;
 import jacJarSoft.noteArkiv.dao.NoteDao;
@@ -55,7 +56,7 @@ public class AdminServiceImpl extends BaseService implements AdminService {
 					}, null);
 				}
 			}
-		} catch (IOException e) {
+		} catch (IOException | CsvValidationException e) {
 			throw new RuntimeException(e);
 		}
 		return Response.ok().build();

@@ -56,7 +56,7 @@ public class CsvExportHandler {
 		File file = exportDirectory.resolve("ListerInfo.csv").toFile();
 		if (file.exists())
 			file.delete();
-		try (CSVWriter writer = new CSVWriter(new FileWriter(file), ';')) {
+		try (CSVWriter writer = createWriter(file, ';')) {
 			writer.writeNext(headers);
 			List<ListSheet> listWithSheets = noteDao.getListWithSheets();
 			for (ListSheet listSheet : listWithSheets) {
@@ -70,13 +70,17 @@ public class CsvExportHandler {
 			}
 		}
 	}
+	private CSVWriter createWriter(File file, char separator) throws IOException
+	{
+		return new CSVWriter(new FileWriter(file), separator, CSVWriter.DEFAULT_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+	}
 
 	private void exportSheetFiles() throws IOException {
 		String[] headers = "NoteId;filnavn;Beskrivelse;RegDato;RegAv".split(";");
 		File file = exportDirectory.resolve("NoteFilerInfo.csv").toFile();
 		if (file.exists())
 			file.delete();
-		try (CSVWriter writer = new CSVWriter(new FileWriter(file), ';')) {
+		try (CSVWriter writer = createWriter(file, ';')) {
 			writer.writeNext(headers);
 			List<NoteFile> sheetFiles = noteDao.getSheetFilesForExport();
 			for (NoteFile sheetFile : sheetFiles) {
@@ -97,7 +101,7 @@ public class CsvExportHandler {
 		File sheetsFile = exportDirectory.resolve("NoteInfo.csv").toFile();
 		if (sheetsFile.exists())
 			sheetsFile.delete();
-		try (CSVWriter writer = new CSVWriter(new FileWriter(sheetsFile), ';')) {
+		try (CSVWriter writer = createWriter(sheetsFile, ';')) {
 			writer.writeNext(heders);
 			List<Note> sheets = noteDao.getSheetsForExport();
 			for (Note sheet : sheets) {
