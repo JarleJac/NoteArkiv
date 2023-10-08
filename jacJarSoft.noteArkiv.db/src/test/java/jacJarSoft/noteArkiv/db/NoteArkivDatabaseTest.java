@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Properties;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.junit.Test;
 
 import jacJarSoft.util.ExceptionUtil;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 public class NoteArkivDatabaseTest {
 
@@ -24,8 +24,8 @@ public class NoteArkivDatabaseTest {
 		resetDbFile(dbFile);
 
 		Properties addedOrOverridenProperties = new Properties();
-		addedOrOverridenProperties.setProperty("javax.persistence.jdbc.driver", "org.sqlite.JDBC");
-		addedOrOverridenProperties.setProperty("javax.persistence.jdbc.url", "jdbc:sqlite:" + dbFile.getAbsolutePath());
+		addedOrOverridenProperties.setProperty("jakarta.persistence.jdbc.driver", "org.sqlite.JDBC");
+		addedOrOverridenProperties.setProperty("jakarta.persistence.jdbc.url", "jdbc:sqlite:" + dbFile.getAbsolutePath());
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("noteArkivDb", addedOrOverridenProperties);
 		try {
 			EntityManager entityManager = null;

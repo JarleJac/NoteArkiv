@@ -15,9 +15,8 @@ ext {
 			'org.glassfish:jakarta.json:2.0.1'
 		],
 		'jaxws':		[
-			'jakarta.xml.ws:jakarta.xml.ws-api:4.0.0'
-			//,
-			//'com.sun.xml.ws:jaxws-rt:4.0.1'
+			'jakarta.xml.ws:jakarta.xml.ws-api:4.0.0',
+			'com.sun.xml.ws:jaxws-rt:4.0.1'
 		],
 		'jaf':		[
 			'com.sun.activation:javax.activation:1.2.0'
@@ -42,14 +41,14 @@ ext {
 		],
 
 		'jackson':		[
-			'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.15.2'
+			'com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider:2.15.2'
 		],
 
 		'eclipselink':	[
 			'org.eclipse.persistence:org.eclipse.persistence.jpa:4.0.2'
 		],
 		'jpa' :			[
-			'org.eclipse.persistence:javax.persistence:2.2.1'
+			'org.eclipse.persistence:jakarta.persistence:2.2.3'
 		],
 		'opencsv' :		[
 			'com.opencsv:opencsv:5.8'

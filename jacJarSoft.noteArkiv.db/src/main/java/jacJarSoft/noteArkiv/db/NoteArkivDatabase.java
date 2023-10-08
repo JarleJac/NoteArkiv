@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.persistence.EntityManager;
-
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 import jacJarSoft.noteArkiv.dao.SheetFileDao;
 import jacJarSoft.noteArkiv.model.AccessLevel;
@@ -24,6 +22,7 @@ import jacJarSoft.util.DbUtil;
 import jacJarSoft.util.ExceptionUtil;
 import jacJarSoft.util.PasswordUtil;
 import jacJarSoft.util.Version;
+import jakarta.persistence.EntityManager;
 
 public class NoteArkivDatabase {
 

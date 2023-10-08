@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NoteArkivSettings>
 	<persistenceProperties>
-		<property key="javax.persistence.jdbc.driver">org.sqlite.JDBC</property>
-		<property key="javax.persistence.jdbc.url">jdbc:sqlite:/notearkiv/tjolling/test/database/Notearkiv.db</property>
+		<property key="jakarta.persistence.jdbc.driver">org.sqlite.JDBC</property>
+		<property key="jakarta.persistence.jdbc.url">jdbc:sqlite:/notearkiv/tjolling/test/database/Notearkiv.db</property>
 		<property key="eclipselink.logging.logger">JavaLogger</property>
 		<property key="eclipselink.logging.level">INFO</property>
 		<property key="eclipselink.logging.parameters">true</property>

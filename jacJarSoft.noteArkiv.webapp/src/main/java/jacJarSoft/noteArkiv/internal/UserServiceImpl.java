@@ -1,7 +1,5 @@
 package jacJarSoft.noteArkiv.internal;
 
-import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jacJarSoft.noteArkiv.dao.UserDao;
@@ -13,6 +11,7 @@ import jacJarSoft.noteArkiv.webapi.LogonInfo;
 import jacJarSoft.noteArkiv.webapi.UserInfoReturn;
 import jacJarSoft.util.PasswordUtil;
 import jacJarSoft.util.StringUtils;
+import jakarta.persistence.EntityManager;
 import jakarta.ws.rs.core.Response;
 
 public class UserServiceImpl extends BaseService implements UserService {
