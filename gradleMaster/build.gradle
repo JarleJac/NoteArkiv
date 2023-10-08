@@ -21,9 +21,10 @@ ext {
 		'jaf':		[
 			'com.sun.activation:javax.activation:1.2.0'
 		],
-		'mail':		[
-			'javax.mail:mail:1.4.7'
-		],
+		//Not in use at the moment
+		//'mail':		[
+		//	'jakarta.mail:jakarta.mail-api:2.1.2' 
+		//],
 
 		'cxf': 			[
 			'org.apache.cxf:cxf-rt-frontend-jaxws:3.3.2',
