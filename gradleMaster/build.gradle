@@ -34,9 +34,9 @@ ext {
 
 
 		'spring': 		[
-			'org.springframework:spring-context:5.0.13.RELEASE',
-			'org.springframework:spring-web:5.0.13.RELEASE',
-			'org.springframework:spring-orm:5.0.13.RELEASE'
+			'org.springframework:spring-context:6.0.12',
+			'org.springframework:spring-web:6.0.12',
+			'org.springframework:spring-orm:6.0.12'
 			
 		],
 
