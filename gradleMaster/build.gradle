@@ -47,9 +47,6 @@ ext {
 		'eclipselink':	[
 			'org.eclipse.persistence:org.eclipse.persistence.jpa:4.0.2'
 		],
-		'jpa' :			[
-			'org.eclipse.persistence:jakarta.persistence:2.2.3'
-		],
 		'opencsv' :		[
 			'com.opencsv:opencsv:5.8'
 		],

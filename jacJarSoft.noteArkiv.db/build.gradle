@@ -3,7 +3,6 @@
 dependencies {
 	implementation project(':jacJarSoft.util')
 	implementation project(':jacJarSoft.noteArkiv.base')
-	//implementation libraries.eclipselink
 	implementation libraries.spring
 	implementation libraries.apache_commons_io
 	implementation libraries.sqlite

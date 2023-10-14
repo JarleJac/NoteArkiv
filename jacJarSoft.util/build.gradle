@@ -1,5 +1,4 @@
 dependencies {
-	//api libraries.jpa
 	api libraries.eclipselink
 	api libraries.jaxb
 }
