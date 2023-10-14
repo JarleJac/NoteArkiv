@@ -1,8 +1,8 @@
 package jacJarSoft.noteArkiv;
 
-import javax.persistence.EntityManager;
 
 import jacJarSoft.noteArkiv.db.PersistenceFactory;
+import jakarta.persistence.EntityManager;
 
 public class AppContext {
 	private static final ThreadLocal<AppContext> appContext =

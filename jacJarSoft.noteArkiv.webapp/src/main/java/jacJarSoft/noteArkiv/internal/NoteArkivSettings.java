@@ -1,8 +1,7 @@
 package jacJarSoft.noteArkiv.internal;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import jacJarSoft.util.PropertyList;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement (name="NoteArkivSettings")
 public class NoteArkivSettings {

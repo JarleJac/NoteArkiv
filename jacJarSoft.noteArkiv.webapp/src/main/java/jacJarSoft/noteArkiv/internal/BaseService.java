@@ -2,11 +2,6 @@ package jacJarSoft.noteArkiv.internal;
 
 import java.util.function.BiFunction;
 
-import javax.persistence.EntityManager;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
-
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.PhaseInterceptorChain;
 import org.apache.cxf.transport.http.AbstractHTTPDestination;
@@ -14,6 +9,10 @@ import org.apache.cxf.transport.http.AbstractHTTPDestination;
 import jacJarSoft.noteArkiv.AppContextAware;
 import jacJarSoft.noteArkiv.webapp.AppServletContextListner;
 import jacJarSoft.util.DbUtil;
+import jakarta.persistence.EntityManager;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.core.Context;
 
 public class BaseService extends AppContextAware {
     private ServletContext servletContext;

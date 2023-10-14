@@ -1,8 +1,6 @@
 
 package jacJarSoft.noteArkiv.internal;
 
-import javax.ws.rs.core.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
@@ -13,6 +11,7 @@ import jacJarSoft.noteArkiv.service.NoteArkivAppService;
 import jacJarSoft.noteArkiv.webapi.LogonInfo;
 import jacJarSoft.noteArkiv.webapi.LogonInfoReturn;
 import jacJarSoft.util.Auth.AuthTokenUtil;
+import jakarta.ws.rs.core.Response;
 
 public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivAppService {
 	@Autowired

@@ -1,62 +1,63 @@
 ext {
 	libraries = [
 		'sqlite': 		[
-			'org.xerial:sqlite-jdbc:3.8.11.1'
+			'org.xerial:sqlite-jdbc:3.43.0.0'
 		],
 		'servlet':		[
-			'javax.servlet:javax.servlet-api:4.0.1'
+			'jakarta.servlet:jakarta.servlet-api:6.0.0'
 		],
 		'jaxb':		[
-			"jakarta.xml.bind:jakarta.xml.bind-api:2.3.2",
-			"org.glassfish.jaxb:jaxb-runtime:2.3.2"
+			"jakarta.xml.bind:jakarta.xml.bind-api:4.0.1",
+			"org.glassfish.jaxb:jaxb-runtime:4.0.3"
 		],
 		'json':		[
-			'jakarta.json:jakarta.json-api:1.1.6',
-			'org.glassfish:jakarta.json:1.1.6'
+			'jakarta.json:jakarta.json-api:2.1.2',
+			'org.glassfish:jakarta.json:2.0.1'
 		],
 		'jaxws':		[
-			'jakarta.xml.ws:jakarta.xml.ws-api:2.3.2',
-			'com.sun.xml.ws:jaxws-rt:2.3.2'
+			'jakarta.xml.ws:jakarta.xml.ws-api:4.0.0',
+			'com.sun.xml.ws:jaxws-rt:4.0.1'
 		],
 		'jaf':		[
 			'com.sun.activation:javax.activation:1.2.0'
 		],
-		'mail':		[
-			'javax.mail:mail:1.4.7'
-		],
+		//Not in use at the moment
+		//'mail':		[
+		//	'jakarta.mail:jakarta.mail-api:2.1.2' 
+		//],
 
 		'cxf': 			[
-			'org.apache.cxf:cxf-rt-frontend-jaxws:3.3.2',
-			'org.apache.cxf:cxf-rt-frontend-jaxrs:3.3.2',
-			'org.apache.cxf:cxf-rt-rs-service-description:3.3.2'
+			'org.apache.cxf:cxf-rt-frontend-jaxws:4.0.3',
+			'org.apache.cxf:cxf-rt-frontend-jaxrs:4.0.3',
+			'org.apache.cxf:cxf-rt-rs-service-description:4.0.3'
 		],
 
 
 		'spring': 		[
-			'org.springframework:spring-context:5.0.13.RELEASE',
-			'org.springframework:spring-web:5.0.13.RELEASE',
-			'org.springframework:spring-orm:5.0.13.RELEASE'
+			'org.springframework:spring-context:6.0.12',
+			'org.springframework:spring-web:6.0.12',
+			'org.springframework:spring-orm:6.0.12'
 			
 		],
 
 		'jackson':		[
-			'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.9.9'
+			'com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider:2.15.2'
 		],
 
 		'eclipselink':	[
-			'org.eclipse.persistence:org.eclipse.persistence.jpa:2.7.4'
+			'org.eclipse.persistence:org.eclipse.persistence.jpa:4.0.2'
 		],
 		'jpa' :			[
-			'org.eclipse.persistence:javax.persistence:2.2.1'
+			'org.eclipse.persistence:jakarta.persistence:2.2.3'
 		],
 		'opencsv' :		[
-			'com.opencsv:opencsv:4.6'
+			'com.opencsv:opencsv:5.8'
 		],
 		'apachehttpclient' : [
-			'org.apache.httpcomponents:httpmime:4.5.9'
+			'org.apache.httpcomponents:httpmime:4.5.14'
 		],		
 		'apache_commons_io' : [
-			'commons-io:commons-io:2.6'
+			'commons-io:commons-io:2.14.0'
 		]		
 	]
 }
@@ -72,15 +73,16 @@ subprojects {
 	apply plugin: 'eclipse-wtp'
 
 	java {
-		sourceCompatibility = JavaVersion.VERSION_11
-		targetCompatibility = JavaVersion.VERSION_11
+		sourceCompatibility = JavaVersion.VERSION_17
+		targetCompatibility = JavaVersion.VERSION_17
 	}
 
 	eclipse.classpath.downloadJavadoc = true;
+	compileJava.options.encoding = 'UTF-8'
 	
 	repositories { mavenCentral() }
 
-	dependencies { testImplementation 'junit:junit:4.12' }
+	dependencies { testImplementation 'junit:junit:4.13.2' }
 
 	version='2.3.1.0'
 

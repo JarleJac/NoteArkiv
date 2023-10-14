@@ -1,11 +1,10 @@
 package jacJarSoft.noteArkiv.webapp;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
 import jacJarSoft.noteArkiv.internal.NoteArkivSettings;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 
 public abstract class AbstractFilter implements Filter {
 

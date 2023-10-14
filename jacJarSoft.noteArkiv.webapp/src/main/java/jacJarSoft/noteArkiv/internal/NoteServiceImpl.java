@@ -9,13 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import javax.activation.DataHandler;
-import javax.activation.MimetypesFileTypeMap;
-import javax.persistence.EntityManager;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +31,12 @@ import jacJarSoft.noteArkiv.model.SheetListNote;
 import jacJarSoft.noteArkiv.model.Tag;
 import jacJarSoft.noteArkiv.service.NoteService;
 import jacJarSoft.util.StringUtils;
+import jakarta.activation.DataHandler;
+import jakarta.activation.MimetypesFileTypeMap;
+import jakarta.persistence.EntityManager;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 public class NoteServiceImpl extends BaseService implements NoteService {
 
@@ -131,8 +130,9 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	}
 
 	@Override
-	public Response addSheetFile(long sheetId, String name, String description, long size, Attachment file) {
-		
+	public Response addSheetFile(long sheetId, String name, String description, String sizeStr, Attachment file) {
+		long size = Long.valueOf(sizeStr);
+			
 		if (size > NoteArkivAppInfo.MAX_FILE_SIZE)
 			throw new ValidationErrorException("Filen " + name + " er for stor. 100MB er maks.");
 		
@@ -293,7 +293,7 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 		return Response.ok(result).build();
 	}
 	private SheetParam getSheetData(Set<Long> currentSheets, Note sheet) {
-		return noteDao.getSheetData(sheet, currentSheets.contains(new Long(sheet.getNoteId())));
+		return noteDao.getSheetData(sheet, currentSheets.contains(Long.valueOf(sheet.getNoteId())));
 	}
 	private Set<Long> getSheetsInCurrentList() {
 		Set<Long> currentSheets = sheetListDao.getLinkedSheets(1);

@@ -9,11 +9,10 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.core.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 
 import jacJarSoft.noteArkiv.api.StatusResponce;
 import jacJarSoft.noteArkiv.dao.NoteDao;
@@ -22,6 +21,7 @@ import jacJarSoft.noteArkiv.dao.UserDao;
 import jacJarSoft.noteArkiv.dao.VoiceDao;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.AdminService;
+import jakarta.ws.rs.core.Response;
 
 public class AdminServiceImpl extends BaseService implements AdminService {
 	private static Logger logger = Logger.getLogger(AdminServiceImpl.class.getName());
@@ -56,7 +56,7 @@ public class AdminServiceImpl extends BaseService implements AdminService {
 					}, null);
 				}
 			}
-		} catch (IOException e) {
+		} catch (IOException | CsvValidationException e) {
 			throw new RuntimeException(e);
 		}
 		return Response.ok().build();

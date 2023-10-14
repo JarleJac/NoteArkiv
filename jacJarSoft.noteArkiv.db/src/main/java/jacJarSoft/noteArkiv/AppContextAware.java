@@ -1,6 +1,6 @@
 package jacJarSoft.noteArkiv;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 public class AppContextAware {
 	protected EntityManager getEntityManager() {

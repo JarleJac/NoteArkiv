@@ -5,10 +5,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PostLoad;
-
 import jacJarSoft.noteArkiv.db.util.SqliteDateTimeFormater;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PostLoad;
 
 @MappedSuperclass
 public abstract class AbstractEntity {

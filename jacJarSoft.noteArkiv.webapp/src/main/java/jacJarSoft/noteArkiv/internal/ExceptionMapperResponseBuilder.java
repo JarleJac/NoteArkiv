@@ -1,9 +1,9 @@
 package jacJarSoft.noteArkiv.internal;
 
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import jakarta.json.Json;
+import jakarta.json.JsonObjectBuilder;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 public class ExceptionMapperResponseBuilder {
 	private String type;

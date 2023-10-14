@@ -2,10 +2,10 @@ package jacJarSoft.noteArkiv.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlTransient;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Transient;
+import jakarta.xml.bind.annotation.XmlTransient;
 
 
 @MappedSuperclass

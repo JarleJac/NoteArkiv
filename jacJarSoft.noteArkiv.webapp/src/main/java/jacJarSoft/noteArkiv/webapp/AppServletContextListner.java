@@ -8,19 +8,18 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
 import jacJarSoft.noteArkiv.AppContext;
 import jacJarSoft.noteArkiv.db.NoteArkivDatabase;
 import jacJarSoft.noteArkiv.db.PersistenceFactory;
 import jacJarSoft.noteArkiv.internal.NoteArkivSettings;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 
 public class AppServletContextListner implements ServletContextListener {
 
@@ -53,8 +52,8 @@ public class AppServletContextListner implements ServletContextListener {
 		try {
 			entityManager = entityManagerFactory.createEntityManager();
 			NoteArkivDatabase db = new NoteArkivDatabase(entityManager);
-			String jdbcDriverClass = (String) persistenProperties.get("javax.persistence.jdbc.driver");
-			String jdbcUrl = (String) persistenProperties.get("javax.persistence.jdbc.url");
+			String jdbcDriverClass = (String) persistenProperties.get("jakarta.persistence.jdbc.driver");
+			String jdbcUrl = (String) persistenProperties.get("jakarta.persistence.jdbc.url");
 			db.verifyAndUpgradeDb(jdbcDriverClass,jdbcUrl);
 		}
 		finally {
