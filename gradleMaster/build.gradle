@@ -1,7 +1,7 @@
 ext {
 	libraries = [
 		'sqlite': 		[
-			'org.xerial:sqlite-jdbc:3.8.11.1'
+			'org.xerial:sqlite-jdbc:3.43.0.0'
 		],
 		'servlet':		[
 			'jakarta.servlet:jakarta.servlet-api:6.0.0'
