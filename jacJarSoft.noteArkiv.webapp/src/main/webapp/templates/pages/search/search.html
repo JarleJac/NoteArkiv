@@ -55,6 +55,8 @@ Viser de notene som det øves på for tiden.
 <div class="small-spacer"> </div>
 
 <div data-cg-busy="{promise:prom.getPromise,message:'Søker ...'}">
-	<h4 class="sub-heading">Søkeresultat</h4>
+	<h4 class="sub-heading">Søkeresultat
+		<span data-ng-show="searchListData.sheetList.length"> ({{searchListData.sheetList.length}})</span>
+	</h4>
 	<sheets-list data="searchListData" resultid="'searchResult'"></sheets-list>
 </div>
