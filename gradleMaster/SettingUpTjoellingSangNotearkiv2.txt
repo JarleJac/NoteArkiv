@@ -1,0 +1,69 @@
+Setting up nginx
+From https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04
+--------------------------------------------------------------------------------------------------
+sudo apt update
+sudo apt install nginx
+
+manually copy conf files from old server
+ /var/www/*
+ /etc/nginx/sites-available/*
+
+Create symlink to sites enabled for jacjarsoft.gotdns.org
+ ln -s /etc/nginx/sites-available/jacjarsoft.gotdns.org /etc/nginx/sites-enabled/
+ (can be removed with unlink  or rm)
+ 
+ 
+ Installing Java
+ ------------------------------------------------------------------------------------------------
+ 
+ubuntu@ip-172-26-3-111:/$ java --version
+Command 'java' not found, but can be installed with:
+sudo apt install openjdk-11-jre-headless  # version 11.0.20.1+1-0ubuntu1~22.04, or
+sudo apt install default-jre              # version 2:1.11-72build2
+sudo apt install openjdk-17-jre-headless  # version 17.0.8.1+1~us1-0ubuntu1~22.04
+sudo apt install openjdk-18-jre-headless  # version 18.0.2+9-2~22.04
+sudo apt install openjdk-19-jre-headless  # version 19.0.2+7-0ubuntu3~22.04
+sudo apt install openjdk-8-jre-headless   # version 8u382-ga-1~22.04.1
+ 
+sudo apt install openjdk-17-jre-headless
+sudo apt install openjdk-17-jdk-headless (did both)
+
+Installing tomcat (https://linux.how2shout.com/how-to-install-apache-tomcat-10-on-ubuntu-22-04-lts/)
+----------------------------------------------------------------------------------------------------
+in ubuntu home dir
+	wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.14/bin/apache-tomcat-10.1.14.tar.gz
+	sudo mkdir -p /opt/tomcat10
+	sudo tar xzvf apache-tomcat-*tar.gz -C /opt/tomcat10 --strip-components=1
+	
+	create user:
+	  sudo groupadd tomcat
+	  sudo useradd -s /bin/false -g tomcat -d /opt/tomcat10 tomcat
+	
+	change owner and make sh executables:
+	  sudo chown -R tomcat: /opt/tomcat10
+	  sudo sh -c 'chmod +x /opt/tomcat10/bin/*.sh'
+	
+	use this to see java installation folder:
+	  sudo update-java-alternatives -l
+	
+	build service control file:
+	using this: /usr/lib/jvm/java-1.17.0-openjdk-amd64
+	copied from: https://linux.how2shout.com/how-to-install-apache-tomcat-10-on-ubuntu-22-04-lts/
+	   sudo nano /etc/systemd/system/tomcat10.service
+	
+	Tell systemctl  that we have a new service:
+	  sudo systemctl daemon-reload
+	Start tomcat:
+	  sudo systemctl start tomcat10
+	Enable autostart:
+	  sudo systemctl enable tomcat10
+	Check that everything is ok
+	  sudo systemctl status tomcat10 --no-pager -l
+	Edit users (admin user)
+	   sudo nano /opt/tomcat10/conf/tomcat-users.xml
+	Allow manager/host-manager from other places than localhost. comment out <Valve className=... Allow=.../>
+	   sudo nano /opt/tomcat10/webapps/manager/META-INF/context.xml
+	   sudo nano /opt/tomcat10/webapps/host-manager/META-INF/context.xml
+	   sudo systemctl restart tomcat10
+	  
+	  
