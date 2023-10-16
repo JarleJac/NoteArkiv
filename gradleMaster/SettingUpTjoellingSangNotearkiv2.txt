@@ -12,6 +12,8 @@ Create symlink to sites enabled for jacjarsoft.gotdns.org
  ln -s /etc/nginx/sites-available/jacjarsoft.gotdns.org /etc/nginx/sites-enabled/
  (can be removed with unlink  or rm)
  
+ After changes
+ 	sudo systemctl restart nginx
  
  Installing Java
  ------------------------------------------------------------------------------------------------
@@ -65,5 +67,50 @@ in ubuntu home dir
 	   sudo nano /opt/tomcat10/webapps/manager/META-INF/context.xml
 	   sudo nano /opt/tomcat10/webapps/host-manager/META-INF/context.xml
 	   sudo systemctl restart tomcat10
+	   
+Installing zip
+-----------------------------------------------------------------------------------------------------------
+sudo apt install zip	   
 	  
-	  
+
+Creating folder for Notearkiv
+-----------------------------------------------------------------------------------------------------------
+sudo -s
+  	mkdir -p -v /notearkiv/tjolling/test/database
+    mkdir -p -v /notearkiv/tjolling/test/files
+    mkdir -p -v /notearkiv/tjolling/test/log
+    mkdir -p -v /notearkiv/tjolling/prod/database
+    mkdir -p -v /notearkiv/tjolling/prod/files
+    mkdir -p -v /notearkiv/tjolling/prod/log
+    
+    chown -R ubuntu /notearkiv
+    chgrp -R tomcat /notearkiv
+    chmod -R g+rw /notearkiv
+    
+    exit
+
+Copying db and files
+-----------------------------------------------------------------------------------------------------------
+zip content of files directory to files.zip 
+Winscp files.zip til /notearkiv/tjolling/test(prod)/files
+Winscp Norearkiv.db til /notearkiv/tjolling/test(prod)/database
+
+in /notearkiv/tjolling/test/fil
+   unzip files.zip
+   
+sudo chown -R ubuntu /notearkiv
+sudo chgrp -R tomcat /notearkiv
+sudo chmod -R g+rw /notearkiv
+
+
+Deploying Notearkiv
+-----------------------------------------------------------------------------------------------------------
+First time in /notearkiv/tjolling/test(prod)
+    mkdir deploy
+winscp tjolling-notearkiv-test##2.3.1.0.war  til   /notearkiv/tjolling/test(prod)/deploy
+
+in putty
+sudo -s
+ cp /notearkiv/tjolling/test/deploy/tjolling-notearkiv-test##2.2.2.0.war /opt/tomcat9031/webapps/
+ rm /opt/tomcat9031/webapps/tjolling-notearkiv-test##2.2.2.0.war
+ exit
