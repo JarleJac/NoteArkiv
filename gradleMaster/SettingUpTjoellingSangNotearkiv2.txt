@@ -1,3 +1,8 @@
+Server config
+---------------------------------------------------------------------------------------------------
+sudo timedatectl set-timezone Europe/Oslo
+
+
 Setting up nginx
 From https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04
 --------------------------------------------------------------------------------------------------
@@ -79,28 +84,50 @@ sudo -s
   	mkdir -p -v /notearkiv/tjolling/test/database
     mkdir -p -v /notearkiv/tjolling/test/files
     mkdir -p -v /notearkiv/tjolling/test/log
+    mkdir -p -v /notearkiv/tjolling/test/deploy
     mkdir -p -v /notearkiv/tjolling/prod/database
     mkdir -p -v /notearkiv/tjolling/prod/files
     mkdir -p -v /notearkiv/tjolling/prod/log
-    
-    chown -R ubuntu /notearkiv
-    chgrp -R tomcat /notearkiv
-    chmod -R g+rw /notearkiv
+    mkdir -p -v /notearkiv/tjolling/prod/deploy
     
     exit
+
+sudo chown ubuntu /notearkiv /notearkiv/tjolling 
+sudo chgrp ubuntu /notearkiv /notearkiv/tjolling 
+sudo chown ubuntu /notearkiv/tjolling/test /notearkiv/tjolling/test/deploy
+sudo chgrp ubuntu /notearkiv/tjolling/test /notearkiv/tjolling/test/deploy
+sudo chown ubuntu /notearkiv/tjolling/prod /notearkiv/tjolling/prod/deploy
+sudo chgrp ubuntu /notearkiv/tjolling/prod /notearkiv/tjolling/prod/deploy
+
+sudo chown -R tomcat /notearkiv/tjolling/prod/database /notearkiv/tjolling/prod/files /notearkiv/tjolling/prod/log
+sudo chgrp -R tomcat /notearkiv/tjolling/prod/database /notearkiv/tjolling/prod/files /notearkiv/tjolling/prod/log
+sudo chown -R tomcat /notearkiv/tjolling/test/database /notearkiv/tjolling/test/files /notearkiv/tjolling/test/log
+sudo chgrp -R tomcat /notearkiv/tjolling/test/database /notearkiv/tjolling/test/files /notearkiv/tjolling/test/log
+chmod -R o=r /notearkiv
+
+
+Sette execute på alle mapper til andre
+	sudo find /notearkiv -type d -exec chmod o+x {} +    
 
 Copying db and files
 -----------------------------------------------------------------------------------------------------------
 zip content of files directory to files.zip 
-Winscp files.zip til /notearkiv/tjolling/test(prod)/files
-Winscp Norearkiv.db til /notearkiv/tjolling/test(prod)/database
+Winscp files.zip til /notearkiv/tjolling/test(prod)/deploy
+Winscp Norearkiv.db til /notearkiv/tjolling/test(prod)/deploy
 
-in /notearkiv/tjolling/test/fil
-   unzip files.zip
+in /notearkiv/tjolling/test/files 
+   unzip files.zip (sudo?)
    
-sudo chown -R ubuntu /notearkiv
-sudo chgrp -R tomcat /notearkiv
-sudo chmod -R g+rw /notearkiv
+sudo chown -R tomcat /notearkiv/tjolling/prod/database /notearkiv/tjolling/prod/files 
+sudo chgrp -R tomcat /notearkiv/tjolling/prod/database /notearkiv/tjolling/prod/files 
+sudo chown -R tomcat /notearkiv/tjolling/test/database /notearkiv/tjolling/test/files 
+sudo chgrp -R tomcat /notearkiv/tjolling/test/database /notearkiv/tjolling/test/files 
+
+chmod -R o=r /notearkiv
+
+
+Sette execute på alle mapper til andre
+	sudo find /notearkiv -type d -exec chmod o+x {} +    
 
 
 Deploying Notearkiv
@@ -114,3 +141,12 @@ sudo -s
  cp /notearkiv/tjolling/test/deploy/tjolling-notearkiv-test##2.2.2.0.war /opt/tomcat9031/webapps/
  rm /opt/tomcat9031/webapps/tjolling-notearkiv-test##2.2.2.0.war
  exit
+ 
+ 
+ Sette opp backup jobb
+ ---------------------------------------------------------------------------------------------------------
+ Laget backup.sh i /notearkiv/tjolling/test
+ kjøres fra /notearkiv/tjolling/test med sudo ./backup.sh (eller fra andre steder med full path)
+ sette opp cron jobb
+    sudo crontab -e
+    

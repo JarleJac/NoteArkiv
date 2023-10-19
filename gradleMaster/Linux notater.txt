@@ -88,12 +88,12 @@ Overfør med winSCP
  sudo chgrp -R tomcat /notearkiv
  sudo chmod -R g+rwx /notearkiv
  
- mkdir -p -v notearkiv/tjolling/test/database
- mkdir -p -v notearkiv/tjolling/test/files
- mkdir -p -v notearkiv/tjolling/test/log
- mkdir -p -v notearkiv/tjolling/prod/database
- mkdir -p -v notearkiv/tjolling/prod/files
- mkdir -p -v notearkiv/tjolling/prod/log
+ mkdir -p -v /notearkiv/tjolling/test/database
+ mkdir -p -v /notearkiv/tjolling/test/files
+ mkdir -p -v /notearkiv/tjolling/test/log
+ mkdir -p -v /notearkiv/tjolling/prod/database
+ mkdir -p -v /notearkiv/tjolling/prod/files
+ mkdir -p -v /notearkiv/tjolling/prod/log
  
  
  sudo chown -R ubuntu /backup
