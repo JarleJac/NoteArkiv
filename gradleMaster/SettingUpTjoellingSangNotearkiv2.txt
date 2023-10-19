@@ -150,3 +150,15 @@ sudo -s
  sette opp cron jobb
     sudo crontab -e
     
+    
+Installere og configurere Jotta (https://docs.jottacloud.com/nb/articles/1436855-jottacloud-cli-for-linux-debian-packages)
+------------------------------------------------------------------------------------------------------------
+sudo apt-get install apt-transport-https
+wget -O - https://repo.jotta.us/public.gpg | sudo apt-key add -
+echo "deb https://repo.jotta.us/debian debian main" | sudo tee /etc/apt/sources.list.d/jotta-cli.list
+sudo apt-get update
+sudo apt-get install jotta-cli    
+run_jottad
+loginctl enable-linger
+jotta-cli login (svare og legge inn token)
+jotta-cli add backup/notearkiv/tjolling/test
