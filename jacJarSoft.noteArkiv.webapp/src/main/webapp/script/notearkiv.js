@@ -20,8 +20,9 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 		controller : 'homeController'
 	})
 	.when('/help', {
-		templateUrl : 'templates/pages/help/index.html'
-	})
+		templateUrl : 'templates/pages/help/index.html',
+		controller : 'helpController',
+})
 	.when('/about', {
 		templateUrl : 'templates/pages/home/about.html'
 	})
