@@ -1,14 +1,12 @@
 
 package jacJarSoft.noteArkiv.internal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 import jacJarSoft.noteArkiv.dao.UserDao;
-import jacJarSoft.noteArkiv.internal.FileList.FileInfo;
 import jacJarSoft.noteArkiv.model.AccessLevel;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.NoteArkivAppService;
@@ -45,8 +43,8 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 
 	@Override
 	public Response getHelpFilesInfo() {
-		List<FileInfo> helpFileInfoList = new ArrayList<>();
-		return Response.ok(helpFileInfoList).build();
+		//return Response.ok(new ArrayList<FileInfo>()).build();
+		return Response.ok(List.of(getAppSettings().getHelpFiles().getFileInfo())).build();
 	}
 
 

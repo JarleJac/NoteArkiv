@@ -67,6 +67,10 @@ div.listHeading {
 	background-color: #46ba4e; /*#d9d9d9;*/ 
 	font-size: larger;
 }
+div.nosortlistHeading {
+	font-weight: bold;
+	background-color: #46ba4e; /*#d9d9d9;*/ 
+}
 div.sublistHeadingEven {
 	margin-top: 5px;
 	font-weight: bolder;

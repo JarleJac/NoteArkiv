@@ -1,2 +1,17 @@
 <h3  data-cg-busy="{promise:getPromise,message:'Henter hjelp info ...'}" class="pagetop">Hjelp</h3>
-<p>Her vil det muligens befinnes seg litt hjelp etterhvert ;-)</p>
+	
+	<div data-ng-show="hasResult() &&  helpFiles.length === 0">Her vil det muligens befinnes seg litt hjelp etterhvert ;-)</div>
+	
+	<div data-ng-repeat="fileInfo in helpFiles">
+		<div data-ng-if="$first" class="row listHeading">
+			<div class="col-xs-9 nosortlistHeading">Beskrivelse</div>
+			<div class="col-xs-3 nosortlistHeading">Aktivitet</div>
+		</div>
+		<div data-ng-class-odd="'listodd'" data-ng-class-even="'listEven'" class="row listRow">
+			<div class="col-xs-9">{{fileInfo.description}}</div>
+			<div class="col-xs-3">
+				<a href="files/{{fileInfo.fileName}}" target="_blank" class="btn btn-primary btn-xs" role="button">
+					<span class="glyphicon glyphicon-open-file"></span> Åpne</a>
+			</div>	
+		</div>
+	</div>
