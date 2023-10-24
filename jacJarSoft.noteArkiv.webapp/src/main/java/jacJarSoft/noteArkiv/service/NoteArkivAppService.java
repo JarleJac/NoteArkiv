@@ -15,6 +15,11 @@ public interface NoteArkivAppService {
 	@Path("/getsystemInfo")
 	public Response getSystemInfo();
 
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/gethelpfilesinfo")
+	public Response getHelpFilesInfo();
+
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/logon")

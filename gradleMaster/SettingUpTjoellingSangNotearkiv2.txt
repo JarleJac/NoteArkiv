@@ -138,8 +138,8 @@ winscp tjolling-notearkiv-test##2.3.1.0.war  til   /notearkiv/tjolling/test(prod
 
 in putty
 sudo -s
- cp /notearkiv/tjolling/test/deploy/tjolling-notearkiv-test##2.2.2.0.war /opt/tomcat9031/webapps/
- rm /opt/tomcat9031/webapps/tjolling-notearkiv-test##2.2.2.0.war
+ cp /notearkiv/tjolling/test/deploy/tjolling-notearkiv-test##2.2.2.0.war /opt/tomcat10/webapps/
+ rm /opt/tomcat10/webapps/tjolling-notearkiv-test##2.2.2.0.war
  exit
  
  

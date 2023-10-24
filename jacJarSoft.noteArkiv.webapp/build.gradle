@@ -36,12 +36,14 @@ task buildTestUnix(type: War) {
 }
 
 task buildTjollingTestUnix(type: War) {
+	from 'configurations/unix-tjolling-test/warRoot'  
 	webInf { from 'configurations/unix-tjolling-test' } 
 	archiveFileName = "tjolling-notearkiv-test##${project.version}.war"
 	destinationDirectory = file "$buildDir/libs/unix"
 }
 
 task buildTjollingProdUnix(type: War) {
+	from 'configurations/unix-tjolling-prod/warRoot'  
 	webInf { from 'configurations/unix-tjolling-prod' } 
 	archiveFileName = "tjolling-notearkiv##${project.version}.war"
 	destinationDirectory = file "$buildDir/libs/unix"

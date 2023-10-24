@@ -1,6 +1,8 @@
 
 package jacJarSoft.noteArkiv.internal;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
@@ -37,6 +39,12 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 		LogonInfoReturn lir = new LogonInfoReturn(user);
 		lir.setAuthToken(AuthTokenUtil.createToken(user.getNo(), "NoteArkiv " + NoteArkivAppInfo.getVersion().toVersionString(true)));
 		return Response.ok(lir).build();
+	}
+
+	@Override
+	public Response getHelpFilesInfo() {
+		//return Response.ok(new ArrayList<FileInfo>()).build();
+		return Response.ok(List.of(getAppSettings().getHelpFiles().getFileInfo())).build();
 	}
 
 

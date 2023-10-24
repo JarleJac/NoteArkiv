@@ -8,6 +8,20 @@
 		<property key="eclipselink.logging.parameters">true</property>
 		<property key="eclipselink.logging.session">false</property>
 	</persistenceProperties>
+	<helpFiles>
+		<fileInfo>
+			<description>Dette er brukerveiledning for de mest brukte funksjonene</description>
+			<fileName>Brukerveiledning nytt notearkiv.pdf</fileName>
+		</fileInfo>
+		<fileInfo>
+			<description>Dette er brukerveiledning for registrering og endring av noter, lister og filer</description>
+			<fileName>brukerveiledning nytt notearkiv kan endre.pdf</fileName>
+		</fileInfo>
+		<fileInfo>
+			<description>Dette er brukerveiledning for administrative oppgaver som vedlikehold av brukere</description>
+			<fileName>Brukerveiledning notearkiv admin.pdf</fileName>
+		</fileInfo>
+	</helpFiles>
 	<filesDirectory>/notearkiv/tjolling/test/files</filesDirectory>
 	<jsAppSettings>
 		<backgroundImageUrl>./images/testbackground_small.png</backgroundImageUrl>
