@@ -3,6 +3,11 @@ Upgrading ubuntu
 sudo apt update
 sudo apt upgrade
 
+Mount a disk
+**************************
+sudo mount /dev/xvdf /tempdata
+
+
 *************************
 sudo apt-get install openssh-server -y
 //Hvis du skal endre port
