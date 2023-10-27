@@ -162,3 +162,7 @@ run_jottad
 loginctl enable-linger
 jotta-cli login (svare og legge inn token)
 jotta-cli add backup/notearkiv/tjolling/test
+
+Kopiere fra annen maskin med sftp
+---------------------------------------------------------------------------------------------------------------
+sftp -i /home/ubuntu/LightsailDefaultKey-eu-west-1.pem  ubuntu@172.26.8.49
