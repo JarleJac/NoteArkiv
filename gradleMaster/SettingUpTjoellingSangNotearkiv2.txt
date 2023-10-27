@@ -72,8 +72,32 @@ in ubuntu home dir
 	   sudo nano /opt/tomcat10/webapps/manager/META-INF/context.xml
 	   sudo nano /opt/tomcat10/webapps/host-manager/META-INF/context.xml
 	   sudo systemctl restart tomcat10
+
+
+upgrading tomcat (to same major release)
+----------------------------------------------------------------------------------------------------------
+in ubuntu home dir
+	wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.15/bin/apache-tomcat-10.1.15.tar.gz
+	sudo mkdir -p /opt/tomcat10.15.1
+	sudo tar xzvf apache-tomcat-10.1.15.tar.gz -C /opt/tomcat10.1.15 --strip-components=1
+
+	change owner and make sh executables:
+	  sudo chown -R tomcat: /opt/tomcat10.1.15
+	  sudo sh -c 'chmod +x /opt/tomcat10.1.15/bin/*.sh'
+	
+	Edit config files in the same way as when installing  
+	  sudo nano /opt/tomcat10.1.15/conf/tomcat-users.xml
+	  sudo nano /opt/tomcat10.1.15/webapps/manager/META-INF/context.xml
+	  sudo nano /opt/tomcat10.1.15/webapps/host-manager/META-INF/context.xml
+	  
+	sudo cp /opt/tomcat10/webapps/*.war /opt/tomcat10.1.15/webapps/
+
+	sudo systemctl stop tomcat10
+	sudo mv /opt/tomcat10 /opt/tomcat10.1.14
+	sudo mv /opt/tomcat10.1.15 /opt/tomcat10
+	sudo systemctl start tomcat10
 	   
-Installing zip
+Installing zip (trenger ikke)
 -----------------------------------------------------------------------------------------------------------
 sudo apt install zip	   
 	  
