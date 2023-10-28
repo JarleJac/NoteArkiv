@@ -81,7 +81,7 @@ subprojects {
 
 	dependencies { testImplementation 'junit:junit:4.13.2' }
 
-	version='2.3.1.1'
+	version='2.3.2.0'
 
 	jar { manifest.attributes provider: 'JacJarSoft' }
 }
