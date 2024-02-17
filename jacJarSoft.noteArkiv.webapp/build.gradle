@@ -49,6 +49,13 @@ task buildTjollingProdUnix(type: War) {
 	destinationDirectory = file "$buildDir/libs/unix"
 }
 
+task buildFarriskoretProdUnix(type: War) {
+	from 'configurations/unix-farriskoret-prod/warRoot'  
+	webInf { from 'configurations/unix-farriskoret-prod' } 
+	archiveFileName = "farriskoret-notearkiv##${project.version}.war"
+	destinationDirectory = file "$buildDir/libs/unix"
+}
+
 task buildProd(type: War) {
 	webInf { from 'configurations/prod' } 
 	archiveFileName = "notearkiv##${project.version}.war"

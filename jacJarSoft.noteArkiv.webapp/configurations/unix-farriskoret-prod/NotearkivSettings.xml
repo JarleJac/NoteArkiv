@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NoteArkivSettings>
+	<persistenceProperties>
+		<property key="jakarta.persistence.jdbc.driver">org.sqlite.JDBC</property>
+		<property key="jakarta.persistence.jdbc.url">jdbc:sqlite:/notearkiv/farriskoret/prod/database/Notearkiv.db</property>
+		<property key="eclipselink.logging.logger">JavaLogger</property>
+		<property key="eclipselink.logging.level">WARNING</property>
+		<property key="eclipselink.logging.parameters">true</property>
+		<property key="eclipselink.logging.session">false</property>
+	</persistenceProperties>
+	<helpFiles>
+<!-- 		<fileInfo> -->
+<!-- 			<description>Dette er brukerveiledning for de mest brukte funksjonene</description> -->
+<!-- 			<fileName>Brukerveiledning nytt notearkiv.pdf</fileName> -->
+<!-- 		</fileInfo> -->
+<!-- 		<fileInfo> -->
+<!-- 			<description>Dette er brukerveiledning for registrering og endring av noter, lister og filer</description> -->
+<!-- 			<fileName>brukerveiledning nytt notearkiv kan endre.pdf</fileName> -->
+<!-- 		</fileInfo> -->
+		<fileInfo>
+			<description>Dette er brukerveiledning for administrative oppgaver som vedlikehold av brukere</description>
+			<fileName>Notearkiv brukerveiledning - Administrative funksjoner.pdf</fileName>
+		</fileInfo>
+	</helpFiles>
+	<filesDirectory>/notearkiv/farriskoret/prod/files</filesDirectory>
+	<jsAppSettings>
+		<applicationTitle>Farriskoret Notearkiv</applicationTitle>
+		<applicationWelcomeTitle>Velkommen til notearkivet</applicationWelcomeTitle>
+		<applicationWelcomeHtml>
+			<![CDATA[<div>Dette er notearkivet til Farriskoret</div>
+			<div>&nbsp;</div>
+			<div>Noter, stemmefiler og annen informasjon som finnes tilgjengelig i dette systemet eies av
+				Farriskoret. Det er kun ment for Farriskoret sine medlemmer og må ikke
+				distribueres videre.</div>]]>
+		</applicationWelcomeHtml>
+		<applicationId>NoteArkiv.farriskoretProd</applicationId>
+	</jsAppSettings>
+	<chacheControlMaxAge>3600</chacheControlMaxAge>
+</NoteArkivSettings>
