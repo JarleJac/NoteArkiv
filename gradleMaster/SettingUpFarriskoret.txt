@@ -8,7 +8,80 @@ From https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ub
 sudo apt update
 sudo apt install nginx
 
+in /etc/nginx/sites-available
+	sudo nano default
+	importand settings:
+			server_name farriskoret.hobby-site.com;
+
+        	client_max_body_size 0;
+
+
+	        location / {
+	                # First attempt to serve request as file, then
+	                # as directory, then fall back to displaying a 404.
+	                try_files $uri $uri/ =404;
+	        }
+	
+	        location /notearkiv/ {
+	                proxy_pass http://127.0.0.1:8080/farriskoret-notearkiv/;
+	        }
+ 
+ in /var/www/html
+  sudo nano index.nginx-debian.html (remove all in heading and body exept for 1 word. nginx in body)
+ 
+ After changes
+ 	sudo systemctl restart nginx	
+
 Installing Java
 ------------------------------------------------------------------------------------------------
 
 sudo apt install openjdk-21-jdk-headless
+
+
+Installing tomcat (https://linux.how2shout.com/how-to-install-apache-tomcat-10-on-ubuntu-22-04-lts/)
+----------------------------------------------------------------------------------------------------
+in ubuntu home dir
+	wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.18/bin/apache-tomcat-10.1.18.tar.gz
+	sudo mkdir -p /opt/tomcat10
+	sudo tar xzvf apache-tomcat-*tar.gz -C /opt/tomcat10 --strip-components=1
+
+	create user:
+	  sudo groupadd tomcat
+	  sudo useradd -s /bin/false -g tomcat -d /opt/tomcat10 tomcat
+
+	change owner and make sh executables:
+	  sudo chown -R tomcat: /opt/tomcat10
+	  sudo sh -c 'chmod +x /opt/tomcat10/bin/*.sh'
+
+	use this to see java installation folder:
+	  sudo update-java-alternatives -l
+
+	build service control file:
+	using this: /usr/lib/jvm/java-1.21.0-openjdk-amd64
+	copied from: https://linux.how2shout.com/how-to-install-apache-tomcat-10-on-ubuntu-22-04-lts/ (actually from setup of tjølling sangforening))
+	   sudo nano /etc/systemd/system/tomcat10.service
+	
+	Tell systemctl  that we have a new service:
+	  sudo systemctl daemon-reload
+	Start tomcat:
+	  sudo systemctl start tomcat10
+	Enable autostart:
+	  sudo systemctl enable tomcat10
+	Check that everything is ok
+	  sudo systemctl status tomcat10 --no-pager -l
+	Edit users (admin user)
+	   sudo nano /opt/tomcat10/conf/tomcat-users.xml
+	   		<role rolename="admin"/>
+			<role rolename="admin-gui"/>
+			<role rolename="manager"/>
+			<role rolename="manager-gui"/>
+			
+			<user username="admin" password="binders" roles="admin,admin-gui,manager,manager-gui"/>
+	   
+	Allow manager/host-manager from other places than localhost. comment out <Valve className=... Allow=.../>
+	   sudo nano /opt/tomcat10/webapps/manager/META-INF/context.xml
+	   sudo nano /opt/tomcat10/webapps/host-manager/META-INF/context.xml
+	   sudo systemctl restart tomcat10
+	  
+	  
+	
