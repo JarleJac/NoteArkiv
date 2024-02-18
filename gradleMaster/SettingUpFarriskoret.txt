@@ -1,0 +1,14 @@
+Server config
+---------------------------------------------------------------------------------------------------
+sudo timedatectl set-timezone Europe/Oslo
+
+Setting up nginx
+From https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04
+--------------------------------------------------------------------------------------------------
+sudo apt update
+sudo apt install nginx
+
+Installing Java
+------------------------------------------------------------------------------------------------
+
+sudo apt install openjdk-21-jdk-headless
