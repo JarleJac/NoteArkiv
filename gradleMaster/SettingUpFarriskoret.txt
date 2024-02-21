@@ -1,0 +1,157 @@
+Server config
+---------------------------------------------------------------------------------------------------
+sudo timedatectl set-timezone Europe/Oslo
+
+Setting up nginx
+From https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04
+--------------------------------------------------------------------------------------------------
+sudo apt update
+sudo apt install nginx
+
+in /etc/nginx/sites-available
+	sudo nano default
+	importand settings:
+			server_name farriskoret.hobby-site.com;
+
+        	client_max_body_size 0;
+
+
+	        location / {
+	                # First attempt to serve request as file, then
+	                # as directory, then fall back to displaying a 404.
+	                try_files $uri $uri/ =404;
+	        }
+	
+	        location /notearkiv/ {
+	                proxy_pass http://127.0.0.1:8080/farriskoret-notearkiv/;
+	        }
+ 
+ in /var/www/html
+  sudo nano index.nginx-debian.html (remove all in heading and body exept for 1 word. nginx in body)
+ 
+ After changes
+ 	sudo systemctl restart nginx	
+ 	
+
+Setting up certbot and certificates 
+From https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal
+-------------------------------------------------------------------------------------------------
+sudo snap install --classic certbot 
+sudo ln -s /snap/bin/certbot /usr/bin/certbot	
+
+Auto get certificates and auto edit nginx conf file
+	sudo certbot --nginx
+		answers email Q with jarle.jacobsen@gmail.com
+		Answers a lot of other Q's. self explanitory
+
+sudo systemctl restart nginx	
+
+
+Installing Java
+------------------------------------------------------------------------------------------------
+
+sudo apt install openjdk-21-jdk-headless
+
+
+Installing tomcat (https://linux.how2shout.com/how-to-install-apache-tomcat-10-on-ubuntu-22-04-lts/)
+----------------------------------------------------------------------------------------------------
+in ubuntu home dir
+	wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.18/bin/apache-tomcat-10.1.18.tar.gz
+	sudo mkdir -p /opt/tomcat10
+	sudo tar xzvf apache-tomcat-*tar.gz -C /opt/tomcat10 --strip-components=1
+
+	create user:
+	  sudo groupadd tomcat
+	  sudo useradd -s /bin/false -g tomcat -d /opt/tomcat10 tomcat
+
+	change owner and make sh executables:
+	  sudo chown -R tomcat: /opt/tomcat10
+	  sudo sh -c 'chmod +x /opt/tomcat10/bin/*.sh'
+
+	use this to see java installation folder:
+	  sudo update-java-alternatives -l
+
+	build service control file:
+	using this: /usr/lib/jvm/java-1.21.0-openjdk-amd64
+	copied from: https://linux.how2shout.com/how-to-install-apache-tomcat-10-on-ubuntu-22-04-lts/ (actually from setup of tjølling sangforening))
+	   sudo nano /etc/systemd/system/tomcat10.service
+	
+	Tell systemctl  that we have a new service:
+	  sudo systemctl daemon-reload
+	Start tomcat:
+	  sudo systemctl start tomcat10
+	Enable autostart:
+	  sudo systemctl enable tomcat10
+	Check that everything is ok
+	  sudo systemctl status tomcat10 --no-pager -l
+	Edit users (admin user)
+	   sudo nano /opt/tomcat10/conf/tomcat-users.xml
+	   		<role rolename="admin"/>
+			<role rolename="admin-gui"/>
+			<role rolename="manager"/>
+			<role rolename="manager-gui"/>
+			
+			<user username="admin" password="binders" roles="admin,admin-gui,manager,manager-gui"/>
+	   
+	Allow manager/host-manager from other places than localhost. comment out <Valve className=... Allow=.../>
+	   sudo nano /opt/tomcat10/webapps/manager/META-INF/context.xml
+	   sudo nano /opt/tomcat10/webapps/host-manager/META-INF/context.xml
+	   sudo systemctl restart tomcat10
+	  
+Creating folder for Notearkiv
+-----------------------------------------------------------------------------------------------------------
+sudo -s
+    mkdir -p -v /notearkiv/farriskoret/prod/database
+    mkdir -p -v /notearkiv/farriskoret/prod/files
+    mkdir -p -v /notearkiv/farriskoret/prod/log
+    mkdir -p -v /notearkiv/farriskoret/prod/deploy
+    
+    exit
+
+sudo chown ubuntu /notearkiv /notearkiv/farriskoret 
+sudo chgrp ubuntu /notearkiv /notearkiv/farriskoret 
+sudo chown ubuntu /notearkiv/farriskoret/prod /notearkiv/farriskoret/prod/deploy
+sudo chgrp ubuntu /notearkiv/farriskoret/prod /notearkiv/farriskoret/prod/deploy
+
+sudo chown -R tomcat /notearkiv/farriskoret/prod/database /notearkiv/farriskoret/prod/files /notearkiv/farriskoret/prod/log
+sudo chgrp -R tomcat /notearkiv/farriskoret/prod/database /notearkiv/farriskoret/prod/files /notearkiv/farriskoret/prod/log
+sudo chmod -R o=r /notearkiv
+
+
+Sette execute på alle mapper til andre
+	sudo find /notearkiv -type d -exec chmod o+x {} +    
+	  
+	
+Deploying Notearkiv
+-----------------------------------------------------------------------------------------------------------
+winscp farriskoret-notearkiv##2.3.2.0.war  til   /notearkiv/farriskoret/prod/deploy
+
+in putty
+sudo -s
+ cp /notearkiv/farriskoret/prod/deploy/farriskoret-notearkiv##2.3.2.0.war /opt/tomcat10/webapps/
+ rm /opt/tomcat10/webapps/farriskoret-notearkiv##2.3.1.0.war (old version)
+ exit
+	
+ Sette opp backup jobb
+ ---------------------------------------------------------------------------------------------------------
+ Laget backup.sh i /notearkiv/farriskoret/prod
+ sudo chmod o+x /notearkiv/farriskoret/prod/backup.sh
+ kjøres fra /notearkiv/farriskoret/prod med sudo ./backup.sh (eller fra andre steder med full path)
+ sette opp cron jobb
+    sudo crontab -e
+    	30 03 * * * /notearkiv/farriskoret/prod/backup.sh
+    
+Installere og configurere Jotta (https://docs.jottacloud.com/nb/articles/1436855-jottacloud-cli-for-linux-debian-packages)
+------------------------------------------------------------------------------------------------------------
+apt-get install wget apt-transport-https ca-certificates
+wget -O - https://repo.jotta.cloud/public.gpg | sudo apt-key add -
+echo "deb https://repo.jotta.cloud/debian debian main" | sudo tee /etc/apt/sources.list.d/jotta-cli.list
+
+sudo apt-get update
+sudo apt-get install jotta-cli    
+run_jottad
+loginctl enable-linger
+    
+jotta-cli login (svare og legge inn token)
+jotta-cli add /backup/notearkiv/farriskoret/prod
+    

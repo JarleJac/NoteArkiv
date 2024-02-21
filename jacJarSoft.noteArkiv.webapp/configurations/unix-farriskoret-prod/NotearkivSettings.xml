@@ -2,12 +2,9 @@
 <NoteArkivSettings>
 	<persistenceProperties>
 		<property key="jakarta.persistence.jdbc.driver">org.sqlite.JDBC</property>
-<!-- 		<property key="jakarta.persistence.jdbc.url">jdbc:sqlite:C:\data\Privat\NoteArkiv\Dev\Database\dev.db</property> -->
-<!-- 		<property key="jakarta.persistence.jdbc.url">jdbc:sqlite:D:\Source\Java\NoteArkiv\Database\ProdKopi.db</property> -->
-		<property key="jakarta.persistence.jdbc.url">jdbc:sqlite:D:\Source\Java\NoteArkiv\Database\ny.db</property>
-<!-- 		<property key="jakarta.persistence.jdbc.url">jdbc:sqlite:D:\Source\Java\NoteArkiv\Database\Notearkiv.db</property> -->
+		<property key="jakarta.persistence.jdbc.url">jdbc:sqlite:/notearkiv/farriskoret/prod/database/Notearkiv.db</property>
 		<property key="eclipselink.logging.logger">JavaLogger</property>
-		<property key="eclipselink.logging.level">INFO</property>
+		<property key="eclipselink.logging.level">WARNING</property>
 		<property key="eclipselink.logging.parameters">true</property>
 		<property key="eclipselink.logging.session">false</property>
 	</persistenceProperties>
@@ -25,21 +22,18 @@
 			<fileName>Notearkiv brukerveiledning - Administrative funksjoner.pdf</fileName>
 		</fileInfo>
 	</helpFiles>
-<!-- 	<filesDirectory>C:\data\Privat\NoteArkiv\Dev\Files</filesDirectory> -->
-<!-- 	<filesDirectory>D:\Source\Java\NoteArkiv\Files\prodkopi</filesDirectory> -->
-	<filesDirectory>D:\Source\Java\NoteArkiv\Files\ny</filesDirectory>
-<!-- 	<filesDirectory>D:\Source\Java\NoteArkiv\Files\temp</filesDirectory> -->
+	<filesDirectory>/notearkiv/farriskoret/prod/files</filesDirectory>
 	<jsAppSettings>
-<!-- 		<backgroundImageUrl>./images/testbackground_small.png</backgroundImageUrl> -->
-	 	<applicationTitle>NoteArkiv Utvikling</applicationTitle>
+		<applicationTitle>Farriskoret Notearkiv</applicationTitle>
 		<applicationWelcomeTitle>Velkommen til notearkivet</applicationWelcomeTitle>
 		<applicationWelcomeHtml>
-			<![CDATA[<div>Dette er notearkiv utvikling</div>
+			<![CDATA[<div>Dette er notearkivet til Farriskoret</div>
 			<div>&nbsp;</div>
-			<div>bla bla om arkivet tester æøåÆØÅ.<p><b>Fet asse</b></p> 
-				Noe mere tekst.</div>]]>
+			<div>Noter, stemmefiler og annen informasjon som finnes tilgjengelig i dette systemet eies av
+				Farriskoret. Det er kun ment for Farriskoret sine medlemmer og må ikke
+				distribueres videre.</div>]]>
 		</applicationWelcomeHtml>
-		<applicationId>NoteArkiv.Develop</applicationId>
+		<applicationId>NoteArkiv.farriskoretProd</applicationId>
 	</jsAppSettings>
-	<chacheControlMaxAge>60</chacheControlMaxAge>
+	<chacheControlMaxAge>3600</chacheControlMaxAge>
 </NoteArkivSettings>

@@ -3,6 +3,9 @@ Upgrading ubuntu
 sudo apt update
 sudo apt upgrade
 
+*if needed
+sudo reboot
+
 Mount a disk
 **************************
 sudo mount /dev/xvdf /tempdata
