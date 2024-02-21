@@ -13,8 +13,16 @@
 	</persistenceProperties>
 	<helpFiles>
 		<fileInfo>
-			<description>Dette er en test beskrivelse</description>
-			<fileName>TestDocFile.pdf</fileName>
+			<description>Dette er brukerveiledning for de mest brukte funksjonene</description>
+			<fileName>Notearkiv brukerveiledning - De mest vanlige funksjonene.pdf</fileName>
+		</fileInfo>
+		<fileInfo>
+			<description>Dette er brukerveiledning for registrering og endring av noter, lister og filer</description>
+			<fileName>Notearkiv brukerveiledning - Vedlikehold av Noter, Lister etc.pdf</fileName>
+		</fileInfo>
+		<fileInfo>
+			<description>Dette er brukerveiledning for administrative oppgaver som vedlikehold av brukere</description>
+			<fileName>Notearkiv brukerveiledning - Administrative funksjoner.pdf</fileName>
 		</fileInfo>
 	</helpFiles>
 <!-- 	<filesDirectory>C:\data\Privat\NoteArkiv\Dev\Files</filesDirectory> -->
