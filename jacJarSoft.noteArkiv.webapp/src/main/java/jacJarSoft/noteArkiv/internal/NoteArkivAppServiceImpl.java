@@ -12,6 +12,7 @@ import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.NoteArkivAppService;
 import jacJarSoft.noteArkiv.webapi.LogonInfo;
 import jacJarSoft.noteArkiv.webapi.LogonInfoReturn;
+import jacJarSoft.noteArkiv.webapi.UserInfoReturn;
 import jacJarSoft.util.Auth.AuthTokenUtil;
 import jakarta.ws.rs.core.Response;
 
@@ -49,8 +50,17 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 
 	@Override
 	public Response forgotPw(String userOrEmail) {
+		User user;
+		if (userOrEmail.contains("@"))
+			user = userDao.getUserFromEmail(userOrEmail);
+		else
+			user = userDao.getUser(userOrEmail);
+		
+		if (user == null)
+			throw new ValidationErrorException("Finner ikke bruker med navn eller e-post " + userOrEmail);
+
 		// TODO Auto-generated method stub
-		return null;
+		return Response.ok(new UserInfoReturn(user)).build();
 	}
 
 
