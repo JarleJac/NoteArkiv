@@ -351,10 +351,10 @@ public class NoteServiceImpl extends BaseService implements NoteService {
 	private SheetList internalAddOrUpdateNote(EntityManager em, SheetList list)
 	{
 		if (list == null || StringUtils.isEmpty(list.getName())) {
-			throw new ValidationErrorException("Navn kan ikke v�re blank.");
+			throw new ValidationErrorException("Navn kan ikke være blank.");
 		}
 		if (list == null || list.getListDate() == null) {
-			throw new ValidationErrorException("Dato m� angis.");
+			throw new ValidationErrorException("Dato må angis.");
 		}
 		SheetList result;
 		if (list.getListId() != 0) {
