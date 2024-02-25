@@ -1,0 +1,18 @@
+<h3 class="pagetop">Glemt bruker/passord</h3>
+<form class="form-horizontal">
+  <div class="form-group">
+    <div class="col-sm-6">Legg inn bruker eller e-post i feltet nedenfor og trykk Nullstille passordet knappen. Systemet vil sende deg en e-post med en link der du kan sette et nytt passord.</div>
+  </div>
+  <div class="form-group">
+    <label for="user" class="col-sm-2 control-label">Bruker eller e-post</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="user" data-ng-model="userOrEmail" placeholder="Bruker eller e-post adresse">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-1">
+      <button type="submit" class="btn btn-default"  data-ng-click="doForgotPw()">Nullstille passordet</button>
+    </div>
+  </div>
+</form>

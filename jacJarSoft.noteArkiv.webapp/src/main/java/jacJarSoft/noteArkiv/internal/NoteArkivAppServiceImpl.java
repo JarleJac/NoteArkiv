@@ -47,5 +47,11 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 		return Response.ok(List.of(getAppSettings().getHelpFiles().getFileInfo())).build();
 	}
 
+	@Override
+	public Response forgotPw(String userOrEmail) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

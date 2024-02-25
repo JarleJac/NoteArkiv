@@ -25,4 +25,9 @@ public interface NoteArkivAppService {
 	@Path("/logon")
 	public Response logon(LogonInfo logonInfo);
 
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/forgotpw")
+	public Response forgotPw(String userOrEmail);
+
 }

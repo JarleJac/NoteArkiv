@@ -75,6 +75,11 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 		controller : 'logonController',
 		controllerAs : 'logonCtrl'
 	})
+	.when('/forgotpw', {
+		templateUrl : 'templates/pages/logon/forgotpw.html',
+		controller : 'logonController',
+		controllerAs : 'logonCtrl'
+	})
 	.when('/changepw', {
 		templateUrl : 'templates/pages/logon/changepw.html',
 		controller : 'changepwController',

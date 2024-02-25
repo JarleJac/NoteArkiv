@@ -74,6 +74,15 @@ angular.module('notearkiv').factory('Auth', function AuthFactory($http, AuthToke
 				throw result;
 			});
 			
+		},
+		forgotPw : function(userOrEmail) {
+			return $http({method: "POST", url : "rest/appservice/forgotpw", data: userOrEmail })
+			.then(function successCallback(result) {
+				return result;
+			}, function errorCallback(result) {
+				throw result;
+			});
+			
 		}
 
 	}
