@@ -57,7 +57,7 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 			user = userDao.getUser(userOrEmail);
 		
 		if (user == null)
-			throw new ValidationErrorException("Finner ikke bruker med navn eller e-post " + userOrEmail);
+			throw new ValidationErrorException("Finner ikke bruker med id eller e-post " + userOrEmail);
 
 		// TODO Auto-generated method stub
 		return Response.ok(new UserInfoReturn(user)).build();
