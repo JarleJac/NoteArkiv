@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
 import jacJarSoft.noteArkiv.dao.UserDao;
+import jacJarSoft.noteArkiv.internal.mail.ForgotPwMailSender;
 import jacJarSoft.noteArkiv.model.AccessLevel;
 import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.NoteArkivAppService;
@@ -59,7 +60,8 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 		if (user == null)
 			throw new ValidationErrorException("Finner ikke bruker med id eller e-post " + userOrEmail);
 
-		// TODO Auto-generated method stub
+		ForgotPwMailSender forgotPwMailSender = new ForgotPwMailSender(user);
+		forgotPwMailSender.sendMail();
 		return Response.ok(new UserInfoReturn(user)).build();
 	}
 
