@@ -13,7 +13,7 @@ public class ForgotPwMailSender {
 	public void sendMail() {
 		String htmlContent = builMailHtml();
 		
-		String subject = "Dett er en test";
+		String subject = "aaddff æøåÆØÅ";
 		String recipientTO = "jarle.jacobsen@gmail.com";
 		
 		MailSender mailSender = MailSenderFactory.getMailSender();
@@ -25,14 +25,12 @@ public class ForgotPwMailSender {
 
 	private String builMailHtml() {
 		String htmlContent = """
-				<html>
-					<body>
-					Hei ${userName}
-					Din bruker er ${user}
-					Denne skulle egentlig vært sendt til ${userMail}
-					<body>
-				</html>
-			""";
+				<html><body>
+					Hei ${userName}<br />
+					Din bruker er ${user}<br />
+					Denne skulle egentlig vært sendt til ${userMail}<br />æøåÆØÅ
+				</body></html>
+				""";
 		htmlContent = htmlContent.replace("${userName}", user.getName());
 		htmlContent = htmlContent.replace("${user}", user.getNo());
 		htmlContent = htmlContent.replace("${userMail}", user.geteMail());
