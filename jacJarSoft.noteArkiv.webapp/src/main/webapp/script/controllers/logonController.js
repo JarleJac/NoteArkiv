@@ -1,8 +1,8 @@
 /**
  * 
  */
-angular.module('notearkiv').controller('logonController', function($rootScope, $scope, Auth, $http) {
-	var controller = this;
+angular.module('notearkiv').controller('logonController', function($rootScope, $scope, Auth) {
+	$scope.pagePromise = null;
 	$scope.doLogon = function() {
 		$scope.$parent.logon($scope.info)
 	}
