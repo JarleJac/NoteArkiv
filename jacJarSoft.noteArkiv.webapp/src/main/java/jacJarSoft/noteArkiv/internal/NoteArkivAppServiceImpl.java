@@ -3,6 +3,7 @@ package jacJarSoft.noteArkiv.internal;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jacJarSoft.noteArkiv.base.NoteArkivAppInfo;
@@ -51,6 +52,9 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 
 	@Override
 	public Response forgotPw(String userOrEmail) {
+		if (StringUtils.isAllEmpty(userOrEmail))
+			throw new ValidationErrorException("Ingen bruker eller e-post er angitt.");
+			
 		User user;
 		if (userOrEmail.contains("@"))
 			user = userDao.getUserFromEmail(userOrEmail);
@@ -60,7 +64,7 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 		if (user == null)
 			throw new ValidationErrorException("Finner ikke bruker med id eller e-post " + userOrEmail);
 
-		ForgotPwMailSender forgotPwMailSender = new ForgotPwMailSender(user);
+		ForgotPwMailSender forgotPwMailSender = new ForgotPwMailSender(user, getAppSettings());
 		forgotPwMailSender.sendMail();
 		return Response.ok(new UserInfoReturn(user)).build();
 	}
