@@ -63,8 +63,10 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 		
 		if (user == null)
 			throw new ValidationErrorException("Finner ikke bruker med id eller e-post " + userOrEmail);
+		AppInfo info = new AppInfo();
+		info.setAppSettings(getAppSettings().getJsAppSettings());
 
-		ForgotPwMailSender forgotPwMailSender = new ForgotPwMailSender(user, getAppSettings());
+		ForgotPwMailSender forgotPwMailSender = new ForgotPwMailSender(user, info, getFreemarkerConfig());
 		forgotPwMailSender.sendMail();
 		return Response.ok(new UserInfoReturn(user)).build();
 	}

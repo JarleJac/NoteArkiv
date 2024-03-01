@@ -21,15 +21,15 @@ a.pwLink {
 </style>
 </head>
 <body>
-<div class=header>${appInfo.jsAppSettings.applicationTitle}</div>
+<div class=header>${appInfo.appSettings.applicationTitle}</div>
 
 <div>
 	<p>Hei ${user.name}</p>
-	<p>Du har bedt om å nullstille passordet for din bruker til ${appInfo.jsAppSettings.applicationTitle}.</p>
+	<p>Du har bedt om å nullstille passordet for din bruker til ${appInfo.appSettings.applicationTitle}.</p>
 	<p>Hvis det ikke er du som har bedt om å nullstille passordet, kan denne e-posten ignoreres. Si gjerne fra til din notearkiv ansvarlige.</p>
 	<p>Din bruker id er: ${user.no}</p>
 	<p>For å nullstille passordet og angi et nytt så kan du trykke på linken nedenfor.</p>
-	<p><a class="pwLink" href="http://localhost:8090/jacJarSoft.noteArkiv.webapp/#/forgotpw" target="_blank">Nullstille passordet</a></p>
+	<p><a class="pwLink" href="${resetPwUrl}" target="_blank">Nullstille passordet</a></p>
 	<p>Har du noen spørsmål kontakt din notearkiv ansvarlige</p>
 </div>
 </body>

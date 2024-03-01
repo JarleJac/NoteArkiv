@@ -15,6 +15,7 @@ dependencies {
 	implementation libraries.jaxws
 	implementation libraries.jaf
 	implementation libraries.mail
+	implementation libraries.freemarker
 	implementation libraries.jackson
 	providedCompile libraries.servlet
 }

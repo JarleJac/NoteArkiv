@@ -4,10 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.TemplateExceptionHandler;
 import jacJarSoft.noteArkiv.AppContext;
 import jacJarSoft.noteArkiv.db.NoteArkivDatabase;
 import jacJarSoft.noteArkiv.db.PersistenceFactory;
@@ -23,6 +27,7 @@ import jakarta.xml.bind.Unmarshaller;
 
 public class AppServletContextListner implements ServletContextListener {
 
+	public static final String FREEMARKER_CONFIG = "jacJarSoft.noteArkiv.webapp.FreemarkerConfig";
 	public static final String ENTITY_MANAGER_FACTORY = "jacJarSoft.noteArkiv.webapp.EntityManagerFactory";
 	public static final String APP_SETTINGS = "jacJarSoft.noteArkiv.webapp.AppSettings";
 	NoteArkivDatabase db;
@@ -43,8 +48,26 @@ public class AppServletContextListner implements ServletContextListener {
 		
 		initFilesDirectory();
 		initDatabase();
+		initFreemarker();
 		
 		AppContext.remove();
+	}
+
+	private void initFreemarker() {
+
+		ClassTemplateLoader templateLoader = new ClassTemplateLoader(this.getClass().getClassLoader(),
+				"/jacJarSoft/noteArkiv/internal/mail");
+		Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);
+		// cfg.setDirectoryForTemplateLoading(new File("/where/you/store/templates"));
+		cfg.setTemplateLoader(templateLoader);
+		// Recommended settings for new projects:
+		cfg.setDefaultEncoding("UTF-8");
+		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+		cfg.setLogTemplateExceptions(true);
+		cfg.setWrapUncheckedExceptions(true);
+		cfg.setFallbackOnNullLoopVariable(false);
+		cfg.setSQLDateAndTimeTimeZone(TimeZone.getDefault());
+		servletContext.setAttribute(FREEMARKER_CONFIG, cfg);
 	}
 
 	private void initDatabase() {

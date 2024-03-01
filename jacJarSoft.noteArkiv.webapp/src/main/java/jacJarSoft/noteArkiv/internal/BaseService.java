@@ -6,6 +6,7 @@ import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.PhaseInterceptorChain;
 import org.apache.cxf.transport.http.AbstractHTTPDestination;
 
+import freemarker.template.Configuration;
 import jacJarSoft.noteArkiv.AppContextAware;
 import jacJarSoft.noteArkiv.webapp.AppServletContextListner;
 import jacJarSoft.util.DbUtil;
@@ -48,4 +49,10 @@ public class BaseService extends AppContextAware {
 		return appSettings;
 	}
 	
+	protected Configuration getFreemarkerConfig()
+	{
+		Configuration cfg = 
+				(Configuration) servletContext.getAttribute(AppServletContextListner.FREEMARKER_CONFIG);
+		return cfg;
+	}
 }
