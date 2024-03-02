@@ -100,12 +100,14 @@ public class MailSenderFactory {
 		}
 	}
 
-	private String mailUser = "noreply.notearkiv.tjollingsang@gmail.com";
-	private String mailpw = "rqyi rdjq ctpq vqmn";
+	private String mailUser;
+	private String mailpw;
 	private Properties mailprops;
 
 	private MailSenderFactory(Properties mailprops) {
 		this.mailprops = mailprops;
+		mailUser = System.getProperty("notearkiv.email.user");
+		mailpw = System.getProperty("notearkiv.email.pw");
 	}
 
 	private MailSender getMailSenderInternal() {
