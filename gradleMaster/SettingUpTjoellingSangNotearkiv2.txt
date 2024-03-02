@@ -19,6 +19,20 @@ Create symlink to sites enabled for jacjarsoft.gotdns.org
  
  After changes
  	sudo systemctl restart nginx
+ 	
+Setting up certbot and certificates 
+From https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal
+-------------------------------------------------------------------------------------------------
+sudo snap install --classic certbot 
+sudo ln -s /snap/bin/certbot /usr/bin/certbot	
+
+Auto get certificates and auto edit nginx conf file
+	sudo certbot --nginx
+		answers email Q with jarle.jacobsen@gmail.com
+		Answers a lot of other Q's. self explanitory
+
+sudo systemctl restart nginx	
+ 	
  
  Installing Java
  ------------------------------------------------------------------------------------------------
@@ -34,6 +48,14 @@ sudo apt install openjdk-8-jre-headless   # version 8u382-ga-1~22.04.1
  
 sudo apt install openjdk-17-jre-headless
 sudo apt install openjdk-17-jdk-headless (did both)
+
+02.03.24: Upgrading to Java 21
+------------------------------/opt
+sudo apt install openjdk-21-jdk-headless
+sudo systemctl stop tomcat10
+edit tomcat service file and do
+sudo systemctl daemon-reload
+sudo systemctl start tomcat10
 
 Installing tomcat (https://linux.how2shout.com/how-to-install-apache-tomcat-10-on-ubuntu-22-04-lts/)
 ----------------------------------------------------------------------------------------------------
@@ -96,6 +118,7 @@ in ubuntu home dir
 	sudo mv /opt/tomcat10 /opt/tomcat10.1.14
 	sudo mv /opt/tomcat10.1.15 /opt/tomcat10
 	sudo systemctl start tomcat10
+	   
 	   
 Installing zip (trenger ikke)
 -----------------------------------------------------------------------------------------------------------
