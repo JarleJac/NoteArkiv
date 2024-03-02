@@ -42,4 +42,5 @@
 		<applicationId>NoteArkiv.Develop</applicationId>
 	</jsAppSettings>
 	<chacheControlMaxAge>60</chacheControlMaxAge>
+	<baseNotearkivUrl></baseNotearkivUrl>
 </NoteArkivSettings>

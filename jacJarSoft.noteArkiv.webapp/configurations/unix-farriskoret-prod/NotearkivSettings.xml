@@ -36,4 +36,5 @@
 		<applicationId>NoteArkiv.farriskoretProd</applicationId>
 	</jsAppSettings>
 	<chacheControlMaxAge>3600</chacheControlMaxAge>
+	<baseNotearkivUrl>https://farriskoret.hobby-site.com/notearkiv/#/</baseNotearkivUrl>
 </NoteArkivSettings>

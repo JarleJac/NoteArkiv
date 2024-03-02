@@ -36,4 +36,5 @@
 		<applicationId>NoteArkiv.tjollingProd</applicationId>
 	</jsAppSettings>
 	<chacheControlMaxAge>3600</chacheControlMaxAge>
+	<baseNotearkivUrl>https://tjollingsangforening.dyndns.org/notearkiv/#/</baseNotearkivUrl>
 </NoteArkivSettings>
