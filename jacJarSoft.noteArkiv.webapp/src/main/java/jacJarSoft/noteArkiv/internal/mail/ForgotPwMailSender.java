@@ -35,7 +35,7 @@ public class ForgotPwMailSender {
 		String htmlContent = builMailHtml(buildUrl());
 		
 		String subject = "Nullstille passordet for din bruker til " + appInfo.getAppSettings().getApplicationTitle();
-		String recipientTO = "jarle.jacobsen@gmail.com";
+		String recipientTO = user.geteMail();
 		
 		MailSender mailSender = MailSenderFactory.getMailSender();
 		
