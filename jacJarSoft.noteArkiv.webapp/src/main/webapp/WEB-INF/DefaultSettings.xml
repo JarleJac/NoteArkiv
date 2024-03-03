@@ -43,4 +43,11 @@
 	</jsAppSettings>
 	<chacheControlMaxAge>60</chacheControlMaxAge>
 	<baseNotearkivUrl></baseNotearkivUrl>
+	<mailProperties>
+		<property key="mail.smtp.host">smtp.gmail.com</property>
+		<property key="mail.smtp.port">587</property>
+		<property key="mail.smtp.auth">true</property>
+		<property key="mail.smtp.starttls.enable">true</property>
+	</mailProperties>
+	
 </NoteArkivSettings>

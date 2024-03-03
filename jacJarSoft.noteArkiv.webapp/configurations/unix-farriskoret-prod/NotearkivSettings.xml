@@ -37,4 +37,10 @@
 	</jsAppSettings>
 	<chacheControlMaxAge>3600</chacheControlMaxAge>
 	<baseNotearkivUrl>https://farriskoret.hobby-site.com/notearkiv/#/</baseNotearkivUrl>
+	<mailProperties>
+		<property key="mail.smtp.host">smtp.gmail.com</property>
+		<property key="mail.smtp.port">587</property>
+		<property key="mail.smtp.auth">true</property>
+		<property key="mail.smtp.starttls.enable">true</property>
+	</mailProperties>
 </NoteArkivSettings>

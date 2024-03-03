@@ -20,6 +20,7 @@ public class MailSenderFactory {
 
 	private static MailSenderFactory instance;
 	private static Object instanceLock = new Object();
+	private static Properties mailprops;
 
 	private static MailSenderFactory getInstance() {
 		if (instance == null) {
@@ -32,21 +33,20 @@ public class MailSenderFactory {
 	}
 
 	private static MailSenderFactory createInstance() {
-		// TODO Initialze the factory from settings
-
-		Properties mailprops = new Properties();
-		mailprops.put("mail.smtp.host", "smtp.gmail.com");
-		mailprops.put("mail.smtp.port", "587");
-		mailprops.put("mail.smtp.auth", "true");
-		mailprops.put("mail.smtp.starttls.enable", "true");
-
-		MailSenderFactory factory = new MailSenderFactory(mailprops);
+		MailSenderFactory factory = new MailSenderFactory();
 
 		return factory;
 	}
 
 	public static MailSender getMailSender() {
 		return getInstance().getMailSenderInternal();
+	}
+	
+	public static void configure(Properties mailprops)	{
+		if (MailSenderFactory.mailprops != null)
+			throw new IllegalStateException("Alredy configured");
+		
+		MailSenderFactory.mailprops = mailprops;
 	}
 
 	private static class MailSenderImpl implements MailSender {
@@ -102,10 +102,8 @@ public class MailSenderFactory {
 
 	private String mailUser;
 	private String mailpw;
-	private Properties mailprops;
 
-	private MailSenderFactory(Properties mailprops) {
-		this.mailprops = mailprops;
+	private MailSenderFactory() {
 		mailUser = System.getProperty("notearkiv.email.user");
 		mailpw = System.getProperty("notearkiv.email.pw");
 	}

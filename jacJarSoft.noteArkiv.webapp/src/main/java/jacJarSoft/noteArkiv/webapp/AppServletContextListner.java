@@ -16,6 +16,7 @@ import jacJarSoft.noteArkiv.AppContext;
 import jacJarSoft.noteArkiv.db.NoteArkivDatabase;
 import jacJarSoft.noteArkiv.db.PersistenceFactory;
 import jacJarSoft.noteArkiv.internal.NoteArkivSettings;
+import jacJarSoft.noteArkiv.internal.mail.MailSenderFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.servlet.ServletContext;
@@ -49,8 +50,13 @@ public class AppServletContextListner implements ServletContextListener {
 		initFilesDirectory();
 		initDatabase();
 		initFreemarker();
+		initMail();
 		
 		AppContext.remove();
+	}
+
+	private void initMail() {
+		MailSenderFactory.configure(appSettings.getMailProperties().getAsProperties());
 	}
 
 	private void initFreemarker() {

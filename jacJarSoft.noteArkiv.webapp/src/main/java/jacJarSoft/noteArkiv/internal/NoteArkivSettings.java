@@ -11,6 +11,7 @@ public class NoteArkivSettings {
 	private Integer chacheControlMaxAge = 3600;
 	private String filesDirectory;
 	private String baseNotearkivUrl;
+	private PropertyList mailProperties;
 
 	public PropertyList getPersistenceProperties() {
 		return persistenceProperties;
@@ -58,5 +59,13 @@ public class NoteArkivSettings {
 
 	public void setBaseNotearkivUrl(String baseNotearkivUrl) {
 		this.baseNotearkivUrl = baseNotearkivUrl;
+	}
+
+	public PropertyList getMailProperties() {
+		return mailProperties;
+	}
+
+	public void setMailProperties(PropertyList mailProperties) {
+		this.mailProperties = mailProperties;
 	}
 }
