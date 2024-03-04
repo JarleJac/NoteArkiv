@@ -83,6 +83,15 @@ angular.module('notearkiv').factory('Auth', function AuthFactory($http, AuthToke
 				throw result;
 			});
 			
+		},
+		checkToken : function(token) {
+			return $http({method: "POST", url : "rest/appservice/tokenuser", data: token })
+			.then(function successCallback(result) {
+				return result;
+			}, function errorCallback(result) {
+				return result;
+			});
+			
 		}
 
 	}

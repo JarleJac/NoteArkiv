@@ -117,6 +117,10 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 		}
 		$location.replace();
 	};
+	$scope.clearLocalStorageUser = function() {
+		localStorage.removeItem(controller.userLSName);
+		localStorage.removeItem(controller.passwordLSName);
+	}
 	$scope.changePwOk = function(isMustChange) {
 		if (isMustChange)
 			controller.setLogonOk();
@@ -154,6 +158,7 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 		else if ($location.path() != "/" && 
 				$location.path() != "/about" &&
 				$location.path() != "/help" &&
+				$location.path() != "/setpw" &&
 				$location.path() != "/logon") {
 			$location.path("/logon").replace();
 		}

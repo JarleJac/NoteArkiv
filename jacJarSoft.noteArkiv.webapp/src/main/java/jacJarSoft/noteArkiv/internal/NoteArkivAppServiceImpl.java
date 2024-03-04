@@ -15,8 +15,10 @@ import jacJarSoft.noteArkiv.service.NoteArkivAppService;
 import jacJarSoft.noteArkiv.webapi.LogonInfo;
 import jacJarSoft.noteArkiv.webapi.LogonInfoReturn;
 import jacJarSoft.noteArkiv.webapi.UserInfoReturn;
+import jacJarSoft.noteArkiv.webapi.UserTokenReturn;
 import jacJarSoft.util.Auth.AuthTokenUtil;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivAppService {
 	@Autowired
@@ -67,6 +69,13 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 		ForgotPwMailSender forgotPwMailSender = new ForgotPwMailSender(user, getAppSettings(), getFreemarkerConfig(), getNotearkivBaseUrl());
 		forgotPwMailSender.sendMail();
 		return Response.ok(new UserInfoReturn(user)).build();
+	}
+
+	@Override
+	public Response getUserFromToken(String token) {
+		UserTokenReturn resp = new UserTokenReturn();
+		resp.setErrorMsg("Ikke ferdig");
+		return Response.ok(resp).build();
 	}
 
 

@@ -90,6 +90,10 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
         }
 		
 	})
+	.when('/setpw', {
+		templateUrl : 'templates/pages/logon/setpw.html',
+		controller : 'setpwController',
+	})
 	.when('/changepw/:userNo', {
 		templateUrl : 'templates/pages/logon/changepw.html',
 		controller : 'changepwController',
