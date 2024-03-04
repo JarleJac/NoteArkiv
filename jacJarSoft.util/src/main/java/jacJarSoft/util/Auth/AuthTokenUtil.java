@@ -18,22 +18,28 @@ public class AuthTokenUtil {
 
 	private static Logger logger = Logger.getLogger(AuthTokenUtil.class.getName());
 	private static String ENC_KEY = "MayThe4thBeWithU";
-	
+	private static long MINUTES_60_DAYS = 86400;
+
 	public static String createToken(String userId, String tokenPart) {
+		return createToken(userId, tokenPart, MINUTES_60_DAYS);
+	}
+
+	public static String createToken(String userId, String tokenPart, long minutes) {
 		logger.fine("Creating auth token for " + userId + "/" + tokenPart);
-		AuthTokenInfo tokenInfo = new AuthTokenInfo(userId, tokenPart);
+		AuthTokenInfo tokenInfo = new AuthTokenInfo(userId, tokenPart, minutes);
 		String key = tokenInfo.getTokenString();
-		logger.fine("Token created: " + key );
+		logger.fine("Token created: " + key);
 		String encryptedToken;
 		try {
 			encryptedToken = encrypt(key);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
 				| BadPaddingException e) {
-			throw new AuthException("Unable to encrypt AuthToken",e);
-		} 
-		logger.fine("Encrypted: " + encryptedToken );
+			throw new AuthException("Unable to encrypt AuthToken", e);
+		}
+		logger.fine("Encrypted: " + encryptedToken);
 		return AuthTokenInfo.AuthSchema + " " + encryptedToken;
 	}
+
 	public static AuthTokenInfo getTokenInfo(String authString) {
 		String encryptedToken = AuthTokenInfo.getTokenFromAuthString(authString);
 		String tokenString;
@@ -41,12 +47,17 @@ public class AuthTokenUtil {
 			tokenString = decrypt(encryptedToken);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
 				| BadPaddingException e) {
-			throw new AuthException("Unable to decrypt AuthToken",e);
+			throw new AuthException("Unable to decrypt AuthToken", e);
 		}
 		AuthTokenInfo tokenInfo = AuthTokenInfo.fromTokenString(tokenString);
+		if (tokenInfo.isExpired())
+			throw new AuthException("Authtoken is expired");
+			
 		return tokenInfo;
 	}
-	private static String decrypt(String encryptedToken) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+
+	private static String decrypt(String encryptedToken) throws InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
 		Decoder decoder = Base64.getDecoder();
 		byte[] encrypted = decoder.decode(encryptedToken);
 
@@ -56,7 +67,8 @@ public class AuthTokenUtil {
 		return token;
 	}
 
-	private static String encrypt(String data) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+	private static String encrypt(String data) throws NoSuchAlgorithmException, NoSuchPaddingException,
+			InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 		Cipher cipher = createCipher(Cipher.ENCRYPT_MODE);
 		byte[] encrypted = cipher.doFinal(data.getBytes());
 
@@ -66,7 +78,9 @@ public class AuthTokenUtil {
 		String enc = encoder.encodeToString(encrypted);
 		return enc;
 	}
-	private static Cipher createCipher(int mode) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
+
+	private static Cipher createCipher(int mode)
+			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
 		Key aesKey = new SecretKeySpec(ENC_KEY.getBytes(), "AES");
 		Cipher cipher = Cipher.getInstance("AES");
 		cipher.init(mode, aesKey);

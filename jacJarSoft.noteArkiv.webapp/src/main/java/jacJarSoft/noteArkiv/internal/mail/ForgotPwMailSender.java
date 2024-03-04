@@ -11,6 +11,7 @@ import freemarker.template.Template;
 import jacJarSoft.noteArkiv.internal.AppInfo;
 import jacJarSoft.noteArkiv.internal.NoteArkivSettings;
 import jacJarSoft.noteArkiv.model.User;
+import jacJarSoft.util.Auth.AuthTokenUtil;
 
 public class ForgotPwMailSender {
     private static Logger logger = Logger.getLogger(ForgotPwMailSender.class.getName());
@@ -45,12 +46,12 @@ public class ForgotPwMailSender {
 
 	private String buildUrl() {
 		String tokenString = buildToken();
-		String resetPwUrl = baseNotearkivUrl + "setPw?spts=" + tokenString;
+		String resetPwUrl = baseNotearkivUrl + "setpw?spts=" + tokenString;
 		return resetPwUrl;
 	}
 
 	private String buildToken() {
-		return "TODO";
+		return AuthTokenUtil.createToken(user.getNo(), "forgotpw", 15);
 	}
 
 	private String builMailHtml(String resetPwUrl) {
