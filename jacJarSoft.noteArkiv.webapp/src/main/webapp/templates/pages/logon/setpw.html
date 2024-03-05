@@ -6,9 +6,10 @@
 
 <form data-ng-show="user" data-cg-busy="{promise:pagePromise,message:promiseMsg}" class="form-horizontal">
   <div class="form-group">
-    <div class="col-sm-6">Hei {{user.name}}.<br />
+    <div class="col-sm-7">Hei {{user.name}}.<br />
     Her kan du angi ditt nye passord 2 ganger og trykke Sett passord knappen for å sette passordet.</div>
   </div>
+  <div class="form-group">
     <label for="user" class="col-sm-2 control-label">Bruker</label>
     <div class="col-sm-5">
       <input type="text" readonly class="form-control" id="user" data-ng-model="user.no" placeholder="Bruker">

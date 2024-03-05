@@ -1,6 +1,7 @@
 
 package jacJarSoft.noteArkiv.internal;
 
+import java.net.URLDecoder;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,8 @@ import jacJarSoft.noteArkiv.webapi.LogonInfo;
 import jacJarSoft.noteArkiv.webapi.LogonInfoReturn;
 import jacJarSoft.noteArkiv.webapi.UserInfoReturn;
 import jacJarSoft.noteArkiv.webapi.UserTokenReturn;
+import jacJarSoft.util.Auth.AuthException;
+import jacJarSoft.util.Auth.AuthTokenInfo;
 import jacJarSoft.util.Auth.AuthTokenUtil;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -74,7 +77,14 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 	@Override
 	public Response getUserFromToken(String token) {
 		UserTokenReturn resp = new UserTokenReturn();
-		resp.setErrorMsg("Ikke ferdig");
+		
+		try {
+			AuthTokenInfo tokenInfo = AuthTokenUtil.getTokenInfo(token);
+			resp.setUser(userDao.getUser(tokenInfo.getUser()));
+			resp.setStatusOk(true);
+		} catch (Exception e) {
+			resp.setErrorMsg("Ugyldig eller utløpt autorisasjonstoken!");
+		}
 		return Response.ok(resp).build();
 	}
 

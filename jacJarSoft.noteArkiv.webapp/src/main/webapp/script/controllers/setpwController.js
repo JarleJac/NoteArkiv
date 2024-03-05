@@ -14,7 +14,7 @@ angular.module('notearkiv').controller('setpwController', function($rootScope, $
 		.then(function successCallback(result) {
 			if (result.data.statusOk)
 			{
-				$scope.user = data.user;
+				$scope.user = result.data.user;
 			}
 			else
 				$scope.errorMsg = result.data.errorMsg;

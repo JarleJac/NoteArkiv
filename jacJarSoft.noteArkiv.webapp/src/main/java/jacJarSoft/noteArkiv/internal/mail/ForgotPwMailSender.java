@@ -1,6 +1,8 @@
 package jacJarSoft.noteArkiv.internal.mail;
 
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -51,7 +53,13 @@ public class ForgotPwMailSender {
 	}
 
 	private String buildToken() {
-		return AuthTokenUtil.createToken(user.getNo(), "forgotpw", 15);
+		String token = AuthTokenUtil.createToken(user.getNo(), "forgotpw", 15);
+		try {
+			return URLEncoder.encode(token, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			logger.log(Level.SEVERE, "Exeption URLEncoding token", e);
+			throw new RuntimeException(e);
+		}
 	}
 
 	private String builMailHtml(String resetPwUrl) {
