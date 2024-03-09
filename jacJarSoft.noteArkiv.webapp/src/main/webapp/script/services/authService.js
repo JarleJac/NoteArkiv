@@ -92,6 +92,18 @@ angular.module('notearkiv').factory('Auth', function AuthFactory($http, AuthToke
 				return result;
 			});
 			
+		},
+		setPw : function(info) {
+			var setpwInfo = {token: info.token,
+							 newpassword: info.newpassword};
+			return $http({method: "POST", url : "rest/appservice/setpw", data: setpwInfo })
+			.then(function successCallback(result) {
+				logonInfo = {password: info.newpassword, user: result.data.user.no};
+				return result;
+			}, function errorCallback(result) {
+				throw result;
+			});
+			
 		}
 
 	}

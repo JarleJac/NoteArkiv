@@ -10,12 +10,14 @@ div.header {
   font-size: x-large;
   font-weight: bold;
   text-align: center;
+  color: black;
 }
 a.pwLink {
   background-color: #46ba4e;
   border-color: #61e86b;
   border: thin;
   padding: 4px;
+  color: black;
 }
 
 </style>
@@ -28,7 +30,7 @@ a.pwLink {
 	<p>Du har bedt om å nullstille passordet for din bruker til ${appInfo.appSettings.applicationTitle}.</p>
 	<p>Hvis det ikke er du som har bedt om å nullstille passordet, kan denne e-posten ignoreres. Si gjerne fra til din notearkiv ansvarlige.</p>
 	<p>Din bruker id er: ${user.no}</p>
-	<p>For å nullstille passordet og angi et nytt så kan du trykke på linken nedenfor.</p>
+	<p>For å nullstille passordet og angi et nytt så kan du trykke på linken nedenfor. <b><i>Linken vil være gyldig i 15 minutter fra du ba om å nullstille passordet.</i></b></p>
 	<p><a class="pwLink" href="${resetPwUrl}" target="_blank">Nullstille passordet</a></p>
 	<p>Har du noen spørsmål kontakt din notearkiv ansvarlige</p>
 </div>

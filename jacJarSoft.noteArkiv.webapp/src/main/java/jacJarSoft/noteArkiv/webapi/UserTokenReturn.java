@@ -6,6 +6,7 @@ public class UserTokenReturn {
 	private boolean statusOk;
 	private User user;
 	private String errorMsg;
+	private String token;
 
 	public boolean isStatusOk() {
 		return statusOk;
@@ -29,5 +30,13 @@ public class UserTokenReturn {
 
 	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 }

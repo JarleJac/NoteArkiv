@@ -1,7 +1,6 @@
 
 package jacJarSoft.noteArkiv.internal;
 
-import java.net.URLDecoder;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,13 +14,13 @@ import jacJarSoft.noteArkiv.model.User;
 import jacJarSoft.noteArkiv.service.NoteArkivAppService;
 import jacJarSoft.noteArkiv.webapi.LogonInfo;
 import jacJarSoft.noteArkiv.webapi.LogonInfoReturn;
+import jacJarSoft.noteArkiv.webapi.SetPwInfo;
 import jacJarSoft.noteArkiv.webapi.UserInfoReturn;
 import jacJarSoft.noteArkiv.webapi.UserTokenReturn;
-import jacJarSoft.util.Auth.AuthException;
+import jacJarSoft.util.PasswordUtil;
 import jacJarSoft.util.Auth.AuthTokenInfo;
 import jacJarSoft.util.Auth.AuthTokenUtil;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
 
 public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivAppService {
 	@Autowired
@@ -77,16 +76,42 @@ public class NoteArkivAppServiceImpl extends BaseService implements NoteArkivApp
 	@Override
 	public Response getUserFromToken(String token) {
 		UserTokenReturn resp = new UserTokenReturn();
-		
+		AuthTokenInfo tokenInfo = null;
 		try {
-			AuthTokenInfo tokenInfo = AuthTokenUtil.getTokenInfo(token);
-			resp.setUser(userDao.getUser(tokenInfo.getUser()));
+			tokenInfo = AuthTokenUtil.getTokenInfo(token);
 			resp.setStatusOk(true);
 		} catch (Exception e) {
 			resp.setErrorMsg("Ugyldig eller utløpt autorisasjonstoken!");
 		}
+
+		if (resp.isStatusOk())
+		{
+			resp.setUser(userDao.getUser(tokenInfo.getUser()));
+			resp.setToken(AuthTokenUtil.createToken(tokenInfo.getUser(), "setPw", 120));
+		}
 		return Response.ok(resp).build();
 	}
 
-
+	@Override
+	public Response setPw(SetPwInfo setPwInfo) {
+		AuthTokenInfo tokenInfo = null;
+		try {
+			tokenInfo = AuthTokenUtil.getTokenInfo(setPwInfo.getToken());
+		} catch (Exception e) {
+			throw new ValidationErrorException("Ugyldig eller utløpt autorisasjonstoken!");
+		}
+		
+		final String userNo = tokenInfo.getUser();
+		
+		return runWithTransaction((em, p) -> {
+			User user = userDao.getUser(userNo);
+			
+			user.setMustChangePassword(false);
+			user.setPassword(PasswordUtil.getPasswordMd5Hash(setPwInfo.getNewpassword()));
+			
+			user = userDao.updateUser(user);
+		
+			return Response.ok(new UserInfoReturn(user)).build();
+		}, null);
+	}
 }

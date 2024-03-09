@@ -1,12 +1,11 @@
 package jacJarSoft.noteArkiv.service;
 
 import jacJarSoft.noteArkiv.webapi.LogonInfo;
+import jacJarSoft.noteArkiv.webapi.SetPwInfo;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -37,4 +36,8 @@ public interface NoteArkivAppService {
 	@Path("/tokenuser")
 	public Response getUserFromToken(String token);
 
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/setpw")
+	public Response setPw(SetPwInfo setPwInfo);
 }

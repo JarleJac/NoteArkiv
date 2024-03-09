@@ -129,6 +129,12 @@ angular.module('notearkiv').controller('mainController', function($rootScope, $s
 			$window.history.back();			
 		}
 	}
+	$scope.setPwOk = function() {
+		controller.saveUserPw();
+		$scope.requestedPath = null;
+		$scope.rquestedQuery = null;
+		controller.initApp();
+	}
 	//Called from logon page
 	$scope.logon = function(logonInfo) {
 		controller.doLogon(logonInfo, true);
