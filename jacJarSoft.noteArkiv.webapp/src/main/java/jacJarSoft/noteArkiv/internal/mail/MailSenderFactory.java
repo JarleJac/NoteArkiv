@@ -1,5 +1,7 @@
 package jacJarSoft.noteArkiv.internal.mail;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Properties;
 
@@ -109,12 +111,13 @@ public class MailSenderFactory {
 
 	private MailSenderFactory() {
 		mailUser = System.getProperty(propertyPrefix + "notearkiv.email.user");
-		mailpw = System.getProperty(propertyPrefix + "notearkiv.email.pw");
+		String mailpwEnc = System.getProperty(propertyPrefix + "notearkiv.email.pw");
 		if (StringUtils.isEmpty(mailUser))
 		{
 			mailUser = System.getProperty("notearkiv.email.user");
-			mailpw = System.getProperty("notearkiv.email.pw");
+			mailpwEnc = System.getProperty("notearkiv.email.pw");
 		}
+		mailpw = new String(Base64.getDecoder().decode(mailpwEnc.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
 	}
 
 	private MailSender getMailSenderInternal() {
