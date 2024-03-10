@@ -1,6 +1,7 @@
 package jacJarSoft.noteArkiv.service;
 
 import jacJarSoft.noteArkiv.webapi.LogonInfo;
+import jacJarSoft.noteArkiv.webapi.SetPwInfo;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -25,4 +26,18 @@ public interface NoteArkivAppService {
 	@Path("/logon")
 	public Response logon(LogonInfo logonInfo);
 
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/forgotpw")
+	public Response forgotPw(String userOrEmail);
+
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/tokenuser")
+	public Response getUserFromToken(String token);
+
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/setpw")
+	public Response setPw(SetPwInfo setPwInfo);
 }

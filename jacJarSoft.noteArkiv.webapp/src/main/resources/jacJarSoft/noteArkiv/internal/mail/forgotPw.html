@@ -1,0 +1,38 @@
+<html>
+<head>
+<style type="text/css">
+div.header {
+  background-color: #46ba4e;
+  border-color: #61e86b;
+  border: thin;
+  padding: 4px;
+  width: 100%;
+  font-size: x-large;
+  font-weight: bold;
+  text-align: center;
+  color: black;
+}
+a.pwLink {
+  background-color: #46ba4e;
+  border-color: #61e86b;
+  border: thin;
+  padding: 4px;
+  color: black;
+}
+
+</style>
+</head>
+<body>
+<div class=header>${appInfo.appSettings.applicationTitle}</div>
+
+<div>
+	<p>Hei ${user.name}</p>
+	<p>Du har bedt om å få angi et nytt passord for din bruker til ${appInfo.appSettings.applicationTitle}.</p>
+	<p>Hvis det ikke er du som har bedt om å angi nytt passord, kan denne e-posten ignoreres. Si gjerne fra til din notearkivansvarlige.</p>
+	<p>Din bruker id er: ${user.no}</p>
+	<p>For å angi et nytt passord så kan du trykke på linken nedenfor. <b><i>Linken vil være gyldig i 15 minutter fra du ba om å få angi et nytt passord.</i></b></p>
+	<p><a class="pwLink" href="${resetPwUrl}" target="_blank">Angi passord</a></p>
+	<p>Har du noen spørsmål kontakt din notearkivansvarlige</p>
+</div>
+</body>
+</html>

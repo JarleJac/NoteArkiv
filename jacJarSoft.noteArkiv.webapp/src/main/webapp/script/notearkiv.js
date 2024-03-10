@@ -75,6 +75,11 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
 		controller : 'logonController',
 		controllerAs : 'logonCtrl'
 	})
+	.when('/forgotpw', {
+		templateUrl : 'templates/pages/logon/forgotpw.html',
+		controller : 'logonController',
+		controllerAs : 'logonCtrl'
+	})
 	.when('/changepw', {
 		templateUrl : 'templates/pages/logon/changepw.html',
 		controller : 'changepwController',
@@ -84,6 +89,10 @@ angular.module('notearkiv', [ 'ngRoute' ,'cgBusy', 'angularFileUpload', 'ui.boot
             accessLevel: "READER"
         }
 		
+	})
+	.when('/setpw', {
+		templateUrl : 'templates/pages/logon/setpw.html',
+		controller : 'setpwController',
 	})
 	.when('/changepw/:userNo', {
 		templateUrl : 'templates/pages/logon/changepw.html',
