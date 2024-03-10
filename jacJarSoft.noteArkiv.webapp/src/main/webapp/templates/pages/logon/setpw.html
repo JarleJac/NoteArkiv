@@ -1,4 +1,4 @@
-<h3 class="pagetop">Sett passord</h3>
+<h3 class="pagetop">Angi passord</h3>
 <div data-ng-show="errorMsg" class="alert alert-danger" role="alert">
   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   {{errorMsg}}
@@ -7,7 +7,7 @@
 <form data-ng-show="user" data-cg-busy="{promise:pagePromise,message:promiseMsg}" class="form-horizontal">
   <div class="form-group">
     <div class="col-sm-7">Hei {{user.name}}.<br />
-    Her kan du angi ditt nye passord 2 ganger og trykke Sett passord knappen for å sette passordet.</div>
+    Her kan du skrive ditt nye passord 2 ganger og trykke "Angi passord" knappen for å angi passordet.</div>
   </div>
   <div class="form-group">
     <label for="user" class="col-sm-2 control-label">Bruker</label>
@@ -29,7 +29,7 @@
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-2">
-      <button type="submit" class="btn btn-default"  data-ng-click="doSetPassword()">Sett passord</button>
+      <button type="submit" class="btn btn-default"  data-ng-click="doSetPassword()">Angi passord</button>
     </div>
   </div>
 </form>
