@@ -37,7 +37,7 @@ public class ForgotPwMailSender {
 		logger.info("forgot email called for user " + user.getNo());
 		String htmlContent = builMailHtml(buildUrl());
 		
-		String subject = "Nullstille passordet for din bruker til " + appInfo.getAppSettings().getApplicationTitle();
+		String subject = "Sette nytt passord for din bruker til " + appInfo.getAppSettings().getApplicationTitle();
 		String recipientTO = user.geteMail();
 		
 		MailSender mailSender = MailSenderFactory.getMailSender();

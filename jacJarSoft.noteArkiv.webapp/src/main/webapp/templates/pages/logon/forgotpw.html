@@ -1,10 +1,10 @@
 <h3 class="pagetop">Glemt bruker/passord</h3>
 <form data-cg-busy="{promise:pagePromise,message:promiseMsg}" class="form-horizontal">
   <div class="form-group" data-ng-show="!forgotPwMailSendt">
-    <div class="col-sm-6">Legg inn bruker eller e-post i feltet nedenfor og trykk Nullstille passordet knappen.<br />
+    <div class="col-sm-6">Legg inn bruker eller e-post i feltet nedenfor og trykk Send e-post knappen.<br />
     Systemet vil sende deg en e-post med en link der du kan sette et nytt passord.<br />
     <b><i>Linken i e-posten vil være gyldig i 15 minutter.</i></b><br />
-    Hvis du ikke husker e-post eller bruker så må du kontakte din  notearkiv ansvarlige.</div>
+    Hvis du ikke husker e-post eller bruker så må du kontakte din notearkivansvarlige.</div>
   </div>
   <div class="form-group" data-ng-show="!forgotPwMailSendt">
     <label for="user" class="col-sm-2 control-label">Bruker eller e-post</label>
@@ -15,12 +15,12 @@
   <div class="form-group"  data-ng-show="!forgotPwMailSendt">
     <div class="col-sm-2"></div>
     <div class="col-sm-1">
-      <button type="submit" class="btn btn-default"  data-ng-click="doForgotPw()">Nullstille passordet</button>
+      <button type="submit" class="btn btn-default"  data-ng-click="doForgotPw()">Send e-post</button>
     </div>
   </div>
   <div class="form-group"  data-ng-show="forgotPwMailSendt">
     <div class="col-sm-6">Da er det sendt en e-post til <b>{{user.eMail}}</b> Lukk denne siden og følg anvisningene i e-posten du fikk.<br />
     Hvis du ikke finner e-posten så husk å sjekke søppelpost mappen din. <br /><br />
-    Svar på e-posten vil ikke bli lest. Har du noen spørsmål kontakt din notearkiv ansvarlige.</div>
+    Svar på e-posten vil ikke bli lest. Har du noen spørsmål kontakt din notearkivansvarlige.</div>
   </div>
 </form>
