@@ -42,7 +42,7 @@ public class UserDao extends AbstractDao {
 
 	public User getUserFromEmail(String userOrEmail) {
 		List<User> users = getEntityManager()
-				.createQuery("select u from User u where u.eMail = :email", User.class)
+				.createQuery("select u from User u where lower(u.eMail) = lower(:email)", User.class)
 				.setParameter("email", userOrEmail)
 				.getResultList();
 		if (users.isEmpty())
