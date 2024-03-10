@@ -56,7 +56,8 @@ public class AppServletContextListner implements ServletContextListener {
 	}
 
 	private void initMail() {
-		MailSenderFactory.configure(appSettings.getMailProperties().getAsProperties());
+		MailSenderFactory.configure(appSettings.getMailProperties().getAsProperties(), 
+				appSettings.getJsAppSettings().getApplicationId() + ".");
 	}
 
 	private void initFreemarker() {

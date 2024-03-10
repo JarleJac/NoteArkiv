@@ -3,6 +3,8 @@ package jacJarSoft.noteArkiv.internal.mail;
 import java.util.Date;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
+
 import jakarta.mail.Authenticator;
 import jakarta.mail.BodyPart;
 import jakarta.mail.Message;
@@ -21,6 +23,7 @@ public class MailSenderFactory {
 	private static MailSenderFactory instance;
 	private static Object instanceLock = new Object();
 	private static Properties mailprops;
+	private static String propertyPrefix;
 
 	private static MailSenderFactory getInstance() {
 		if (instance == null) {
@@ -42,11 +45,12 @@ public class MailSenderFactory {
 		return getInstance().getMailSenderInternal();
 	}
 	
-	public static void configure(Properties mailprops)	{
+	public static void configure(Properties mailprops, String propertyPrefix)	{
 		if (MailSenderFactory.mailprops != null)
 			throw new IllegalStateException("Alredy configured");
 		
 		MailSenderFactory.mailprops = mailprops;
+		MailSenderFactory.propertyPrefix = propertyPrefix;
 	}
 
 	private static class MailSenderImpl implements MailSender {
@@ -104,8 +108,13 @@ public class MailSenderFactory {
 	private String mailpw;
 
 	private MailSenderFactory() {
-		mailUser = System.getProperty("notearkiv.email.user");
-		mailpw = System.getProperty("notearkiv.email.pw");
+		mailUser = System.getProperty(propertyPrefix + "notearkiv.email.user");
+		mailpw = System.getProperty(propertyPrefix + "notearkiv.email.pw");
+		if (StringUtils.isEmpty(mailUser))
+		{
+			mailUser = System.getProperty("notearkiv.email.user");
+			mailpw = System.getProperty("notearkiv.email.pw");
+		}
 	}
 
 	private MailSender getMailSenderInternal() {
