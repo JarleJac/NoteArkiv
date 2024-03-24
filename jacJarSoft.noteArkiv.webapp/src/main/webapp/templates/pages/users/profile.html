@@ -9,14 +9,29 @@
 		<a href="https://en.gravatar.com/" target="_blank">https://en.gravatar.com/</a></div>
 	</div>
 	<div class="col-sm-8">
-	<div><span class="listLabel">Id: </span>{{user.no}}</div>
-	<div><span class="listLabel">E-Post: </span>{{user.eMail}}</div>
-	<div><span class="listLabel">Tilgangsnivå: </span>{{getAcccessLevelText()}}</div>
-	<div>
-		<br>
-		<a class="btn btn-sm btn-default" href="#/changepw"><span
-			aria-hidden="true"></span>Bytt passord</a>
+		<div><span class="listLabel">bruker Id: </span>{{user.no}}</div>
+		<div><span class="listLabel">Tilgangsnivå: </span>{{getAcccessLevelText()}}</div>
+		<div data-ng-show="!changeMode">
+			<div><span class="listLabel">E-Post: </span>{{user.eMail}}</div>
+			<div>
+				<br>
+				<a class="btn btn-sm btn-default" href="#/changepw"><span aria-hidden="true"></span>Bytt passord</a>
+				<a class="btn btn-primary btn-sm" data-ng-click="startChanges()" role="button">
+					<span class="glyphicon glyphicon-edit"></span> Endre</a>
+			</div>
+		</div>
+		<form  data-ng-show="changeMode" data-cg-busy="{promise:pagePromise,message:promiseMsg}" class="form-horizontal main">
+	  	  <div class="form-group">
+		    <label for="eMail" class="col-sm-2 control-label">E-Post</label>
+		    <div class="col-sm-7 col-lg-5  col-md-6">
+		      <input type="text" class="form-control" id="eMail" data-ng-model="user.eMail" placeholder="Brukers e-post">
+		    </div>
+		  </div>
+	        <button type="submit" class="btn btn-danger btn-sm"  data-ng-click="cancelChanges()"><span class="glyphicon glyphicon-remove"></span> Avbryt</button>
+		    <button type="submit" class="btn btn-primary btn-sm"  data-ng-click="saveChanges()">
+		    	<span class="glyphicon glyphicon-floppy-save"></span> Lagre</button>
+		</form>
+		
 	</div>
-</div>
 
 </div>

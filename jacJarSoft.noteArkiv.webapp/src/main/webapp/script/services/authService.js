@@ -64,6 +64,10 @@ angular.module('notearkiv').factory('Auth', function AuthFactory($http, AuthToke
 			});
 			
 		},
+		updateUserInfo : function (info) {
+			user = info.user;
+			userGravatarInfo = info.gravatar;
+		},
 		changePw : function(info, isOtherUser) {
 			return $http({method: "PUT", url : "rest/userservice/user/"+info.user+"/changepw", data: info })
 			.then(function successCallback(result) {
