@@ -32,7 +32,7 @@ angular.module('notearkiv').controller('userProfileController', function($scope,
 		$scope.changeMode = true;
 	}
 	$scope.cancelChanges = function() {
-		readUser();
+		readUser($scope.user.no);
 		$scope.changeMode = false;
 	}
 	$scope.saveChanges = function() {
